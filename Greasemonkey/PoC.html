@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PoC</title>
+  <script>
+    function updateUserscript() {
+      window.open("PoC.user.js", "userscript_frame");
+      alert("Refresh");
+      window.location.reload();
+    }
+  </script>
+</head>
+<body>
+  <table width="100%">
+  <thead>
+    <tr>
+      <th colspan="2"><h1>Proof-of-Concept</h1>
+    </tr>
+    <tr>
+      <th colspan="2" align="center">Greasemonkey:
+        <a href="https://wiki.greasespot.net/Greasemonkey_Manual" target="GM_Manual">Manual</a>
+      | <a href="https://wiki.greasespot.net/Greasemonkey_Manual:API" target="GM_API">API</a>
+      </th>
+    <tr>
+  </thead>
+  <tbody>
+    <tr><td colspan="2">&nbsp</td></tr>
+    <tr>
+      <td width="50%" align="right">document.readyState:</td>
+      <td width="50%"><input id="document.ReadyState" type="text" value="" /> </td>
+    </tr>
+    <tr>
+      <td width="50%" align="right">GM_info.version:</td>
+      <td width="50%"><input id="GM_info.version" type="text" value="" /> </td>
+    </tr>
+    <tr>
+      <td width="50%" align="right">GM_info.script.version:</td>
+      <td width="50%"><input id="GM_info.script.version" type="text" value="" /> <button id="update" onclick="updateUserscript()">Update</button> </td>
+    </tr>
+    <tr>
+      <td width="50%" align="right">GM_listValues:</td>
+      <td width="50%"><input id="GM_listValues" type="text" value="?" /> </td>
+    </tr>
+     <tr>
+      <td width="50%" align="right">GM_xmlhttpRequest:</td>
+      <td width="50%"><input id="GM_xmlhttpRequest" type="text" value="?" /> </td>
+    </tr>
+ </tbody>
+  </table>
+</body>
+</html>
