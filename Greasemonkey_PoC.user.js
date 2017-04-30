@@ -3,9 +3,9 @@
 // @namespace   yourUncleMike
 // @include     file:///home/md_clay/yourUncleMike.github.io/*.html
 // @include     https://yourunclemike.github.io/*.html
-// @version     2017.04.30.1631
+// @version     2017.04.30.1647
 // ==/UserScript==
-var version  = '2017.04.30.1631'
+var version  = '2017.04.30.1647'
 
 //////////////////////////////////////////////////
 //                                              //
@@ -15,10 +15,7 @@ var version  = '2017.04.30.1631'
 //                                              //
 //////////////////////////////////////////////////
 
-readyState = document.readyState;
-if (readyState) {
-  alert("document.readyState: " + readyState);
-}
+var readyState = document.readyState;
 
 documentReadyState_field = document.getElementById("document.readyState");
 if (documentReadyState_field) {
