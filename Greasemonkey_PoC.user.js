@@ -3,9 +3,9 @@
 // @namespace   yourUncleMike
 // @include     file:///home/md_clay/yourUncleMike.github.io/*.html
 // @include     https://yourunclemike.github.io/*.html
-// @version     2017.04.30.1647
+// @version     2017.04.30.1653
 // ==/UserScript==
-var version  = '2017.04.30.1647'
+var version  = '2017.04.30.1653'
 
 //////////////////////////////////////////////////
 //                                              //
