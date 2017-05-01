@@ -8,10 +8,17 @@
       alert("Refresh");
       window.location.reload();
     }
+    function initialize() {
+      version_installed = document.getElementById("GM_info.script.version").value;
+      if (version != version_installed) {
+        alert("version available: " + version + " != version installed: " + version_installed);
+        setTimeout(updateUserscript, 1000);
+      }
+    }
   </script>
+  <script name="user.js" src="Greasemonkey_PoC_user.js"></script>
 </head>
-<body>
-  <!--iframe name="userscript_frame" src="about:blank"></iframe -->
+<body onload="initialize()">
   <table width="100%">
   <thead>
     <tr>
