@@ -3,9 +3,13 @@
 // @namespace   yourUncleMike
 // @include     file:///home/md_clay/yourUncleMike.github.io/*.html
 // @include     https://yourunclemike.github.io/*.html
-// @version     2017.04.30.2256
+// @grant       GM_setValue
+// @grant       GM_getValue
+// @grant       GM_listValues
+// @grant       GM_xmlhttpRequest
+// @version     2017.05.02.1654
 // ==/UserScript==
-var version  = '2017.04.30.2256'
+var version  = '2017.05.02.1654'
 
 //////////////////////////////////////////////////
 //                                              //
@@ -34,14 +38,33 @@ if (greasemonkeyVersion_field) {
 userscriptVersion_field = document.getElementById("GM_info.script.version");
 if (userscriptVersion_field) {
   userscriptVersion_field.value = GM_info.script.version;
+  GM_setValue("scriptVer", GM_info.script.version);
+}
+
+getValue_field = document.getElementById("GM_getValue");
+if (getValue_field) {
+  getValue_field.value = typeof GM_getValue;
+}
+
+setValue_field = document.getElementById("GM_setValue");
+if (setValue_field) {
+  setValue_field.value = typeof GM_setValue;
 }
 
 listValues_field = document.getElementById("GM_listValues");
 if (listValues_field) {
   listValues_field.value = typeof GM_listValues;
+  val_list = [];
+  for each (var name in GM_listValues()) {
+    val_list.push(name + "=" + GM_getValue(name));
+  };
+  listValues_field.value = "[" + val_list.join(", ") + "]";
 }
 
 xmlhttpRequest_field = document.getElementById("GM_xmlhttpRequest");
 if (xmlhttpRequest_field) {
   xmlhttpRequest_field.value = typeof GM_xmlhttpRequest;
 }
+
+GM_setValue("foo", "bar");
+var foo = GM_getValue("foo");

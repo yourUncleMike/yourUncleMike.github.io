@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8"/>
   <title>Greasemonkey PoC</title>
   <script>
     function updateUserscript() {
@@ -10,13 +11,15 @@
     }
     function initialize() {
       version_installed = document.getElementById("GM_info.script.version").value;
+      /*
       if (version != version_installed) {
         alert("version available: " + version + " != version installed: " + version_installed);
-        setTimeout(updateUserscript, 1000);
+        /* setTimeout(updateUserscript, 1000);
       }
+      */
     }
   </script>
-  <script name="user.js" src="Greasemonkey_PoC_user.js"></script>
+  <!-- script name="user.js" src="Greasemonkey_PoC_user.js"></script -->
 </head>
 <body onload="initialize()">
   <table width="100%">
@@ -25,7 +28,8 @@
       <th colspan="2"><h1>Proof-of-Concept</h1>
     </tr>
     <tr>
-      <th colspan="2" align="center">Greasemonkey:
+      <th align="right">Greasemonkey:</th>
+      <th align="left">
         <a href="https://wiki.greasespot.net/Greasemonkey_Manual" target="GM_Manual">Manual</a>
       | <a href="https://wiki.greasespot.net/Greasemonkey_Manual:API" target="GM_API">API</a>
       </th>
@@ -34,24 +38,32 @@
   <tbody>
     <tr><td colspan="2">&nbsp</td></tr>
     <tr>
-      <td width="50%" align="right">document.readyState:</td>
-      <td width="50%"><input id="document.readyState" type="text" value="Use Firefox or Chrome." /> </td>
+      <td width="40%" align="right">document.readyState:</td>
+      <td width="60%"><input id="document.readyState" type="text" size="40" value="Use Firefox or Chrome." /> </td>
     </tr>
     <tr>
-      <td width="50%" align="right">GM_info.version:</td>
-      <td width="50%"><input id="GM_info.version" type="text" value="Enable Greasemonkey." /> </td>
+      <td width="40%" align="right">GM_info.version:</td>
+      <td width="60%"><input id="GM_info.version" type="text" size="40" value="Enable Greasemonkey." /> </td>
     </tr>
     <tr>
-      <td width="50%" align="right">GM_info.script.version:</td>
-      <td width="50%"><input id="GM_info.script.version" type="text" value="Click - - - - - - - - - - - - - - - ->" /> <button id="update" onclick="updateUserscript()">Update</button> </td>
+      <td width="40%" align="right">GM_info.script.version:</td>
+      <td width="60%"><input id="GM_info.script.version" type="text" size="40" value="Click - - - - - - - - - - - - - - - ->" /> <button id="update" onclick="updateUserscript()">Update</button> </td>
     </tr>
     <tr>
-      <td width="50%" align="right">GM_listValues:</td>
-      <td width="50%"><input id="GM_listValues" type="text" value="?" /> </td>
+      <td width="40%" align="right">GM_getValue:</td>
+      <td width="60%"><input id="GM_getValue" type="text" size="40" value="?" /> </td>
+    </tr>
+    <tr>
+      <td width="40%" align="right">GM_setValue:</td>
+      <td width="60%"><input id="GM_setValue" type="text" size="40" value="?" /> </td>
+    </tr>
+    <tr>
+      <td width="40%" align="right">GM_listValues:</td>
+      <td width="60%"><input id="GM_listValues" type="text" size="40" value="?" /> </td>
     </tr>
      <tr>
-      <td width="50%" align="right">GM_xmlhttpRequest:</td>
-      <td width="50%"><input id="GM_xmlhttpRequest" type="text" value="?" /> </td>
+      <td width="40%" align="right">GM_xmlhttpRequest:</td>
+      <td width="60%"><input id="GM_xmlhttpRequest" type="text" size="40" value="?" /> </td>
     </tr>
  </tbody>
   </table>
