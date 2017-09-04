@@ -7,9 +7,13 @@
 // @grant       GM_getValue
 // @grant       GM_listValues
 // @grant       GM_xmlhttpRequest
-// @version     2017.05.02.1654
+// @grant       GM_getResourceText
+// @resource    PoC file:///home/md_clay/yourUncleMike.github.io/PoC.js
+// @version     2017.09.03.1915
 // ==/UserScript==
-var version  = '2017.05.02.1654'
+var version  = '2017.09.03.1915'
+
+var PoC_source = GM_getResourceText("PoC");
 
 //////////////////////////////////////////////////
 //                                              //
@@ -21,6 +25,7 @@ var version  = '2017.05.02.1654'
 
 var readyState = document.readyState;
 
+console.debug("PoC resource: " + PoC_source);
 documentReadyState_field = document.getElementById("document.readyState");
 if (documentReadyState_field) {
   if (readyState) {
