@@ -7,13 +7,9 @@
 // @grant       GM_getValue
 // @grant       GM_listValues
 // @grant       GM_xmlhttpRequest
-// @grant       GM_getResourceText
-// @resource    PoC file:///home/md_clay/yourUncleMike.github.io/PoC.js
-// @version     2017.09.03.1915
+// @version     2017.09.04.1220
 // ==/UserScript==
-var version  = '2017.09.03.1915'
-
-var PoC_source = GM_getResourceText("PoC");
+var version  = '2017.09.04.1220';
 
 //////////////////////////////////////////////////
 //                                              //
@@ -25,7 +21,18 @@ var PoC_source = GM_getResourceText("PoC");
 
 var readyState = document.readyState;
 
-console.debug("PoC resource: " + PoC_source);
+function pad2(nval) { return ("0000" + nval).slice(-2) };
+
+var xhr = {
+  method: "GET",
+  url: "https://yourunclemike.github.io/PoC.js",
+  onload: function(response) {
+    console.debug("GM_xmlhttpRequest executed");
+    console.debug(response.responseText);
+  }
+};
+GM_xmlhttpRequest(xhr);
+
 documentReadyState_field = document.getElementById("document.readyState");
 if (documentReadyState_field) {
   if (readyState) {
@@ -38,6 +45,17 @@ if (documentReadyState_field) {
 greasemonkeyVersion_field = document.getElementById("GM_info.version");
 if (greasemonkeyVersion_field) {
   greasemonkeyVersion_field.value = GM_info.version;
+}
+
+last_update_field = document.getElementById("localStorage.last_update");
+if (last_update_field) {
+  d = new Date(parseInt(localStorage.last_update));
+  year = d.getFullYear();
+  mon = pad2(d.getMonth() + 1);
+  day = pad2(d.getDate());
+  hrs = pad2(d.getHours());
+  mins = pad2(d.getMinutes());
+  last_update_field.value = "" + year + "." + mon + "." + day + "." + hrs + mins;
 }
 
 userscriptVersion_field = document.getElementById("GM_info.script.version");

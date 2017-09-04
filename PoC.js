@@ -1,2 +1,4 @@
-variable = {"a":"aye", "b":"bee", "007":"Clay"};
-alert("PoC.js executed");
+variable = {
+ "a":"aye",
+ "b":"bee",
+ "7":"Bond, James"}
