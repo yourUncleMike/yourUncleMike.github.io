@@ -11,10 +11,9 @@
       window.location.reload();
     }
     function updateUserscript() {
-//    window.open("Greasemonkey_PoC.user.js", "userscript_frame");
       localStorage.last_update = new Date().getTime();
       window.setTimeout(refresh, 500);
-      window.location = "Greasemonkey_PoC.user.js";
+      window.location = "Greasemonkey_PoC.user.js";   // NOTE: window.location does not actually change for Greasemonkey user scripts.
     }
     initialize = function() {
       version_installed = document.getElementById("GM_info.script.version").value;
