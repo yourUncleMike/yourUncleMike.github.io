@@ -4,24 +4,28 @@
   <meta charset="utf-8"/>
   <title>Greasemonkey PoC</title>
   <script>
+    var url = 'file:///home/md_clay/yourUncleMike.github.io/PoC.js';
     function updateUserscript() {
       window.open("Greasemonkey_PoC.user.js", "userscript_frame");
       alert("Refresh");
       window.location.reload();
     }
-    function initialize() {
+    initialize = function() {
       version_installed = document.getElementById("GM_info.script.version").value;
-      /*
-      if (version != version_installed) {
-        alert("version available: " + version + " != version installed: " + version_installed);
-        /* setTimeout(updateUserscript, 1000);
-      }
-      */
+      var scriptTag = document.createElement('script');
+      console.debug('window.onload: url: ' + url);
+      scriptTag.onload = function() {
+        console.debug(variable)
+      };
+      now = new Date().getTime();
+      scriptTag.src = url + '?t=' + now;
+      document.body.appendChild(scriptTag);
     }
+    window.onload = initialize;
   </script>
   <!-- script name="user.js" src="Greasemonkey_PoC_user.js"></script -->
 </head>
-<body onload="initialize()">
+<body>
   <table width="100%">
   <thead>
     <tr>
