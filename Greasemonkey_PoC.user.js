@@ -48,7 +48,7 @@ if (greasemonkeyVersion_field) {
 }
 
 last_update_field = document.getElementById("localStorage.last_update");
-if (last_update_field) {
+if (last_update_field && (typeof localStorage.last_update) != "undefined") {
   d = new Date(parseInt(localStorage.last_update));
   year = d.getFullYear();
   mon = pad2(d.getMonth() + 1);
