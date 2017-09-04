@@ -13,11 +13,12 @@
     initialize = function() {
       version_installed = document.getElementById("GM_info.script.version").value;
       var scriptTag = document.createElement('script');
-      console.debug('window.onload: url: ' + url);
+      var now = new Date().getTime();
+      console.debug('window.onload: url: ' + url + ", now: " + now);
       scriptTag.onload = function() {
+        console.debug('dynamic script onload');
         console.debug(variable)
       };
-      now = new Date().getTime();
       scriptTag.src = url + '?t=' + now;
       document.body.appendChild(scriptTag);
     }
