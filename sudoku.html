@@ -1,0 +1,277 @@
+<html>
+<head>
+<title>sudoku</title>
+<style type="text/css">
+ input { text-align: center;}
+</style>
+<script>
+function validate(row,col)
+{
+  e = row * 9 + col;
+  v = document.sudoku.elements[e].value;
+  if (v != '')
+  {
+    // Check this row ////////////////////////////////////////
+    matches = 0;
+    for (col_to_check = 0; col_to_check < 9; col_to_check ++)
+    {
+      e_to_check = row * 9 + col_to_check;
+      v_to_check = document.sudoku.elements[e_to_check].value;
+      if (v_to_check == v)
+      {
+        matches ++;
+      }
+    }
+    if (matches != 1)
+    {
+      alert((matches - 1) + " too many " + v + "'s in that row");
+      document.sudoku.elements[e].focus();
+    }
+    
+    // Check this column /////////////////////////////////////
+    matches = 0;
+    for (row_to_check = 0; row_to_check < 9; row_to_check ++)
+    {
+      e_to_check = row_to_check * 9 + col;
+      v_to_check = document.sudoku.elements[e_to_check].value;
+      if (v_to_check == v)
+      {
+        matches ++;
+      }
+    }
+    if (matches != 1)
+    {
+      alert((matches - 1) + " too many " + v + "'s in that column");
+      document.sudoku.elements[e].focus();
+    }
+
+    // Check this square ////////////////////////////////////////////////////////////////////////////
+    matches = 0;
+    top_row_of_square  = Math.floor(row / 3) * 3;
+    left_col_of_square = Math.floor(col / 3) * 3;
+    for (row_to_check = top_row_of_square; row_to_check < top_row_of_square + 3; row_to_check ++)
+    {
+      for (col_to_check = left_col_of_square; col_to_check < left_col_of_square + 3; col_to_check ++)
+      {
+        e_to_check = row_to_check * 9 + col_to_check;
+        v_to_check = document.sudoku.elements[e_to_check].value;
+        if (v_to_check == v)
+        {
+          matches ++;
+        }
+      }
+    }
+    if (matches != 1)
+    {
+      alert((matches - 1) + " too many " + v + "'s in that 3x3 square");
+      document.sudoku.elements[e].focus();
+    }
+  }
+};
+
+function puzzle_hint()
+{
+  for (row = 0; row < 9; row ++)
+  {
+    for (col = 0; col < 9; col ++)
+    {
+      n19 = "123456789";
+      e = row * 9 + col;
+      if (document.sudoku.elements[e].value == '')
+      {
+        // eliminate numbers played in same row ////////////////////////////////////
+        for (col_to_check = 0; col_to_check < 9; col_to_check ++)
+        {
+          e_to_check = row * 9 + col_to_check;
+          n19 = n19.replace(RegExp(document.sudoku.elements[e_to_check].value), "");
+        };
+        // eliminate numbers played in same column /////////////////////////////////
+        for (row_to_check = 0; row_to_check < 9; row_to_check ++)
+        {
+          e_to_check = row_to_check * 9 + col;
+          n19 = n19.replace(RegExp(document.sudoku.elements[e_to_check].value), "");
+        };
+        // eliminate numbers played in same square //////////////////////////////////////////////////////
+        top_row_of_square  = Math.floor(row / 3) * 3;
+        left_col_of_square = Math.floor(col / 3) * 3;
+        for (row_to_check = top_row_of_square; row_to_check < top_row_of_square + 3; row_to_check ++)
+        {
+          for (col_to_check = left_col_of_square; col_to_check < left_col_of_square + 3; col_to_check ++)
+          {
+            e_to_check = row_to_check * 9 + col_to_check;
+            n19 = n19.replace(RegExp(document.sudoku.elements[e_to_check].value), "");
+          };
+        }
+        if (n19.length == 1)
+        {
+///////// UNCOMMENT THE FOLLOWING TWO LINES IF YOU WANT IT TO SOLVE A SINGLE SQUARE ///////////////
+//        document.sudoku.elements[e].value = n19;
+//        document.sudoku.elements[e].style.color = "red";
+///////////////////////////////////////////////////////////////////////////////////////////////////
+          document.sudoku.elements[e].focus();
+          return;
+        }
+      }
+    }
+  }
+  alert("Are we done?");
+}
+
+function lock_puzzle()
+{
+  for (e = 0; e < 81; e ++)
+  {
+    if (document.sudoku.elements[e].value != '')
+    {
+      document.sudoku.elements[e].disabled = true;
+      document.sudoku.elements[e].style.color = "black";
+    }
+  }
+}
+
+function unlock_puzzle()
+{
+  for (e = 0; e < 81; e ++)
+  {
+    document.sudoku.elements[e].disabled = false;
+  }
+}
+
+function clear_puzzle()
+{
+  for (e = 0; e < 81; e ++)
+  {
+    if (document.sudoku.elements[e].disabled == false)
+    {
+      document.sudoku.elements[e].value = "";
+      document.sudoku.elements[e].style.color = "black";
+    }
+  };
+  document.sudoku.elements[0].focus();
+};
+
+function init()
+{
+  document.sudoku.elements[0].focus();
+};
+
+</script>
+</head>
+<body onLoad="init();">
+<h1>Sudoku!</h1>
+<form name="sudoku">
+<table bgcolor="black" fgcolor="white"><tr><td>
+<table>
+<tr>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(0,0)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(0,1)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(0,2)"></td><td></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(0,3)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(0,4)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(0,5)"></td><td></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(0,6)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(0,7)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(0,8)"></td>
+</tr>
+<tr>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(1,0)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(1,1)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(1,2)"></td><td></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(1,3)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(1,4)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(1,5)"></td><td></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(1,6)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(1,7)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(1,8)"></td>
+</tr>
+<tr>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(2,0)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(2,1)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(2,2)"></td><td></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(2,3)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(2,4)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(2,5)"></td><td></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(2,6)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(2,7)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(2,8)"></td>
+</tr>
+<tr></tr>
+<tr>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(3,0)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(3,1)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(3,2)"></td><td></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(3,3)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(3,4)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(3,5)"></td><td></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(3,6)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(3,7)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(3,8)"></td>
+</tr>
+<tr>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(4,0)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(4,1)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(4,2)"></td><td></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(4,3)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(4,4)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(4,5)"></td><td></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(4,6)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(4,7)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(4,8)"></td>
+</tr>
+<tr>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(5,0)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(5,1)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(5,2)"></td><td></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(5,3)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(5,4)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(5,5)"></td><td></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(5,6)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(5,7)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(5,8)"></td>
+</tr>
+<tr></tr>
+<tr>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(6,0)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(6,1)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(6,2)"></td><td></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(6,3)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(6,4)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(6,5)"></td><td></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(6,6)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(6,7)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(6,8)"></td>
+</tr>
+<tr>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(7,0)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(7,1)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(7,2)"></td><td></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(7,3)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(7,4)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(7,5)"></td><td></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(7,6)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(7,7)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(7,8)"></td>
+</tr>
+<tr>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(8,0)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(8,1)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(8,2)"></td><td></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(8,3)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(8,4)"></td>
+<td bgcolor='blue'><input type="text" size="1" maxlength="1" onChange="validate(8,5)"></td><td></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(8,6)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(8,7)"></td>
+<td bgcolor='green'><input type="text" size="1" maxlength="1" onChange="validate(8,8)"></td>
+</tr>
+</table>
+</td></tr></table>
+<BR>
+<input type="button" onClick="puzzle_hint()" value="Hint">
+<input type="button" onClick="lock_puzzle()" value="Lock">
+<input type="button" onClick="unlock_puzzle()" value="Unlock">
+<input type="button" onClick="clear_puzzle()" value="Clear">
+</form>
+<br>
+<table border=0><tr><td><hr>&copy; 2007, Michael.D.Clay</td></tr></table>
+</body>
+</html>
