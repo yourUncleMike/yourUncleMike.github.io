@@ -82,7 +82,9 @@ function validate(row,col)
     {
       too_many += ", 3x3 square";
     }
-    if (too_many != "") {
+   
+    invalid = too_many != "";
+    if (invalid) {
       alert("Too many " + v + "'s in that" + too_many.substr(1,));
       focus_cell(row, col);
       sudoku[e].select();
@@ -129,9 +131,11 @@ function puzzle_hint()
 //        sudoku[e].value = n19;
 //        sudoku[e].style.color = "red";
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-          sudoku[e].focus();
-          sudoku[e].select();
-          return;
+          if (! invalid) {
+            sudoku[e].focus();
+            sudoku[e].select();
+            return;
+          }
         }
       }
     }
@@ -178,6 +182,7 @@ function clear_puzzle()
 
 function init()
 {
+  var invalid = false;
   var sudoku = document.sudoku.elements;
   values = [  "", "7", "9",   "",  "",  "8",    "",  "",  "",
              "6", "8", "4",  "3",  "",  "",     "", "2", "5",
