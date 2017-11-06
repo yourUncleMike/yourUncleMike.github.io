@@ -1,5 +1,3 @@
-
-<!-- saved from url=(0043)https://yourunclemike.github.io/sudoku.html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>sudoku</title>
 <style type="text/css">
@@ -9,20 +7,22 @@
 function focus_cell(row,col)
 {
   e = row * 9 + col;
-  document.sudoku.elements[e].select();
-  document.sudoku.elements[e].style.backgroundColor = "lightgreen";
+  sudoku[e].style.backgroundColor = "lightgreen";
+  sudoku[e].select();
+  document.execCommand("copy");
 };
 
 function blur_cell(row,col)
 {
   e = row * 9 + col;
-  document.sudoku.elements[e].style.backgroundColor = "white";
+  sudoku[e].style.backgroundColor = "white";
 };
 
 function validate(row,col)
 {
+  too_many = "";
   e = row * 9 + col;
-  v = document.sudoku.elements[e].value;
+  v = sudoku[e].value;
   if (v != '')
   {
     // Check this row ////////////////////////////////////////
@@ -30,7 +30,7 @@ function validate(row,col)
     for (col_to_check = 0; col_to_check < 9; col_to_check ++)
     {
       e_to_check = row * 9 + col_to_check;
-      v_to_check = document.sudoku.elements[e_to_check].value;
+      v_to_check = sudoku[e_to_check].value;
       if (v_to_check == v)
       {
         matches ++;
@@ -38,9 +38,7 @@ function validate(row,col)
     }
     if (matches != 1)
     {
-      alert((matches - 1) + " too many " + v + "'s in that row");
-      document.sudoku.elements[e].focus();
-      document.sudoku.elements[e].select();
+      too_many += ", row";
     }
     
     // Check this column /////////////////////////////////////
@@ -48,7 +46,7 @@ function validate(row,col)
     for (row_to_check = 0; row_to_check < 9; row_to_check ++)
     {
       e_to_check = row_to_check * 9 + col;
-      v_to_check = document.sudoku.elements[e_to_check].value;
+      v_to_check = sudoku[e_to_check].value;
       if (v_to_check == v)
       {
         matches ++;
@@ -56,9 +54,7 @@ function validate(row,col)
     }
     if (matches != 1)
     {
-      alert((matches - 1) + " too many " + v + "'s in that column");
-      document.sudoku.elements[e].focus();
-      document.sudoku.elements[e].select();
+      too_many += ", column";
     }
 
     // Check this square ////////////////////////////////////////////////////////////////////////////
@@ -70,7 +66,7 @@ function validate(row,col)
       for (col_to_check = left_col_of_square; col_to_check < left_col_of_square + 3; col_to_check ++)
       {
         e_to_check = row_to_check * 9 + col_to_check;
-        v_to_check = document.sudoku.elements[e_to_check].value;
+        v_to_check = sudoku[e_to_check].value;
         if (v_to_check == v)
         {
           matches ++;
@@ -79,9 +75,11 @@ function validate(row,col)
     }
     if (matches != 1)
     {
-      alert((matches - 1) + " too many " + v + "'s in that 3x3 square");
-      document.sudoku.elements[e].focus();
-      document.sudoku.elements[e].select();
+      too_many += ", 3x3 square";
+    }
+    if (too_many != "") {
+      alert("Too many " + v + "'s in that" + too_many.substr(1,));
+      focus_cell(row, col);
     }
   }
 };
@@ -94,19 +92,19 @@ function puzzle_hint()
     {
       n19 = "123456789";
       e = row * 9 + col;
-      if (document.sudoku.elements[e].value == '')
+      if (sudoku[e].value == '')
       {
         // eliminate numbers played in same row ////////////////////////////////////
         for (col_to_check = 0; col_to_check < 9; col_to_check ++)
         {
           e_to_check = row * 9 + col_to_check;
-          n19 = n19.replace(RegExp(document.sudoku.elements[e_to_check].value), "");
+          n19 = n19.replace(RegExp(sudoku[e_to_check].value), "");
         };
         // eliminate numbers played in same column /////////////////////////////////
         for (row_to_check = 0; row_to_check < 9; row_to_check ++)
         {
           e_to_check = row_to_check * 9 + col;
-          n19 = n19.replace(RegExp(document.sudoku.elements[e_to_check].value), "");
+          n19 = n19.replace(RegExp(sudoku[e_to_check].value), "");
         };
         // eliminate numbers played in same square //////////////////////////////////////////////////////
         top_row_of_square  = Math.floor(row / 3) * 3;
@@ -116,16 +114,17 @@ function puzzle_hint()
           for (col_to_check = left_col_of_square; col_to_check < left_col_of_square + 3; col_to_check ++)
           {
             e_to_check = row_to_check * 9 + col_to_check;
-            n19 = n19.replace(RegExp(document.sudoku.elements[e_to_check].value), "");
+            n19 = n19.replace(RegExp(sudoku[e_to_check].value), "");
           };
         }
         if (n19.length == 1)
         {
 ///////// UNCOMMENT THE FOLLOWING TWO LINES IF YOU WANT IT TO SOLVE A SINGLE SQUARE ///////////////
-//        document.sudoku.elements[e].value = n19;
-//        document.sudoku.elements[e].style.color = "red";
+//        sudoku[e].value = n19;
+//        sudoku[e].style.color = "red";
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-          document.sudoku.elements[e].focus();
+          sudoku[e].focus();
+          document.execCommand("copy");
           return;
         }
       }
@@ -138,22 +137,23 @@ function lock_puzzle()
 {
   for (e = 0; e < 81; e ++)
   {
-    if (document.sudoku.elements[e].value != '')
+    if (sudoku[e].value != '')
     {
-      document.sudoku.elements[e].disabled = true;
-      document.sudoku.elements[e].style.backgroundColor = "lightblue";
-      document.sudoku.elements[e].style.fontWeight = "bolder";
+      sudoku[e].disabled = true;
+      sudoku[e].style.backgroundColor = "lightblue";
+      sudoku[e].style.fontWeight = "bolder";
     }
-  }
+  };
+  puzzle_hint();
 }
 
 function unlock_puzzle()
 {
   for (e = 0; e < 81; e ++)
   {
-    document.sudoku.elements[e].disabled = false;
-    document.sudoku.elements[e].style.backgroundColor = "white";
-    document.sudoku.elements[e].style.fontWeight = "normal";
+    sudoku[e].disabled = false;
+    sudoku[e].style.backgroundColor = "white";
+    sudoku[e].style.fontWeight = "normal";
   }
 }
 
@@ -161,18 +161,35 @@ function clear_puzzle()
 {
   for (e = 0; e < 81; e ++)
   {
-    if (document.sudoku.elements[e].disabled == false)
+    if (sudoku[e].disabled == false)
     {
-      document.sudoku.elements[e].value = "";
-      document.sudoku.elements[e].style.color = "black";
+      sudoku[e].value = "";
+      sudoku[e].style.color = "black";
     }
   };
-  document.sudoku.elements[0].focus();
+  puzzle_hint();
 };
 
 function init()
 {
-  document.sudoku.elements[0].focus();
+  var sudoku = document.sudoku.elements;
+  values = [  "", "7", "9",   "",  "",  "8",    "",  "",  "",
+             "6", "8", "4",  "3",  "",  "",     "", "2", "5",
+              "", "2",  "",   "",  "",  "7",    "",  "", "8",
+
+              "", "1",  "",   "4",  "", "5",    "",  "", "7",
+             "3",  "",  "",   "9",  "", "2",    "",  "", "1",
+             "8",  "",  "",   "1",  "", "6",    "", "3",  "",
+
+             "2",  "",  "",   "7",  "",  "",    "", "6",  "",
+             "4", "6",  "",    "",  "", "1",   "5", "7", "3",
+              "",  "",  "",   "8",  "",  "",   "1", "9",  ""];
+  for (e = 0; e < 81 ; e ++)
+  {
+    sudoku[e].value = values[e];
+  };
+  lock_puzzle();
+  puzzle_hint();
 };
 
 </script>
