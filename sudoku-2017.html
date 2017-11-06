@@ -12,6 +12,22 @@
 </style>
 
 <script>
+function absorb_event(event) {
+  var e = event || window.event;
+  e.preventDefault && e.preventDefault();
+  e.stopPropagation && e.stopPropagation();
+  e.cancelBubble = true;
+  e.returnValue = false;
+  return false;
+}
+
+function prevent_long_Press_menu(e) {
+  e.ontouchstart = absorb_event;
+  e.ontouchmove = absorb_event;
+  e.ontouchend = absorb_event;
+  e.ontouchcancel = absorb_event;
+}
+
 function focus_cell(row,col)
 {
   e = row * 9 + col;
@@ -195,6 +211,7 @@ function init()
   for (e = 0; e < 81 ; e ++)
   {
     sudoku[e].value = values[e];
+    prevent_long_Press_menu(sudoku[e]);
   };
   lock_puzzle();
   puzzle_hint();
