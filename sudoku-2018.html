@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>sudoku</title>
+  <script>
+   var prev_cell = null;
+   var invalid = false;
+   function init() {
+    var game = document.getElementById("game");
+    var inputs = document.getElementById("inputs");
+    var sudoku = document.sudoku.elements;
+    for (var row = 0; row < 9; row++) {
+     var tr = document.createElement("tr");
+     for (var col = 0; col < 9; col++) {
+      var td = document.createElement("td");
+       var input = document.createElement("input");
+        input.type = "button";
+        input.value = "_";
+        input.style.backgroundColor = "white";
+        if ((Math.floor(row/3) + Math.floor(col/3)) % 2 == 0) {
+         input.style.borderColor = "blue";
+        } else {
+         input.style.borderColor = "red";
+        }
+        input.row = row;
+        input.col = col;
+        input.onfocus = function() { 
+         this.style.backgroundColor = "lightgreen";
+         prev_cell = this;
+        };
+        input.onblur = function() { 
+         this.style.backgroundColor = "white";
+         prev_cell = this;
+        };
+       td.appendChild(input);
+      tr.appendChild(td);
+     };
+     game.appendChild(tr);
+    };
+
+    var button = [1, 2, 3, 4, 5, 6, 7, 8, 9, "_"];
+    var tr = document.createElement("tr");
+    for (var i in button) {
+     var td = document.createElement("td");
+      var input = document.createElement("input");
+       input.type  = "button";
+       input.value = button[i];
+       input.onclick = function() {
+        if (prev_cell != null) { 
+         prev_cell.focus(); 
+         prev_cell.value = this.value;
+         validate(prev_cell.row, prev_cell.col);
+        };
+       };
+      td.appendChild(input);
+     tr.appendChild(td);
+    };
+    inputs.appendChild(tr);
+
+    values = [ "_", "7", "9",  "_", "_",  "8",   "_", "_", "_",
+               "6", "8", "4",  "3", "_", "_",    "_", "2", "5",
+               "_", "2", "_",  "_", "_",  "7",   "_", "_", "8",
+  
+               "_", "1", "_",   "4", "_", "5",   "_", "_", "7",
+               "3", "_", "_",   "9", "_", "2",   "_", "_", "1",
+               "8", "_", "_",   "1", "_", "6",   "_", "3", "_",
+  
+               "2", "_", "_",   "7", "_", "_",   "_", "6", "_",
+               "4", "6", "_",   "_", "_", "1",   "5", "7", "3",
+               "_", "_", "_",   "8", "_", "_",   "1", "9", "_"];
+    for (e = 0; e < 81; e ++) {
+     sudoku[e].value = values[e];
+    };
+    lock_puzzle();
+    puzzle_hint();
+   };
+
+   function focus_cell(row,col) {
+    e = row * 9 + col;
+    sudoku[e].focus();
+   };
+
+   function blur_cell(row,col) {
+    e = row * 9 + col;
+    sudoku[e].style.backgroundColor = "white";
+   };
+
+   function validate(row,col) {
+    too_many = "";
+    e = row * 9 + col;
+    v = sudoku[e].value;
+    if (v != "_") {
+     // Check this row ////////////////////////////////////////
+     matches = 0;
+     for (col_to_check = 0; col_to_check < 9; col_to_check ++) {
+      e_to_check = row * 9 + col_to_check;
+      v_to_check = sudoku[e_to_check].value;
+      if (v_to_check == v) {
+        matches ++;
+      };
+     };
+     if (matches != 1) {
+      too_many += ", row";
+     };
+     // Check this column /////////////////////////////////////
+     matches = 0;
+     for (row_to_check = 0; row_to_check < 9; row_to_check ++) {
+      e_to_check = row_to_check * 9 + col;
+      v_to_check = sudoku[e_to_check].value;
+      if (v_to_check == v) {
+        matches ++;
+      };
+     };
+     if (matches != 1) {
+       too_many += ", column";
+     };
+     // Check this square ////////////////////////////////////////////////////////////////////////////
+     matches = 0;
+     top_row_of_square  = Math.floor(row / 3) * 3;
+     left_col_of_square = Math.floor(col / 3) * 3;
+     for (row_to_check = top_row_of_square; row_to_check < top_row_of_square + 3; row_to_check ++) {
+      for (col_to_check = left_col_of_square; col_to_check < left_col_of_square + 3; col_to_check ++) {
+       e_to_check = row_to_check * 9 + col_to_check;
+       v_to_check = sudoku[e_to_check].value;
+       if (v_to_check == v) {
+        matches ++;
+       };
+      };
+     };
+     if (matches != 1) {
+      too_many += ", 3x3 square";
+     };
+     invalid = too_many != "";
+     if (invalid) {
+      alert("Too many " + v + "'s in that" + too_many.substr(1,));
+      focus_cell(row, col);
+      sudoku[e].select();
+     };
+    };
+   };
+
+   function puzzle_hint() {
+    for (row = 0; row < 9; row ++) {
+     for (col = 0; col < 9; col ++) {
+      n19 = "123456789";
+      e = row * 9 + col;
+      if (sudoku[e].value == "_") {
+       // eliminate numbers played in same row ////////////////////////////////////
+       for (col_to_check = 0; col_to_check < 9; col_to_check ++) {
+        e_to_check = row * 9 + col_to_check;
+        n19 = n19.replace(RegExp(sudoku[e_to_check].value), "");
+       };
+       // eliminate numbers played in same column /////////////////////////////////
+       for (row_to_check = 0; row_to_check < 9; row_to_check ++) {
+        e_to_check = row_to_check * 9 + col;
+        n19 = n19.replace(RegExp(sudoku[e_to_check].value), "");
+       };
+       // eliminate numbers played in same square //////////////////////////////////////////////////////
+       top_row_of_square  = Math.floor(row / 3) * 3;
+       left_col_of_square = Math.floor(col / 3) * 3;
+       for (row_to_check = top_row_of_square; row_to_check < top_row_of_square + 3; row_to_check ++) {
+        for (col_to_check = left_col_of_square; col_to_check < left_col_of_square + 3; col_to_check ++) {
+         e_to_check = row_to_check * 9 + col_to_check;
+         n19 = n19.replace(RegExp(sudoku[e_to_check].value), "");
+        };
+       };
+       if (n19.length == 1) {
+///////// UNCOMMENT THE FOLLOWING TWO LINES IF YOU WANT IT TO SOLVE A SINGLE SQUARE ///////////////
+//      sudoku[e].value = n19;
+//      sudoku[e].style.color = "red";
+///////////////////////////////////////////////////////////////////////////////////////////////////
+        if (! invalid) {
+         focus_cell(row, col);
+         return;
+        };
+       };
+      };
+     };
+    };
+    alert("No hint available.  Sorry... :(");
+   };
+
+   function lock_puzzle() {
+    for (e = 0; e < 81; e ++) {
+     if (sudoku[e].value != '_') {
+      sudoku[e].disabled = true;
+      sudoku[e].style.backgroundColor = "lightblue";
+      sudoku[e].style.fontWeight = "bolder";
+     };
+    };
+    puzzle_hint();
+   };
+
+   function unlock_puzzle() {
+    for (e = 0; e < 81; e ++) {
+     sudoku[e].disabled = false;
+     sudoku[e].style.backgroundColor = "white";
+     sudoku[e].style.fontWeight = "normal";
+    };
+    if (prev_cell != null) { 
+     prev_cell.focus(); 
+    };
+   };
+
+   function clear_puzzle() {
+    for (e = 0; e < 81; e ++) {
+     if (sudoku[e].disabled == false) {
+      sudoku[e].value = "_";
+      sudoku[e].style.color = "black";
+     };
+    };
+    puzzle_hint();
+   };
+
+  </script>
+ </head>
+ <body onload="init()">
+  <h1>Sudoku!</h1>
+  <form name="sudoku">
+   <table id="outer">
+    <tr> <td> <table id="game"> </table> </td> </tr>
+    <tr> <td colspan=9> <hr> </td> </tr>
+    <tr> <td> <table id="inputs"></table> </td> </tr>
+    <tr>
+     <td colspan=9>
+      <input type="button" onclick="puzzle_hint()" value="Hint">
+      <input type="button" onclick="lock_puzzle()" value="Lock">
+      <input type="button" onclick="unlock_puzzle()" value="Unlock">
+      <input type="button" onclick="clear_puzzle()" value="Clear">
+     </td>
+    </tr>
+   </table>
+  </form>
+ </body>
+</html>
