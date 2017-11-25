@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>sudoku</title>
   <style type="text/css">
-   input { font-family: "monospace"; font-size: 125%; }
+   table { border-spacing: 5; border-collapse: collapse; }
+   td, th { padding: 20; }
+   input { font-family: "monospace"; border-width: 1.5px; font-size: 200%; }
   </style>
   <script>
    var prev_cell = null;
@@ -189,7 +191,7 @@
     for (e = 0; e < 81; e ++) {
      if (sudoku[e].value != '_') {
       sudoku[e].disabled = true;
-      sudoku[e].style.backgroundColor = "lightblue";
+      sudoku[e].style.backgroundColor = "#EEE";
       sudoku[e].style.fontWeight = "bolder";
      };
     };
