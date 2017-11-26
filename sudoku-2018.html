@@ -147,6 +147,7 @@
    };
 
    function puzzle_hint() {
+    var filled = 0;
     for (row = 0; row < 9; row ++) {
      for (col = 0; col < 9; col ++) {
       n19 = "123456789";
@@ -181,17 +182,23 @@
          return;
         };
        };
+      } else {
+       filled += 1;
       };
      };
     };
-    alert("No hint available.  Sorry... :(");
+    if (filled == 81) {
+     alert("You solved it! :)");
+    } else {
+     alert("No hint available.  Sorry... :(");
+    }
    };
 
    function lock_puzzle() {
     for (e = 0; e < 81; e ++) {
      if (sudoku[e].value != '_') {
       sudoku[e].disabled = true;
-      sudoku[e].style.backgroundColor = "#EEE";
+      sudoku[e].style.backgroundColor = "white";
       sudoku[e].style.fontWeight = "bolder";
      };
     };
