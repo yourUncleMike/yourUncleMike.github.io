@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<title>which craft</title>
+<style>
+ button, li { font-size: 125%; }
+ button     { font-family: monospace; }
+ span    { font-size: 150%; }
+ th, td  { font-size: 150%; font-family: monospace; vertical-align: top; text-align: left; }
+ h1, h2  { text-align: center }
+</style>
+<script>
+ function reveal(button) {
+  span = button.nextElementSibling;
+  div = span.nextElementSibling;
+  div.hidden = button.textContent[0] == "+";
+  span.style.fontWeight = div.hidden ? "bold" : "normal";
+ }
+ function toggle(button) {
+  button.textContent = (button.textContent[0] == "-" ? "+" : "-") + button.textContent.slice(1,);
+  reveal(button);
+ }
+ function init() {
+  buttons = document.getElementsByTagName("button");
+  for (var i in buttons) {
+   reveal(buttons[i]);
+  }
+ }
+</script>
+</head>
+
+<body onload="init()">
+
+<h1>which craft</h1>
+<h2>An introduction to how the BASH shell figures<br>out what to run when you enter a command.</h2>
+<hr>
+
+<div>
+<button onclick="toggle(this)">-</button> <span>BASH manual references</span>
+<div>
+<hr>
+<ul>
+<li><h3>3.2.1 <a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Simple-Commands.html">Simple Commands</a></h3>
+<li><h3>3.7.2 <a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Command-Search-and-Execution.html#Command-Search-and-Execution">Command Search and Execution</a> - How bash finds and runs commands</h3>
+<li><h3>6.6 <a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Aliases.html#Aliases">Aliases</a> - What 3.7.2 did <i>not</i> tell you</h3>
+<li><h3>3.3 <a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Shell-Functions.html#Shell-Functions">Shell Functions</a></h3>
+<li><h3>4.2 <a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html#Bash-Builtins">Bash Builtin Commands</a></h3>
+</ul>
+<hr>
+</div>
+</div>
+
+<div>
+<button onclick="toggle(this)">+</button> <span>which man page</span>
+<div>
+<hr>
+<table>
+<tr><td></td><td><pre>
+<b>NAME</b>
+       which - locate a command<br>
+<b>SYNOPSIS</b>
+       which [-a] filename ...<br>
+<b>DESCRIPTION</b>
+       <b>which</b> returns the pathnames of the files (or links) which would be 
+       executed in the current environment, had its arguments been given
+       as commands in a strictly POSIX-conformant shell.  It does this by
+       searching the PATH for executable files matching the names of the
+       arguments.  It does not follow symbolic links.<br>
+<b>OPTIONS</b>
+       <b>-a</b>     print all matching pathnames of each argument</pre></td></tr>
+</table>
+<hr>
+</div>
+</div>
+
+<div>
+<button onclick="toggle(this)">+</button> <span>which basics</span>
+<div>
+<hr>
+<table>
+
+<tr><td>&nbsp;&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>which which</th></tr>
+<tr><td></td><td>/usr/bin/which</td></tr>
+
+<tr><td>&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>which -a which</th></tr>
+<tr><td></td><td>/usr/bin/which</td></tr>
+<tr><td></td><td>/bin/which</td></tr>
+
+<tr><td>&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>stat -c %N $(which -a which)</th></td>
+<tr><td></td><td>'/usr/bin/which' -> '/bin/which'</td></tr>
+<tr><td></td><td>'/bin/which'</td></tr>
+
+<tr><td>&nbsp;</td><td></td></tr>
+</table>
+<hr>
+</div>
+</div>
+
+<div>
+<button onclick="toggle(this)">+</button> <span>printf (practice target)</span>
+<div>
+<hr>
+<table>
+
+<tr><td>&nbsp;&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>printf 'Hello %s\n' Michael<th></tr>
+<tr><td></td><td>Hello Michael</td></tr>
+
+<tr><td>&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>which printf</th></tr>
+<tr><td></td><td>/usr/bin/printf</td></tr>
+
+<tr><td>&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>printf -v greeting 'Hello %s\n' Michael<th></tr>
+<tr><td>$</td><th>echo $greeting</th></tr>
+<tr><td></td><td>Hello Michael</td></tr>
+
+<tr><td>&nbsp;&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>/usr/bin/printf -v greeting 'Hello %s\n' Michael<th></tr>
+<tr><td></td><td>-v/usr/bin/printf: warning: ignoring excess arguments, starting with ‘greeting’</td></tr>
+
+<tr><td>&nbsp;</td><td></td></tr>
+</table>
+<hr>
+</div>
+</div>
+
+<div>
+<button onclick="toggle(this)">+</button> <span>builtin shell commands</span>
+<div>
+<hr>
+<table>
+
+<tr><td>&nbsp;&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>builtin printf '$? = ' ; echo $?</th></tr>
+<tr><td></td><td>$? = 0</td></tr>
+
+<tr><td>&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>builtin printf || echo '$?' = $?</th></tr>
+<tr><td></td><td>printf: usage: printf [-v var] format [arguments]</td></tr>
+<tr><td></td><td>$? = 2</td></tr>
+
+<tr><td>&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>builtin ls || echo '$?' = $?</th></tr>
+<tr><td></td><td>bash: builtin: ls: not a shell builtin</td></tr>
+<tr><td></td><td>$? = 1</td></tr>
+
+<tr><td>&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>which ls</th></tr>
+<tr><td></td><td>/bin/ls</td></tr>
+
+<tr><td>&nbsp;</td><td></td></tr>
+</table>
+<hr>
+</div>
+</div>
+
+<div>
+<button onclick="toggle(this)">+</button> <span>functions</span>
+<div>
+<hr>
+<table>
+
+<tr><td>&nbsp;&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>function printf { echo -n function:\ ; builtin printf "$@"; }</td></tr>
+<tr><td>$</td><th>printf 'Hello %s\n' Michael</td></tr>
+<tr><td></td><td>function: Hello Michael</td></tr>
+
+<tr><td>&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>which printf</th></tr>
+<tr><td></td><td>/usr/bin/printf</td></tr>
+
+<tr><td>&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>declare -f printf</th></tr>
+<tr><td></td><td>printf ()<br>{<br>&nbsp;&nbsp;echo -n function:\ ;<br>&nbsp;&nbsp;builtin printf "$@"<br>}</td></tr>
+
+<tr><td>&nbsp;</td><td></td></tr>
+</table>
+<hr>
+</div>
+</div>
+
+<div>
+<button onclick="toggle(this)">+</button> <span>aliases</span>
+<div>
+<hr>
+<table>
+
+<tr><td>&nbsp;&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>alias printf='echo -n alias:\ ; printf'</th></tr>
+<tr><td>$</td><th>printf 'Hello %s\n' Michael</th></tr>
+<tr><td></td><td>alias: function: Hello Michael</td></tr>
+
+<tr><td>&nbsp;&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>alias printf='echo -n alias:\ ; /usr/bin/printf'</th></tr>
+<tr><td>$</td><th>printf 'Hello %s\n' Michael</th></tr>
+<tr><td></td><td>alias: Hello Michael</td></tr>
+
+<tr><td>&nbsp;&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>which printf</th></tr>
+<tr><td></td><td>/usr/bin/printf</td></tr>
+
+<tr><td>&nbsp;</td><td></td></tr>
+</table>
+<hr>
+</div>
+</div>
+
+<div>
+<button onclick="toggle(this)">+</button> <span>Putting it all together (alias + declare -f + builtin + which)</span>
+<div>
+<hr>
+<table>
+
+<tr><td>&nbsp;&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>function which {<br>
+ &nbsp;&nbsp;for c in "$@"<br>
+ &nbsp;&nbsp;do<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;\builtin alias "$c" 2&gt; /dev/null<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;\builtin declare -f "$c"<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;e="$(\builtin "$c" 2&gt;&amp;1 &lt;&gt;/dev/null)" || \grep -qv '^bash: builtin:' &lt;&lt;&lt;"$e" &amp;&amp; echo bash builtin: $c<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;env which -a "$c" | xargs -I{} stat -c %N "{}"<br>
+ &nbsp;&nbsp;done<br>
+}</th></tr>
+
+<tr><td>&nbsp;&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>which grep</th></tr>
+<tr><td></td><td>alias grep='grep --color=auto'</td></tr>
+<tr><td></td><td>'/bin/grep'</td></tr>
+
+<tr><td>&nbsp;&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>which printf</th></tr>
+<tr><td></td><td>alias printf='echo -n alias:\ ; /usr/bin/printf'
+<tr><td></td><td>printf ()<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;echo -n function:\ ;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;builtin printf "$@"<br>
+}</td></tr>
+<tr><td></td><td>bash builtin: printf</td></tr>
+<tr><td></td><td>'/usr/bin/printf'</td></tr>
+
+<tr><td>&nbsp;&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>which which</th></tr>
+<tr><td></td><td>which () <br>
+{<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;for c in "$@";<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;do<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin alias "$c" 2&gt; /dev/null;<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin declare -f "$c";<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e="$(\builtin "$c" 2&gt;&amp;1 &lt;&gt;/dev/null)" || \grep -qv '^bash: builtin:' &lt;&lt;&lt; "$e" &amp;&amp; echo bash builtin: $c;<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env which -a "$c" | xargs -I{} stat -c %N "{}";<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;done<br>
+}<br>
+'/usr/bin/which' -> '/bin/which'<br>
+'/bin/which'</td></tr>
+
+<tr><td>&nbsp;</td><td></td></tr>
+</table>
+<hr>
+</div>
+</div>
+
+
+</body>
+</html>
