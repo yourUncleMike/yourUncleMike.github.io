@@ -4,10 +4,11 @@
 <meta charset='utf-8'>
 <title>which craft</title>
 <style>
- button, li { font-size: 125%; }
+ button, li { font-size: 20px; }
  button     { font-family: monospace; }
- span    { font-size: 150%; }
- th, td  { font-size: 150%; font-family: monospace; vertical-align: top; text-align: left; }
+         li { padding-bottom: 10px; }
+ span    { font-size: 20px; font-family: sans-serif; }
+ th, td  { font-size: 20px; font-family: monospace; vertical-align: top; text-align: left; padding-bottom: 10px; padding-left: 10px; }
  h1, h2  { text-align: center }
 </style>
 <script>
@@ -23,9 +24,7 @@
  }
  function init() {
   buttons = document.getElementsByTagName("button");
-  for (var i in buttons) {
-   reveal(buttons[i]);
-  }
+  for (var i in buttons) reveal(buttons[i]);
  }
 </script>
 </head>
@@ -37,16 +36,38 @@
 <hr>
 
 <div>
-<button onclick="toggle(this)">-</button> <span>BASH manual references</span>
+<button onclick="toggle(this)">+</button> <span>References</span>
 <div>
 <hr>
-<ul>
-<li><h3>3.2.1 <a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Simple-Commands.html">Simple Commands</a></h3>
-<li><h3>3.7.2 <a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Command-Search-and-Execution.html">Command Search and Execution</a> - How bash finds and runs commands</h3>
-<li><h3>4.2 <a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html">Bash Builtin Commands</a></h3>
-<li><h3>3.3 <a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Shell-Functions.html">Shell Functions</a></h3>
-<li><h3>6.6 <a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Aliases.html">Aliases</a> - What 3.7.2 did <i>not</i> tell you</h3>
-</ul>
+<table>
+<tr><th>&nbsp;</th><td><a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/index.html">Bash Reference Manual</td></tr>
+<tr><th>3.2.1 </th><td><a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Simple-Commands.html">Simple Commands</td></tr>
+<tr><th>3.7.2 </th><td><a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Command-Search-and-Execution.html">Command Search and Execution</a></td></tr>
+<tr><th>4.2 </th><td><a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html">Builtin Commands</td></tr>
+<tr><th>3.3 </th><td><a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Shell-Functions.html">Shell Functions</td></tr>
+<tr><th>6.6 </th><td><a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Aliases.html">Aliases</a> - What 3.7.2 did <i>not</i> tell you</td></tr>
+<tr>
+ <th>&nbsp;</th>
+ <td>
+  <div width="512px">
+   <button onclick="toggle(this)">+</button> <span>TL;DR</span>
+   <div>
+    <hr>
+     NAME [OPTION]...
+     <ol>
+     <li>If NAME contains "/", execute it as literal path.</li>
+     <li>If NAME is an alias, substitute the alias value for NAME.
+     <br>If resulting NAME is different go to step 1.</li>
+     <li>If NAME is a function, execute the function.</li>
+     <li>If NAME is a BASH builtin, execute the builtin command.</li>
+     <li>Search $PATH for NAME and run first matching executable.</li>
+     </ol>
+    <hr>
+   </div>
+  </div>
+ </td>
+</tr>
+</table>
 <hr>
 </div>
 </div>
@@ -80,21 +101,17 @@
 <hr>
 <table>
 
-<tr><td>&nbsp;&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>which which</th></tr>
+<tr><td><br>$</td><th><br>which which</th></tr>
 <tr><td></td><td>/usr/bin/which</td></tr>
 
-<tr><td>&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>which -a which</th></tr>
-<tr><td></td><td>/usr/bin/which</td></tr>
-<tr><td></td><td>/bin/which</td></tr>
+<tr><td><br>$</td><th><br>which -a which</th></tr>
+<tr><td></td><td>/usr/bin/which<br>
+                 /bin/which</td></tr>
 
-<tr><td>&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>stat -c %N $(which -a which)</th></td>
-<tr><td></td><td>'/usr/bin/which' -> '/bin/which'</td></tr>
-<tr><td></td><td>'/bin/which'</td></tr>
+<tr><td><br>$</td><th><br>which -a which | while read c; do stat -c %N "$c"; done</th></td>
+<tr><td></td><td>'/usr/bin/which' -> '/bin/which'<br>
+                 '/bin/which'</td></tr>
 
-<tr><td>&nbsp;</td><td></td></tr>
 </table>
 <hr>
 </div>
@@ -106,54 +123,45 @@
 <hr>
 <table>
 
-<tr><td>&nbsp;&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>printf 'Hello %s\n' Michael<th></tr>
-<tr><td></td><td>Hello Michael</td></tr>
+<tr><td><br>$</td><th><br>printf 'Hello %s\n' 'Mr. Bond'<th></tr>
+<tr><td></td><td>Hello Mr. Bond</td></tr>
 
-<tr><td>&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>which printf</th></tr>
+<tr><td><br>$</td><th><br>printf -v greeting 'Hello %s\n' James<th></tr>
+<tr><td>$</td><th>echo $greeting</th></tr>
+<tr><td></td><td>Hello James</td></tr>
+
+<tr><td><br>$</td><th><br>which printf</th></tr>
 <tr><td></td><td>/usr/bin/printf</td></tr>
 
-<tr><td>&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>printf -v greeting 'Hello %s\n' Michael<th></tr>
-<tr><td>$</td><th>echo $greeting</th></tr>
-<tr><td></td><td>Hello Michael</td></tr>
+<tr><td><br>$</td><th><br>/usr/bin/printf -v greeting Aloha ; echo '$?'=$? greeting=$greeting</th><td style="color: red;"><br># WTF moment #1</td></tr>
+<tr><td></td><td>-v/usr/bin/printf: warning: ignoring excess arguments, starting with ‘greeting’
+             <br>$?=0 greeting=Hello James</td></tr>
 
-<tr><td>&nbsp;&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>/usr/bin/printf -v greeting 'Hello %s\n' Michael<th></tr>
-<tr><td></td><td>-v/usr/bin/printf: warning: ignoring excess arguments, starting with ‘greeting’</td></tr>
-
-<tr><td>&nbsp;</td><td></td></tr>
 </table>
 <hr>
 </div>
 </div>
 
 <div>
-<button onclick="toggle(this)">+</button> <span>builtin shell commands</span>
+<button onclick="toggle(this)">+</button> <span>builtins</span>
 <div>
 <hr>
 <table>
 
-<tr><td>&nbsp;&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>builtin printf '$? = ' ; echo $?</th></tr>
-<tr><td></td><td>$? = 0</td></tr>
+<tr><td><br>$</td><th><br>builtin printf -v greeting Aloha ; echo '$?'=$? greeting=$greeting</th></tr>
+<tr><td></td><td>$?=0 greeting=Aloha</td></tr>
 
-<tr><td>&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>builtin printf || echo '$?' = $?</th></tr>
-<tr><td></td><td>printf: usage: printf [-v var] format [arguments]</td></tr>
-<tr><td></td><td>$? = 2</td></tr>
+<tr><td><br>$</td><th><br>builtin printf || echo '$?'=$?</th></tr>
+<tr><td></td><td>printf: usage: printf [-v var] format [arguments]
+             <br>$?=2</td></tr>
 
-<tr><td>&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>builtin ls || echo '$?' = $?</th></tr>
-<tr><td></td><td>bash: builtin: ls: not a shell builtin</td></tr>
-<tr><td></td><td>$? = 1</td></tr>
+<tr><td><br>$</td><th><br>builtin ls || echo '$?'=$?</th></tr>
+<tr><td></td><td>bash: builtin: ls: not a shell builtin
+             <br>$?=1</td></tr>
 
-<tr><td>&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>which ls</th></tr>
+<tr><td><br>$</td><th><br>which ls</th></tr>
 <tr><td></td><td>/bin/ls</td></tr>
 
-<tr><td>&nbsp;</td><td></td></tr>
 </table>
 <hr>
 </div>
@@ -165,24 +173,22 @@
 <hr>
 <table>
 
-<tr><td>&nbsp;&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>function printf { echo -n function:\ ; builtin printf "$@"; }</td></tr>
+<tr><td><br>$</td><th><br>function printf { echo -n function:\ ; builtin printf "$@"; }</td></tr>
 <tr><td>$</td><th>printf 'Hello %s\n' Michael</td></tr>
 <tr><td></td><td>function: Hello Michael</td></tr>
 
-<tr><td>&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>which printf</th></tr>
+<tr><td><br>$</td><th><br>which printf</th></tr>
 <tr><td></td><td>/usr/bin/printf</td></tr>
 
-<tr><td>&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>declare -f printf || echo '$?' = $?</th></tr>
-<tr><td></td><td>printf ()<br>{<br>&nbsp;&nbsp;echo -n function:\ ;<br>&nbsp;&nbsp;builtin printf "$@"<br>}</td></tr>
+<tr><td><br>$</td><th><br>declare -f printf || echo '$?'=$?</th></tr>
+<tr><td></td><td>printf ()
+             <br>{<br>&nbsp;&nbsp;echo -n function:\ ;
+             <br>&nbsp;&nbsp;builtin printf "$@"
+             <br>}</td></tr>
 
-<tr><td>&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>declare -f ls || echo '$?' = $?</th></tr>
-<tr><td></td><td>$? = 1</td></tr>
+<tr><td><br>$</td><th><br>declare -f ls || echo '$?'=$?</th></tr>
+<tr><td></td><td>$?=1</td></tr>
 
-<tr><td>&nbsp;</td><td></td></tr>
 </table>
 <hr>
 </div>
@@ -194,83 +200,90 @@
 <hr>
 <table>
 
-<tr><td>&nbsp;&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>alias printf='echo -n alias:\ ; printf'</th></tr>
-<tr><td>$</td><th>printf 'Hello %s\n' Michael</th></tr>
+<tr><td><br>$</td><th><br>alias printf='echo -n alias:\ ; printf'</th></tr>
+<tr><td>$</td><th>printf 'Hello %s\n' Michael</th><td style="color: red"># WTF moment #2</td></tr>
 <tr><td></td><td>alias: function: Hello Michael</td></tr>
 
-<tr><td>&nbsp;&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>alias printf='echo -n alias:\ ; /usr/bin/printf'</th></tr>
+<tr><td><br>$</td><th><br>alias printf='echo -n alias:\ ; /usr/bin/printf'</th></tr>
 <tr><td>$</td><th>printf 'Hello %s\n' Michael</th></tr>
 <tr><td></td><td>alias: Hello Michael</td></tr>
 
-<tr><td>&nbsp;&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>which printf</th></tr>
+<tr><td><br>$</td><th><br>which printf</th></tr>
 <tr><td></td><td>/usr/bin/printf</td></tr>
 
-<tr><td>&nbsp;&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>alias printf</th></tr>
+<tr><td><br>$</td><th><br>alias printf || echo '$?'=$?</th></tr>
 <tr><td></td><td>alias printf='echo -n alias:\ ; /usr/bin/printf'</td></tr>
 
-<tr><td>&nbsp;&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>alias pwd</th></tr>
-<tr><td></td><td>bash: alias: pwd: not found</td></tr>
+<tr><td><br>$</td><th><br>alias pwd || echo '$?'=$?</th></tr>
+<tr><td></td><td>bash: alias: pwd: not found
+             <br>$?=1</td></tr>
 
-<tr><td>&nbsp;</td><td></td></tr>
 </table>
 <hr>
 </div>
 </div>
 
 <div>
-<button onclick="toggle(this)">+</button> <span>Putting it all together (alias + declare -f + builtin + which)</span>
+<button onclick="toggle(this)">-</button> <span>Putting it all together (alias + declare -f + builtin + which)</span>
 <div>
 <hr>
 <table>
 
-<tr><td>&nbsp;&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>function which {<br>
- &nbsp;&nbsp;for c in "$@"<br>
- &nbsp;&nbsp;do<br>
- &nbsp;&nbsp;&nbsp;&nbsp;\builtin alias "$c" 2&gt; /dev/null<br>
- &nbsp;&nbsp;&nbsp;&nbsp;\builtin declare -f "$c"<br>
- &nbsp;&nbsp;&nbsp;&nbsp;e="$(\builtin "$c" 2&gt;&amp;1 &lt;&gt;/dev/null)" || \grep -qv '^bash: builtin:' &lt;&lt;&lt;"$e" &amp;&amp; echo bash builtin: $c<br>
- &nbsp;&nbsp;&nbsp;&nbsp;env which -a "$c" | xargs -I{} stat -c %N "{}"<br>
- &nbsp;&nbsp;done<br>
-}</th></tr>
+<tr><td><pre>$</pre></td><th><pre>function which {
+  _opt='' _fmt=%n
+  case "$1" in
+    -a) shift; _opt=-a ; _fmt=%N ;;
+    -*) \builtin printf 'Illegal option %s\nUsage: which [-a] args\n' "$1" ; return 2 ;;
+  esac
+  for _cmd in "$@" 
+  do 
+    \builtin alias "$_cmd" 2> /dev/null 
+    \builtin declare -f "$_cmd" 
+    \builtin "$_cmd" &>/dev/null ; [ $? -ne 1 ] && echo builtin: $_cmd 
+    env which $_opt "$_cmd" | xargs -I{} stat -c "$_fmt" '{}' 
+  done
+}</pre></th></tr>
 
-<tr><td>&nbsp;&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>which grep</th></tr>
+<tr><td><br>$</td><th><br>which grep</th></tr>
 <tr><td></td><td>alias grep='grep --color=auto'</td></tr>
 <tr><td></td><td>'/bin/grep'</td></tr>
 
-<tr><td>&nbsp;&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>which printf</th></tr>
+<tr><td><br>$</td><th><br>which printf</th></tr>
 <tr><td></td><td>alias printf='echo -n alias:\ ; /usr/bin/printf'
-<tr><td></td><td>printf ()<br>
-{<br>
-&nbsp;&nbsp;&nbsp;&nbsp;echo -n function:\ ;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;builtin printf "$@"<br>
-}</td></tr>
+<tr><td></td><td>printf ()
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;echo -n function:\ ;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;builtin printf "$@"
+ <br>}</td></tr>
 <tr><td></td><td>bash builtin: printf</td></tr>
 <tr><td></td><td>'/usr/bin/printf'</td></tr>
 
-<tr><td>&nbsp;&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>which which</th></tr>
-<tr><td></td><td>which () <br>
-{<br>
- &nbsp;&nbsp;&nbsp;&nbsp;for c in "$@";<br>
- &nbsp;&nbsp;&nbsp;&nbsp;do<br>
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin alias "$c" 2&gt; /dev/null;<br>
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin declare -f "$c";<br>
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e="$(\builtin "$c" 2&gt;&amp;1 &lt;&gt;/dev/null)" || \grep -qv '^bash: builtin:' &lt;&lt;&lt; "$e" &amp;&amp; echo bash builtin: $c;<br>
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env which -a "$c" | xargs -I{} stat -c %N "{}";<br>
- &nbsp;&nbsp;&nbsp;&nbsp;done<br>
-}<br>
-'/usr/bin/which' -> '/bin/which'<br>
-'/bin/which'</td></tr>
+<tr><td><br>$</td><th><br>which which</th></tr>
+<tr><td></td><td>which ()
+             <br>{
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;_opt=; _fmt=%n;
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;case "$1" in
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-a)
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shift;
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_opt=-a;
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_fmt=%N
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;;
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-*)
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin printf 'Illegal option %s\nUsage: which [-a] args\n' "$1";
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 2
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;;
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;esac;
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;for _cmd in "$@";
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;do
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin alias "$_cmd" 2&gt; /dev/null;
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin declare -f "$_cmd";
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin "$_cmd" &> /dev/null;
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ $? -ne 1 ] && echo builtin: $_cmd;
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env which -a "$_cmd" | xargs -I{} stat -c "$_fmt" '{}';
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;done
+             <br>}</td></tr>
+<tr><td></td><td>/usr/bin/which</td></tr>
 
-<tr><td>&nbsp;</td><td></td></tr>
 </table>
 <hr>
 </div>
