@@ -175,11 +175,12 @@
 <tr><td></td><td>/usr/bin/printf</td></tr>
 
 <tr><td>&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>declare -f printf</th></tr>
+<tr><td>$</td><th>declare -f printf || echo '$?' = $?</th></tr>
 <tr><td></td><td>printf ()<br>{<br>&nbsp;&nbsp;echo -n function:\ ;<br>&nbsp;&nbsp;builtin printf "$@"<br>}</td></tr>
 
 <tr><td>&nbsp;</td><td></td></tr>
-<tr><td>$</td><th>declare -f ls</th></tr>
+<tr><td>$</td><th>declare -f ls || echo '$?' = $?</th></tr>
+<tr><td></td><td>$? = 1</td></tr>
 
 <tr><td>&nbsp;</td><td></td></tr>
 </table>
@@ -210,6 +211,10 @@
 <tr><td>&nbsp;&nbsp;</td><td></td></tr>
 <tr><td>$</td><th>alias printf</th></tr>
 <tr><td></td><td>alias printf='echo -n alias:\ ; /usr/bin/printf'</td></tr>
+
+<tr><td>&nbsp;&nbsp;</td><td></td></tr>
+<tr><td>$</td><th>alias pwd</th></tr>
+<tr><td></td><td>bash: alias: pwd: not found</td></tr>
 
 <tr><td>&nbsp;</td><td></td></tr>
 </table>
