@@ -230,39 +230,25 @@
 <table>
 
 <tr><td><pre>$</pre></td><th><pre>function which {
-  _fmt=%n _opt=
+  _fmt=%n _opt= _all='return 0'
   case "$1" in
-    -a) _fmt=%N _opt=-a; shift ;;
+    -a) _fmt=%N _opt=-a _all=true; shift ;;
     -*) \builtin printf 'Illegal option %s\nUsage: which [-a] args\n' "$1" ; return 2 ;;
   esac
   for _cmd in "$@"; do 
-    \builtin alias "$_cmd" 2> /dev/null 
-    \builtin declare -f "$_cmd" 
-    \builtin "$_cmd" &>/dev/null ; [ $? -ne 1 ] && echo builtin: $_cmd 
+    \builtin alias "$_cmd" 2> /dev/null && $_all
+    \builtin declare -f "$_cmd" && $_all
+    \builtin "$_cmd" &>/dev/null ; [ $? -ne 1 ] && echo builtin: $_cmd && $_all
     env which $_opt "$_cmd" | xargs -I{} stat -c $_fmt {}
   done }</pre></th></tr>
-
-<tr><td><br>$</td><th><br>which grep</th></tr>
-<tr><td></td><td>alias grep='grep --color=auto'</td></tr>
-<tr><td></td><td>'/bin/grep'</td></tr>
-
-<tr><td><br>$</td><th><br>which printf</th></tr>
-<tr><td></td><td>alias printf='echo -n alias:\ ; /usr/bin/printf'
-<tr><td></td><td>printf ()
- <br>{
- <br>&nbsp;&nbsp;&nbsp;&nbsp;echo -n function:\ ;
- <br>&nbsp;&nbsp;&nbsp;&nbsp;builtin printf "$@"
- <br>}</td></tr>
-<tr><td></td><td>bash builtin: printf</td></tr>
-<tr><td></td><td>/usr/bin/printf</td></tr>
 
 <tr><td><br>$</td><th><br>which -a which</th></tr>
 <tr><td></td><td>which ()
              <br>{
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;fmt=%n _opt=;
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;fmt=%n _opt= _all='return 0';
              <br>&nbsp;&nbsp;&nbsp;&nbsp;case "$1" in
              <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-a)
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_fmt=%N _opt=-a;
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_fmt=%N _opt=-a _all=true;
              <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shift
              <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;;
              <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-*)
@@ -272,15 +258,30 @@
              <br>&nbsp;&nbsp;&nbsp;&nbsp;esac;
              <br>&nbsp;&nbsp;&nbsp;&nbsp;for _cmd in "$@";
              <br>&nbsp;&nbsp;&nbsp;&nbsp;do
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin alias "$_cmd" 2&gt; /dev/null;
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin declare -f "$_cmd";
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin alias "$_cmd" 2&gt; /dev/null && $_all;
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin declare -f "$_cmd" && $_all;
              <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin "$_cmd" &> /dev/null;
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ $? -ne 1 ] && echo builtin: $_cmd;
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env which -a "$_cmd" | xargs -I{} stat -c $_fmt {};
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ $? -ne 1 ] && echo builtin: $_cmd && $_all;
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env which $_opt "$_cmd" | xargs -I{} stat -c $_fmt {};
              <br>&nbsp;&nbsp;&nbsp;&nbsp;done
              <br>}</td></tr>
 <tr><td></td><td>'/usr/bin/which' -> '/bin/which'
              <br>'/bin/which'</td></tr>
+
+<tr><td><br>$</td><th><br>which printf</th></tr>
+<tr><td></td><td>alias printf='echo -n alias:\ ; /usr/bin/printf'
+
+<tr><td><br>$</td><th><br>unalias printf</th></tr>
+<tr><td>$</td><th>which printf</th></tr>
+<tr><td></td><td>printf ()
+ <br>{
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;echo -n function:\ ;
+ <br>&nbsp;&nbsp;&nbsp;&nbsp;builtin printf "$@"
+ <br>}</td></tr>
+
+<tr><td><br>$</td><th><br>unset printf</th></tr>
+<tr><td>$</td><th>which printf</th></tr>
+<tr><td></td><td>bash builtin: printf</td></tr>
 
 </table>
 <hr>
