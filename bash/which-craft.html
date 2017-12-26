@@ -108,7 +108,7 @@
 <tr><td></td><td>/usr/bin/which<br>
                  /bin/which</td></tr>
 
-<tr><td><br>$</td><th><br>which -a which | while read _cmd; do stat -c %N "$_cmd"; done</th></td>
+<tr><td><br>$</td><th><br>which -a which | xargs -I{} stat -c %N {}</th></td>
 <tr><td></td><td>'/usr/bin/which' -> '/bin/which'<br>
                  '/bin/which'</td></tr>
 
