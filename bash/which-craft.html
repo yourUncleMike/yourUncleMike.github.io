@@ -5,7 +5,7 @@
 <title>which craft</title>
 <style>
  button, li { font-size: 20px; }
- button     { font-family: monospace; }
+ button     { font-family: monospace; border-width: 2px; padding: 1px 6px; }
          li { padding-bottom: 10px; }
  span    { font-size: 20px; font-family: sans-serif; }
  th, td  { font-size: 20px; font-family: monospace; vertical-align: top; text-align: left; padding-bottom: 10px; padding-left: 10px; }
@@ -40,15 +40,15 @@
 <div>
 <hr>
 <table>
-<tr><th>&nbsp;</th><td><a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/index.html">Bash Reference Manual</td></tr>
+<tr><th>&nbsp;</th><th><a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/index.html">Bash Reference Manual</th></tr>
 <tr><th>3.2.1 </th><td><a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Simple-Commands.html">Simple Commands</td></tr>
 <tr><th>3.7.2 </th><td><a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Command-Search-and-Execution.html">Command Search and Execution</a></td></tr>
 <tr><th>4.2 </th><td><a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html">Builtin Commands</td></tr>
 <tr><th>3.3 </th><td><a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Shell-Functions.html">Shell Functions</td></tr>
-<tr><th>6.6 </th><td><a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Aliases.html">Aliases</a> - What 3.7.2 did <i>not</i> tell you</td></tr>
+<tr><th>6.6 </th><td><a target="_blank" href="https://www.gnu.org/software/bash/manual/html_node/Aliases.html">Aliases</a></td><td style="color: red">(What 3.7.2 did <i>not</i> tell you.)</td></tr>
 <tr>
  <th>&nbsp;</th>
- <td>
+ <td colspan=2>
   <div width="512px">
    <button onclick="toggle(this)">+</button> <span>TL;DR</span>
    <div>
@@ -108,7 +108,7 @@
 <tr><td></td><td>/usr/bin/which<br>
                  /bin/which</td></tr>
 
-<tr><td><br>$</td><th><br>which -a which | while read c; do stat -c %N "$c"; done</th></td>
+<tr><td><br>$</td><th><br>which -a which | while read _cmd; do stat -c %N "$_cmd"; done</th></td>
 <tr><td></td><td>'/usr/bin/which' -> '/bin/which'<br>
                  '/bin/which'</td></tr>
 
@@ -133,7 +133,7 @@
 <tr><td><br>$</td><th><br>which printf</th></tr>
 <tr><td></td><td>/usr/bin/printf</td></tr>
 
-<tr><td><br>$</td><th><br>/usr/bin/printf -v greeting Aloha ; echo '$?'=$? greeting=$greeting</th><td style="color: red;"><br># WTF moment #1</td></tr>
+<tr><td><br>$</td><th><br>/usr/bin/printf -v greeting Aloha ; echo '$?'=$? greeting=$greeting</th><td style="color: red;"><br># WTF moment</td></tr>
 <tr><td></td><td>-v/usr/bin/printf: warning: ignoring excess arguments, starting with ‘greeting’
              <br>$?=0 greeting=Hello James</td></tr>
 
@@ -201,7 +201,7 @@
 <table>
 
 <tr><td><br>$</td><th><br>alias printf='echo -n alias:\ ; printf'</th></tr>
-<tr><td>$</td><th>printf 'Hello %s\n' Michael</th><td style="color: red"># WTF moment #2</td></tr>
+<tr><td>$</td><th>printf 'Hello %s\n' Michael</th><td style="color: red"># WTF moment</td></tr>
 <tr><td></td><td>alias: function: Hello Michael</td></tr>
 
 <tr><td><br>$</td><th><br>alias printf='echo -n alias:\ ; /usr/bin/printf'</th></tr>
@@ -230,19 +230,17 @@
 <table>
 
 <tr><td><pre>$</pre></td><th><pre>function which {
-  _opt='' _fmt=%n
+  _fmt=%n _opt=
   case "$1" in
-    -a) shift; _opt=-a ; _fmt=%N ;;
+    -a) _fmt=%N _opt=-a; shift ;;
     -*) \builtin printf 'Illegal option %s\nUsage: which [-a] args\n' "$1" ; return 2 ;;
   esac
-  for _cmd in "$@" 
-  do 
+  for _cmd in "$@"; do 
     \builtin alias "$_cmd" 2> /dev/null 
     \builtin declare -f "$_cmd" 
     \builtin "$_cmd" &>/dev/null ; [ $? -ne 1 ] && echo builtin: $_cmd 
-    env which $_opt "$_cmd" | xargs -I{} stat -c "$_fmt" '{}' 
-  done
-}</pre></th></tr>
+    env which $_opt "$_cmd" | xargs -I{} stat -c $_fmt {}
+  done }</pre></th></tr>
 
 <tr><td><br>$</td><th><br>which grep</th></tr>
 <tr><td></td><td>alias grep='grep --color=auto'</td></tr>
@@ -256,17 +254,16 @@
  <br>&nbsp;&nbsp;&nbsp;&nbsp;builtin printf "$@"
  <br>}</td></tr>
 <tr><td></td><td>bash builtin: printf</td></tr>
-<tr><td></td><td>'/usr/bin/printf'</td></tr>
+<tr><td></td><td>/usr/bin/printf</td></tr>
 
-<tr><td><br>$</td><th><br>which which</th></tr>
+<tr><td><br>$</td><th><br>which -a which</th></tr>
 <tr><td></td><td>which ()
              <br>{
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;_opt=; _fmt=%n;
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;fmt=%n _opt=;
              <br>&nbsp;&nbsp;&nbsp;&nbsp;case "$1" in
              <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-a)
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shift;
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_opt=-a;
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_fmt=%N
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_fmt=%N _opt=-a;
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shift
              <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;;
              <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-*)
              <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin printf 'Illegal option %s\nUsage: which [-a] args\n' "$1";
@@ -279,10 +276,11 @@
              <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin declare -f "$_cmd";
              <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin "$_cmd" &> /dev/null;
              <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ $? -ne 1 ] && echo builtin: $_cmd;
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env which -a "$_cmd" | xargs -I{} stat -c "$_fmt" '{}';
+             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env which -a "$_cmd" | xargs -I{} stat -c $_fmt {};
              <br>&nbsp;&nbsp;&nbsp;&nbsp;done
              <br>}</td></tr>
-<tr><td></td><td>/usr/bin/which</td></tr>
+<tr><td></td><td>'/usr/bin/which' -> '/bin/which'
+             <br>'/bin/which'</td></tr>
 
 </table>
 <hr>
