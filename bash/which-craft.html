@@ -10,6 +10,8 @@
  span    { font-size: 20px; font-family: sans-serif; }
  th, td  { font-size: 20px; font-family: monospace; vertical-align: top; text-align: left; padding-bottom: 10px; padding-left: 10px; }
  h1, h2  { text-align: center }
+ h1      { font-size: 64px; }
+     h2  { font-size: 32px; }
 </style>
 <script>
  function reveal(button) {
@@ -60,7 +62,7 @@
      <br>If resulting NAME is different go to step 1.</li>
      <li>If NAME is a function, execute the function.</li>
      <li>If NAME is a BASH builtin, execute the builtin command.</li>
-     <li>Search $PATH for NAME and run first matching executable.</li>
+     <li>Search $PATH for NAME and run the first matching executable.</li>
      </ol>
     <hr>
    </div>
@@ -73,7 +75,7 @@
 </div>
 
 <div>
-<button onclick="toggle(this)">+</button> <span>which man page</span>
+<button onclick="toggle(this)">+</button> <span>man which</span>
 <div>
 <hr>
 <table>
@@ -96,7 +98,7 @@
 </div>
 
 <div>
-<button onclick="toggle(this)">+</button> <span>which basics</span>
+<button onclick="toggle(this)">+</button> <span>basic which craft</span>
 <div>
 <hr>
 <table>
@@ -158,9 +160,6 @@
 <tr><td><br>$</td><th><br>builtin ls || echo '$?'=$?</th></tr>
 <tr><td></td><td>bash: builtin: ls: not a shell builtin
              <br>$?=1</td></tr>
-
-<tr><td><br>$</td><th><br>which ls</th></tr>
-<tr><td></td><td>/bin/ls</td></tr>
 
 </table>
 <hr>
@@ -224,64 +223,99 @@
 </div>
 
 <div>
-<button onclick="toggle(this)">+</button> <span>Putting it all together (alias + declare -f + builtin + which)</span>
+<button onclick="toggle(this)">+</button> <span>Putting it all together (<b>alias</b>, <b>declare -f</b>, <b>type -t</b>, and <b>which</b>)</span>
 <div>
 <hr>
 <table>
 
-<tr><td><pre>$</pre></td><th><pre>function which {
-  _fmt=%n _opt= _all='return 0'
+<tr><td><pre>$</pre></td><th><pre>function which {<span style="color: red">   # Success !~}></span>
+  local _fmt=%n _opt='' _cmd _all=continue
   case "$1" in
     -a) _fmt=%N _opt=-a _all=true; shift ;;
-    -*) \builtin printf 'Illegal option %s\nUsage: which [-a] args\n' "$1" ; return 2 ;;
+    -*) \builtin printf 'Illegal option %s\nUsage: which [-a] args\n' "$1"; return 2 ;;
   esac
   for _cmd in "$@"; do 
-    \builtin alias "$_cmd" 2> /dev/null && $_all
+    \builtin alias "$_cmd" 2>/dev/null && $_all
     \builtin declare -f "$_cmd" && $_all
-    \builtin "$_cmd" &>/dev/null ; [ $? -ne 1 ] && echo builtin: $_cmd && $_all
+    \builtin "$_cmd" &>/dev/null ; [ $? -ne 1 ] && echo builtin $_cmd && $_all
     env which $_opt "$_cmd" | xargs -I{} stat -c $_fmt {}
   done }</pre></th></tr>
 
-<tr><td><br>$</td><th><br>which -a which</th></tr>
-<tr><td></td><td>which ()
-             <br>{
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;fmt=%n _opt= _all='return 0';
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;case "$1" in
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-a)
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_fmt=%N _opt=-a _all=true;
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shift
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;;
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-*)
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin printf 'Illegal option %s\nUsage: which [-a] args\n' "$1";
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 2
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;;
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;esac;
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;for _cmd in "$@";
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;do
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin alias "$_cmd" 2&gt; /dev/null && $_all;
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin declare -f "$_cmd" && $_all;
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\builtin "$_cmd" &> /dev/null;
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ $? -ne 1 ] && echo builtin: $_cmd && $_all;
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;env which $_opt "$_cmd" | xargs -I{} stat -c $_fmt {};
-             <br>&nbsp;&nbsp;&nbsp;&nbsp;done
-             <br>}</td></tr>
-<tr><td></td><td>'/usr/bin/which' -> '/bin/which'
-             <br>'/bin/which'</td></tr>
+<tr><td><pre>$</pre></td><th><pre>function which {<span style="color: red">    # A longer but cleaner implementation</span>
+  local _fmt=%n _opt='' _cmd _type
+  case "$1" in
+    -a) _fmt=%N _opt=-a; shift ;;
+    -*) \builtin printf 'Illegal option %s\nUsage: which [-a] args\n' "$1"; return 2 ;;
+  esac
+  for _cmd in "$@"; do
+    for _type in $(type -t $_opt "$_cmd" | uniq); do
+      case $_type in
+        alias)    \builtin alias "$_cmd" 2>/dev/null ;;
+        function) echo -n 'function '; \builtin declare -f "$_cmd" ;;
+        builtin)  echo builtin $_cmd ;;
+        file)     env which $_opt "$_cmd" | xargs -I{} stat -c $_fmt {} ;;
+      esac
+    done
+  done }</pre></th></tr>
+
+<tr><td><br>$</td><th><br>type -at printf</th><td style="color: red"># Facepalm</td></tr>
+<tr><td></td><td>alias<br>function<br>builtin<br>file</td></tr>
 
 <tr><td><br>$</td><th><br>which printf</th></tr>
-<tr><td></td><td>alias printf='echo -n alias:\ ; /usr/bin/printf'
+<tr><td></td><td>alias printf='echo -n alias:\ ; /usr/bin/printf'</td></tr>
 
 <tr><td><br>$</td><th><br>unalias printf</th></tr>
 <tr><td>$</td><th>which printf</th></tr>
-<tr><td></td><td>printf ()
+<tr><td></td><td>function printf ()
  <br>{
  <br>&nbsp;&nbsp;&nbsp;&nbsp;echo -n function:\ ;
  <br>&nbsp;&nbsp;&nbsp;&nbsp;builtin printf "$@"
  <br>}</td></tr>
 
 <tr><td><br>$</td><th><br>unset -f printf</th></tr>
-<tr><td>$</td><th>which printf</th></tr>
-<tr><td></td><td>bash builtin: printf</td></tr>
+<tr><td>$</td><th>which -a printf</th></tr>
+<tr><td></td><td>builtin printf</td></tr>
+<tr><td></td><td>'/usr/bin/printf'</td></tr>
+
+<tr><td><br>$</td><th><br>which -a which</th></tr>
+<tr><td></td><td><pre>function which () 
+{ 
+    local _fmt=%n _opt='' _cmd _type;
+    case "$1" in 
+        -a)
+            _fmt=%N _opt=-a;
+            shift
+        ;;
+        -*)
+            \builtin printf 'Illegal option %s\nUsage: which [-a] args\n' "$1";
+            return 2
+        ;;
+    esac;
+    for _cmd in "$@";
+    do
+        for _type in $(type -t $_opt "$_cmd" | uniq);
+        do
+            case $_type in 
+                alias)
+                    \builtin alias "$_cmd" 2> /dev/null
+                ;;
+                function)
+                    echo -n 'function ';
+                    \builtin declare -f "$_cmd"
+                ;;
+                builtin)
+                    echo builtin $_cmd
+                ;;
+                file)
+                    env which $_opt "$_cmd" | xargs -I{} stat -c $_fmt {}
+                ;;
+            esac;
+        done;
+    done
+}</pre></td></tr>
+<tr><td></td><td>'/usr/bin/which' -> '/bin/which'
+             <br>'/bin/which'</td></tr>
+
 
 </table>
 <hr>
