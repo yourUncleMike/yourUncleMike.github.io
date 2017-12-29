@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<title>meister on buttons</title>
+<style>
+ button, li { font-size: 20px; }
+ button     { font-family: monospace; border-width: 2px; padding: 1px 6px; }
+         li { padding-bottom: 10px; }
+ span    { font-size: 20px; font-family: sans-serif; }
+ th, td  { font-size: 20px; font-family: monospace; vertical-align: top; text-align: left; padding-bottom: 10px; padding-left: 10px; }
+ h1, h2  { text-align: center }
+ h1      { font-size: 64px; }
+     h2  { font-size: 32px; }
+ pre     { display: inline; }
+</style>
+<script>
+ function reveal(button) {
+  span = button.nextElementSibling;
+  div = span.nextElementSibling;
+  div.hidden = button.textContent[0] == "+";
+  span.style.fontWeight = div.hidden ? "bold" : "normal";
+ }
+ function toggle(button) {
+  button.textContent = (button.textContent[0] == "-" ? "+" : "-") + button.textContent.slice(1);
+  reveal(button);
+ }
+ function init() {
+  buttons = document.getElementsByTagName("button");
+  for (var i = 0; i < buttons.length; i++)
+    reveal(buttons[i])
+ }
+</script>
+</head>
+
+<body onload="init()">
+<div>
+ <button onclick="toggle(this)">+</button><span><a target="_blank" href="http://johnmeister.com/fotos/">fotos from 1974-2016</a></span>
+ <div>
+ <ul>
+  <li><a href="http://johnmeister.com/fotos/1999/" target="new"> fotos from 1999 </a>
+  <li><a href="http://johnmeister.com/fotos/2000/" target="new"> fotos from 2000 </a>
+  <li><a href="http://johnmeister.com/fotos/2001/" target="new"> fotos from 2001 </a>
+  <li><a href="http://johnmeister.com/fotos/2002/" target="new"> fotos from 2002 </a>
+  <li><a href="http://johnmeister.com/fotos/2003/" target="new"> fotos from 2003 </a>
+  <li><a href="http://johnmeister.com/fotos/2004/" target="new"> fotos from 2004 </a>
+  <li><a href="http://johnmeister.com/fotos/2005/" target="new"> fotos from 2005 </a>
+  <li><a href="http://johnmeister.com/fotos/2006/" target="new"> fotos from 2006 </a>
+  <li><a href="http://johnmeister.com/fotos/2007/" target="new"> fotos from 2007 </a>
+  <li><a href="http://johnmeister.com/fotos/2008/" target="new"> fotos from 2008 </a>
+  <li><a href="http://johnmeister.com/fotos/2009/" target="new"> fotos from 2009 </a>
+  <li><a href="http://johnmeister.com/fotos/2010/" target="new"> fotos from 2010 </a>
+  <li><a href="http://johnmeister.com/fotos/2011/" target="new"> fotos from 2011 </a>
+  <li><a href="http://johnmeister.com/fotos/2012/" target="new"> fotos from 2012 </a>
+  <li><a href="http://johnmeister.com/fotos/2013/" target="new"> fotos from 2013 </a>
+  <li><a href="http://johnmeister.com/fotos/2014/" target="new"> fotos from 2014 </a>
+  <li><a href="http://johnmeister.com/2015" target="new"> fotos from 2015 </a>
+  <li><a href="http://johnmeister.com/2016" target="new"> fotos from 2016 </a>
+  <li><a href="http://johnmeister.com/cars-of-john" target="new"> cars-of-john </a>
+  </ul>
+ </div>
+</div>
+
+</body>
