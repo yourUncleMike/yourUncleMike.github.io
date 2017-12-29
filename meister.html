@@ -3,7 +3,13 @@
 <head>
 <meta charset='utf-8'>
 <title>meister on buttons</title>
-<style>button { font-size: 20px; font-family: monospace; border-width: 2px; padding: 1px 6px; }</style>
+<style>
+ button
+ { 
+  font-family: monospace;               /* Make [+] and [-] the same width. */
+  border-width: 2px; padding: 1px 6px;  /* Keep buttons consistently "square" across browsers. */
+ }
+</style>
 <script>
  function reveal(button) {
   span = button.nextElementSibling;
