@@ -22,12 +22,14 @@
   span.style.fontWeight = div.hidden ? "bold" : "normal";
  }
  function toggle(button) {
-  button.textContent = (button.textContent[0] == "-" ? "+" : "-");
+  button.textContent = (button.textContent[0] == "-" ? "+" : "-") + button.textContent.slice(1);
   reveal(button);
  }
  function init() {
   buttons = document.getElementsByTagName("button");
-  for (var i in buttons) reveal(buttons[i]);
+  for (var i = 0; i < buttons.length; i++) {
+    reveal(buttons[i])
+  }
  }
 </script>
 </head>
@@ -111,7 +113,7 @@
 <tr><td></td><td>/usr/bin/which<br>
                  /bin/which</td></tr>
 
-<tr><td><br>$</td><th><br>which -a which | xargs -I{} stat -c %N {}</th></td>
+<tr><td><br>$</td><th><br>which -a which | xargs -I{} stat -c %N {}</th></tr>
 <tr><td></td><td>'/usr/bin/which' -> '/bin/which'<br>
                  '/bin/which'</td></tr>
 
@@ -173,8 +175,8 @@
 <hr>
 <table>
 
-<tr><td><br>$</td><th><br>function printf { echo -n function:\ ; builtin printf "$@"; }</td></tr>
-<tr><td>$</td><th>printf 'Hello %s\n' Michael</td></tr>
+<tr><td><br>$</td><th><br>function printf { echo -n function:\ ; builtin printf "$@"; }</th></tr>
+<tr><td>$</td><th>printf 'Hello %s\n' Michael</th></tr>
 <tr><td></td><td>function: Hello Michael</td></tr>
 
 <tr><td><br>$</td><th><br>which printf</th></tr>
