@@ -12,6 +12,7 @@
  h1, h2  { text-align: center }
  h1      { font-size: 64px; }
      h2  { font-size: 32px; }
+ pre     { display: inline; }
 </style>
 <script>
  function reveal(button) {
@@ -180,10 +181,11 @@
 <tr><td></td><td>/usr/bin/printf</td></tr>
 
 <tr><td><br>$</td><th><br>declare -f printf || echo '$?'=$?</th></tr>
-<tr><td></td><td>printf ()
-             <br>{<br>&nbsp;&nbsp;echo -n function:\ ;
-             <br>&nbsp;&nbsp;builtin printf "$@"
-             <br>}</td></tr>
+<tr><td></td><td><pre>printf ()
+{
+  echo -n function:\ ;
+  builtin printf "$@"
+}</pre></td></tr>
 
 <tr><td><br>$</td><th><br>declare -f ls || echo '$?'=$?</th></tr>
 <tr><td></td><td>$?=1</td></tr>
@@ -228,20 +230,20 @@
 <hr>
 <table>
 
-<tr><td><pre>$</pre></td><th><pre>function which {<span style="color: red">   # Success !~}></span>
-  local _fmt=%n _opt='' _cmd _all=continue
+<tr><td><br>$</td><th><br><pre>function which {<span style="color: red">   # Success !~}></span>
+  local _fmt=%n _opt='' _all=continue _cmd
   case "$1" in
     -a) _fmt=%N _opt=-a _all=true; shift ;;
     -*) \builtin printf 'Illegal option %s\nUsage: which [-a] args\n' "$1"; return 2 ;;
   esac
   for _cmd in "$@"; do 
-    \builtin alias "$_cmd" 2>/dev/null && $_all
-    \builtin declare -f "$_cmd" && $_all
-    \builtin "$_cmd" &>/dev/null ; [ $? -ne 1 ] && echo builtin $_cmd && $_all
+    \builtin alias "$_cmd" 2&gt;/dev/null &amp;&amp; $_all
+    \builtin declare -f "$_cmd" &amp;&amp; $_all
+    \builtin "$_cmd" &amp;&gt;/dev/null ; [ $? -ne 1 ] &amp;&amp; echo builtin $_cmd &amp;&amp; $_all
     env which $_opt "$_cmd" | xargs -I{} stat -c $_fmt {}
   done }</pre></th></tr>
 
-<tr><td><pre>$</pre></td><th><pre>function which {<span style="color: red">    # A longer but cleaner implementation</span>
+<tr><td><br>$</td><th><br><pre>function which {<span style="color: red">    # A longer but cleaner implementation</span>
   local _fmt=%n _opt='' _cmd _type
   case "$1" in
     -a) _fmt=%N _opt=-a; shift ;;
@@ -250,7 +252,7 @@
   for _cmd in "$@"; do
     for _type in $(type -t $_opt "$_cmd" | uniq); do
       case $_type in
-        alias)    \builtin alias "$_cmd" 2>/dev/null ;;
+        alias)    \builtin alias "$_cmd" 2&gt;/dev/null ;;
         function) echo -n 'function '; \builtin declare -f "$_cmd" ;;
         builtin)  echo builtin $_cmd ;;
         file)     env which $_opt "$_cmd" | xargs -I{} stat -c $_fmt {} ;;
@@ -266,11 +268,11 @@
 
 <tr><td><br>$</td><th><br>unalias printf</th></tr>
 <tr><td>$</td><th>which printf</th></tr>
-<tr><td></td><td>function printf ()
- <br>{
- <br>&nbsp;&nbsp;&nbsp;&nbsp;echo -n function:\ ;
- <br>&nbsp;&nbsp;&nbsp;&nbsp;builtin printf "$@"
- <br>}</td></tr>
+<tr><td></td><td><pre>function printf ()
+{
+    echo -n function:\ ;
+    builtin printf "$@"
+}</pre></td></tr>
 
 <tr><td><br>$</td><th><br>unset -f printf</th></tr>
 <tr><td>$</td><th>which -a printf</th></tr>
