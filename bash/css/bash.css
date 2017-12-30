@@ -1,0 +1,11 @@
+pre { display: inline; }
+
+h1, h2 { text-align: center }
+h1     { font-size: 64px; }
+    h2 { font-size: 32px; }
+
+th, td, button, li, span { font-size: 20px; }
+th                       { text-align: left; }
+th, td                   { font-family: monospace; vertical-align: top; padding-bottom: 10px; padding-left: 10px; }
+                li       { padding-bottom: 10px; }
+                    span { font-family: sans-serif; }

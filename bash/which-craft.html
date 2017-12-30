@@ -3,45 +3,19 @@
 <head>
 <meta charset='utf-8'>
 <title>which craft</title>
-<style>
- button, li { font-size: 20px; }
- button     { font-family: monospace; border-width: 2px; padding: 1px 6px; }
-         li { padding-bottom: 10px; }
- span    { font-size: 20px; font-family: sans-serif; }
- th, td  { font-size: 20px; font-family: monospace; vertical-align: top; text-align: left; padding-bottom: 10px; padding-left: 10px; }
- h1, h2  { text-align: center }
- h1      { font-size: 64px; }
-     h2  { font-size: 32px; }
- pre     { display: inline; }
-</style>
-<script>
- function reveal(button) {
-  span = button.nextElementSibling;
-  div = span.nextElementSibling;
-  div.hidden = button.textContent[0] == "+";
-  span.style.fontWeight = div.hidden ? "bold" : "normal";
- }
- function toggle(button) {
-  button.textContent = (button.textContent[0] == "-" ? "+" : "-") + button.textContent.slice(1);
-  reveal(button);
- }
- function init() {
-  buttons = document.getElementsByTagName("button");
-  for (var i = 0; i < buttons.length; i++) {
-    reveal(buttons[i])
-  }
- }
-</script>
+<link href="../css/button.css" type="text/css" rel="stylesheet">
+<link href="css/bash.css" type="text/css" rel="stylesheet">
+<script src="../js/button.js" type="text/javascript"></script>
 </head>
 
-<body onload="init()">
+<body onload="buttons_init()">
 
 <h1>which craft</h1>
 <h2>An introduction to how the BASH shell figures<br>out what to run when you enter a command.</h2>
 <hr>
 
 <div>
-<button onclick="toggle(this)">-</button> <span>References</span>
+<button onclick="button_toggle(this)">-</button> <span>References</span>
 <div>
 <hr>
 <table>
@@ -55,7 +29,7 @@
  <th>&nbsp;</th>
  <td colspan=2>
   <div width="512px">
-   <button onclick="toggle(this)">+</button> <span>TL;DR</span>
+   <button onclick="button_toggle(this)">+</button> <span>TL;DR</span>
    <div>
     <hr>
      NAME [OPTION]...
@@ -78,7 +52,7 @@
 </div>
 
 <div>
-<button onclick="toggle(this)">+</button> <span>man which</span>
+<button onclick="button_toggle(this)">+</button> <span>man which</span>
 <div>
 <hr>
 <table>
@@ -101,7 +75,7 @@
 </div>
 
 <div>
-<button onclick="toggle(this)">+</button> <span>basic which craft</span>
+<button onclick="button_toggle(this)">+</button> <span>basic which craft</span>
 <div>
 <hr>
 <table>
@@ -123,7 +97,7 @@
 </div>
 
 <div>
-<button onclick="toggle(this)">+</button> <span>printf (practice target)</span>
+<button onclick="button_toggle(this)">+</button> <span>printf (practice target)</span>
 <div>
 <hr>
 <table>
@@ -148,7 +122,7 @@
 </div>
 
 <div>
-<button onclick="toggle(this)">+</button> <span>builtins</span>
+<button onclick="button_toggle(this)">+</button> <span>builtins</span>
 <div>
 <hr>
 <table>
@@ -170,7 +144,7 @@
 </div>
 
 <div>
-<button onclick="toggle(this)">+</button> <span>functions</span>
+<button onclick="button_toggle(this)">+</button> <span>functions</span>
 <div>
 <hr>
 <table>
@@ -198,7 +172,7 @@
 </div>
 
 <div>
-<button onclick="toggle(this)">+</button> <span>aliases</span>
+<button onclick="button_toggle(this)">+</button> <span>aliases</span>
 <div>
 <hr>
 <table>
@@ -227,7 +201,7 @@
 </div>
 
 <div>
-<button onclick="toggle(this)">+</button> <span>Putting it all together (<b>alias</b>, <b>declare -f</b>, <b>type -t</b>, and <b>which</b>)</span>
+<button onclick="button_toggle(this)">+</button> <span>Putting it all together (<b>alias</b>, <b>declare -f</b>, <b>type -t</b>, and <b>which</b>)</span>
 <div>
 <hr>
 <table>
