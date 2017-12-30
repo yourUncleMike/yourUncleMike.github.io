@@ -1,0 +1,5 @@
+button
+{ 
+ font-family: monospace;               /* Make [+] and [-] the same width. */
+ border-width: 2px; padding: 1px 6px;  /* Keep buttons consistently "square" across browsers. */
+}
