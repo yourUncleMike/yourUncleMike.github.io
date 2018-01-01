@@ -6,47 +6,57 @@
 <link href="css/button.css" type="text/css" rel="stylesheet">
 <script src="js/button.js" type="text/javascript"></script>
 <style>
- span, div
- { 
-  font-size: 24px; 
- }
- div
- {
-  padding-top: 10px;
-  padding-left: 10px;
- }
+ p         { font-size: 28px; }
+ div, span { font-size: 24px; }
+ div       { padding-top: 10px; padding-left: 40px; }
+ h1        { text-align: center; }
+ button    { vertical-align: middle; }
 </style>
 <script>function init() { buttons_init(); }</script>
 </head>
 
 <body onload="buttons_init()">
+<h1>Buttons demo</h1>
+<p>
+This &lt;p&gt;aragraph is just something to read while the browser hides and bolds other form elements, below.
+All that hiding and bolding happens faster than the eye can detect, unless you save this page to disk and open the saved copy with Internet Explorer.
+(That's because IE blocks JavaScript for local files until you click <button style="font-family: sans-serif" onclick="alert('Not the button you were looking for...')">Allow Blocked Content</button>.)
+</p>
+
+<hr />
+<h2>The <button disabled> + </button> and <button disabled> - </button> buttons affect the two page elements immediately following them:</h2>
 
 <div>
  <button onclick="button_toggle(this)">-</button>&nbsp;
- <span>This &lt;span&gt; started out normal because the &lt;button&gt; to its left was [-].</span>
+ <span>This &lt;span&gt; started out normal because the &lt;button&gt; to its left was <button disabled> - </button>.</span>
  <div>
-  This &lt;div&gt; started out exposed because the &lt;button&gt; above was [-].
+  Also, this &lt;div&gt; started out visible because the &lt;button&gt; above was <button disabled> - </button>.
   <br>
-  Clicking the [-] &lt;button&gt; changes it to [+] and hides this &lt;div&gt;.
+  Clicking the <button disabled> - </button> &lt;button&gt; changes it to <button disabled> + </button> and hides this &lt;div&gt;.
+  <br>
  </div>
 </div>
 
 <div>
  <button onclick="button_toggle(this)">+</button>&nbsp;
- <span>This &lt;span&gt; started out bolded because the &lt;button&gt; to its left was [+].</span>
+ <span>This &lt;span&gt; started out bolded because the &lt;button&gt; to its left was <button disabled> + </button>.</span>
  <div>
-  This &lt;div&gt; started out hidden but was exposed when you clicked the [+] &lt;button&gt;.<br>
-  The &lt;button&gt; has now changed to [-] and clicking it again will change it back and rehide this &lt;div&gt;.</div>
- </div>
+  This &lt;div&gt; started out hidden but was exposed when you clicked the <button disabled> + </button> &lt;button&gt;.<br>
+  The &lt;button&gt; has now changed to <button disabled> - </button> and clicking it again will change it back and rehide this &lt;div&gt;.</div>
 </div>
 
-<hr />
+<hr>
+<h2>The <button disabled> more </button> and <button disabled> less </button> buttons, however, affect the page elements immediately <i>preceding</i> them:</h2>
 
 <div>
- <span>Sometimes you start out wanting to see </span>
- <span>more, but later change your mind and want to see </span>
- <button onclick="button_toggle(this)">more</button>
+ <span>Right now you want to see </span> <span>more, but later you'll change your mind and want to see </span><button onclick="button_toggle(this)">more</button><span>.</span>
 </div>
+
+<hr>
+<h2>
+Like <button disabled> more </button>, the <button disabled> ... </button> button exposes the page element immediately preceding it.
+<br>
+Unlike <button disabled> more </button>, however, <button disabled> ... </button> hides itself. Once you click it, there's no going back:</h2>
 
 <div>
  <span>The danger is that once you've seen something</span><span>, you cannot <u>un</u>see it.</span>
