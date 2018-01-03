@@ -134,8 +134,8 @@
 <tr><td></td><td>printf: usage: printf [-v var] format [arguments]
              <br>$?=2</td></tr>
 
-<tr><td><br>$</td><th><br>builtin ls || echo '$?'=$?</th></tr>
-<tr><td></td><td>bash: builtin: ls: not a shell builtin
+<tr><td><br>$</td><th><br>builtin which || echo '$?'=$?</th></tr>
+<tr><td></td><td>bash: builtin: which: not a shell builtin
              <br>$?=1</td></tr>
 
 </table>
@@ -163,7 +163,7 @@
   builtin printf "$@"
 }</pre></td></tr>
 
-<tr><td><br>$</td><th><br>declare -f ls || echo '$?'=$?</th></tr>
+<tr><td><br>$</td><th><br>declare -f which || echo '$?'=$?</th></tr>
 <tr><td></td><td>$?=1</td></tr>
 
 </table>
