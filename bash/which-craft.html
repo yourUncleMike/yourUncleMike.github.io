@@ -60,7 +60,7 @@
 <b>NAME</b>
        which - locate a command<br>
 <b>SYNOPSIS</b>
-       which [-a] filename ...<br>
+       which [options] commandname ...<br>
 <b>DESCRIPTION</b>
        <b>which</b> returns the pathnames of the files (or links) which would be 
        executed in the current environment, had its arguments been given
@@ -68,7 +68,26 @@
        searching the PATH for executable files matching the names of the
        arguments.  It does not follow symbolic links.<br>
 <b>OPTIONS</b>
-       <b>-a</b>     print all matching pathnames of each argument</pre></td></tr>
+       <b>-a</b>
+          Print all matching pathnames of each argument.
+       </pre><span><pre>
+
+       <b>--read-alias, -i</b>
+          Read aliases from stdin, reporting matching ones on stdout. This is
+          useful in combination with using an alias for which itself.  For
+          example:
+
+             alias which='alias | which -i'
+
+       <b>--read-functions</b>
+          Read shell function definitions from stdin, reporting matching ones
+          on stdout. This is useful in combination with using a shell func-
+          tion for which itself.  For example:
+
+             which() { declare -f | which --read-functions $@ }
+             export -f which
+       </pre></span><button onclick="button_toggle(this)">more</button>
+</td></tr>
 </table>
 <hr>
 </div>
