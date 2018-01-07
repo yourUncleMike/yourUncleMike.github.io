@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<title>Linux Mint 18.3</title>
+<link href="../css/button.css" type="text/css" rel="stylesheet">
+<link href="css/mint.css" type="text/css" rel="stylesheet">
+<script src="js/button.js" type="text/javascript"></script>
+</head>
+
+<body onload="buttons_init()">
+<h1>Linux Mint 18.3</h1>
+<h2>Installing Mint to a thumb drive and<br>configuring dual boot with Windows 10.</h2>
+<hr>
+
+<table>
+ <tr>
+  <td><button onclick="button_toggle(this)">+</button></td>
+  <td>
+   <header>References</header>
+   <section>
+    <ul>
+     <li><a target="blank" href="https://www.windowscentral.com/how-disable-windows-10-fast-startup">How to disable Windows 10 fast startup (and why you'd want to)</a></li>
+     <li><a target="blank" href="https://winaero.com/blog/how-to-open-various-settings-pages-directly-in-windows-10/">How to open various settings pages directly in Windows 10</a></li>
+     <li>Linux Mint <a target="_blank" href="https://linuxmint.com/">HOME</a></li>
+     <li>Linux Mint 18.3 "Sylvia" - Cinnamon (64-bit) <a target="_blank" href="https://linuxmint.com/edition.php?id=246"><b>download</b></a></li>
+    </ul>
+   </section>
+  </td>
+ </tr>
+</table>
+
+<table>
+ <tr><td><button onclick="button_toggle(this)">+</button></td>
+  <td><header>Obtain USB media</header>
+   <section>
+    <ul>
+     <li><b>Install media drive</b> (USB2, at least 4GB)<br>
+         You will burn an ISO image of the Mint installer to this thumb drive 
+         and use it to install Mint to the other thumb drive.
+         After installation, keep this drive.  You can use it as recovery media,
+         if the need arises.<br>
+         Recommended product:
+         <a target="_blank" href="https://www.sandisk.com/home/usb-flash/cruzer-fit"><span style="background-color: black; color: red;">&nbsp;<b>SanDisk</b>&nbsp;<span style="color:white">Cruzer Fit</span>&nbsp;</span></a>
+         <img width="125" height="125" style="vertical-align: top" src="images/Cruzer-Fit_with-cap_angle.png"></li>
+     <li><b>Linux Mint OS drive</b> (USB3, at least 32GB)<br>
+         You will install Linux Mint to this drive, which will become a permanent part of your computer.<br>
+         Recommended product:
+         <a target="_blank" href="https://www.sandisk.com/home/usb-flash/ultra-fit-usb"><span style="background-color: black; color: red;">&nbsp;<b>SanDisk</b>&nbsp;<span style="color:white">Ultra Fit</span>&nbsp;</span></a>
+        <img width="125" height="125" style="vertical-align: top" src="images/CZ43_128GB_agnle_right_open-retina.png"></li>
+    </ul>
+   </section>
+  </td>
+ </tr>
+</table>
+
+<table>
+ <tr><td><button onclick="button_toggle(this)">+</button></td>
+  <td><header>Prepare install media</header>
+   <section>
+    <hr>
+    <ul>
+     <li>Download ISO from linuxmint.com.</li>
+     <li>Verify ISO checksum.</li>
+     <li>Burn ISO to install media.</li>
+    </ul>
+    If you are unable to complete the above steps without detailed instructions you are in the wrong class.
+    <hr>
+   </section>
+  </td>
+ </tr>
+</table>
+
+<table>
+ <tr><td><button onclick="button_toggle(this)">+</button></td>
+  <td>
+   <header>Prepare Windows</header>
+   <section>
+    <hr>
+    <table>
+
+     <tr>
+      <td><button onclick="button_toggle(this)">+</button></td>
+      <td>
+       <header>Disable fast boot</header>
+       <section>
+        <ul>
+         <li>Open <span style="font-weight: bold"><a href="ms-settings:powersleep">Power & sleep</a></span> settings</li>
+         <li>Under <span style="font-weight: bold">Related settings</span> click <span style="color:blue;">Additional power settings</span></li>
+         <li>Under the <span style="font-weight: bold">Control Panel Home</span> column, click <span style="color:blue">Choose what the power button does</span></li>
+         <li>Click <span style="color:blue">Change Settings that are currently unavailable</span></li>
+         <li>Under <span style="font-weight: bold">Shutdown settings</span> uncheck <span style="font-weight: bold">Turn on fast startup</span></li>
+         <li>Click <span style="background-color: lightgrey;">&nbsp;Save changes&nbsp;</span></li>
+        </ul>
+       </section>
+      </td>
+     </tr>
+
+     <tr>
+      <td><button onclick="button_toggle(this)">+</button></td>
+      <td>
+       <header>Force Windows to use UTC for hardware clock</header>
+       <section>
+        <ul>
+         <li>Run <b>regedit</b></li>
+         <li>Navigate to <input type="text" value="Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation" size="92" readonly></li>
+         <li>Create new DWORD value named <input type="text" value="RealTimeIsUniversal" size="19" readonly> then set its value to <input input type="text" value="1" size="1" readonly></li>
+        </ul>
+       </section>
+      </td>
+     </tr>
+
+    </table>
+    <hr>
+   </section>
+  </td>
+ </tr>
+</table>
+
+<table>
+ <tr>
+  <td><button onclick="button_toggle(this)">+</button></td>
+  <td>
+   <header>Prepare BIOS</header>
+   <section>
+    <hr>
+    <ul>
+     <li>Disable secure boot, if possible. (Windows may not boot, if not.)</li>
+     <li>Change boot order to try USB media before trying the hard drive.</li>
+    </ul>
+    <p>If you are unable to complete the above steps without detailed instructions you are in the wrong class.</p>
+    <p>If all else fails, start with <span style="background-color: lightgrey">Shift</span>+<span style="background-color: lightgrey">Restart</span> from Windows.</p>
+    <hr>
+   </section>
+  </td>
+ </tr>
+</table>
+
+<table>
+ <tr>
+  <td><button onclick="button_toggle(this)">+</button></td>
+  <td>
+   <header>Boot from install media</header>
+   <section>
+    <hr>
+    <p>Congratulations for making it this far!  Now the <i>real</i> fun begins...</p>
+    <ul>
+     <li>Insert the install media and reboot.</li>
+     <li>When the GRUB boot menu appears, press <span style="background-color: lightgrey">&nbsp;e&nbsp;</span> to edit the boot commands.</li>
+     <li>Down arrow to the line starting with <b>linux</b></li>
+     <li>Right arrow to just before the words <b>quiet splash</b></li>
+     <li>Insert the following text: <span style="color: red"><b>nomodeset #</b></span></li>
+     <li>Press <span style="background-color: lightgrey">&nbsp;F10&nbsp;</span> to continue.</li>
+    </ul>
+    <hr>
+   </section>
+  </td>
+ </tr>
+</table>
+
+<table>
+ <tr>
+  <td><button onclick="button_toggle(this)">-</button></td>
+  <td>
+   <header>Install Linux Mint</header>
+   <section>
+    <hr>
+    <ul>
+     <li>Turn off the screen saver.</li>
+     <li>Connect to the Internet.</li>
+     <li>Insert OS media into the USB slot furthest away from fan exhaust ports.</li>
+     <li>Double-click the installer icon.</li>
+     <li>When asked what kind of installation, choose <b>Something else</b>.</li>
+     <li>Leave sda and sdb drives untouched.</li>
+     <li>Format the entire sdc drive as a single ext4 partition.</li>
+     <li>Do <u><b>not</b></u> configure a swap partition.</li>
+     <li>Specify just <b>sdc</b> as where to install GRUB, <u><b>not</b></u> sdc1</li>
+     <li>Reboot if installation succeeds.</li>
+     <li>Remove install media when prompted.</li>
+    </ul>
+    <hr>
+   </section>
+  </td>
+ </tr>
+</table>
+
+<table>
+ <tr>
+  <td><button onclick="button_toggle(this)">-</button></td>
+  <td>
+   <header>Post-installation optimization</header>
+   <section>
+    <hr>
+    <ul>
+     <li>When the GRUB boot menu appears, press <span style="background-color: lightgrey">&nbsp;e&nbsp;</span> to edit the boot commands and insert <span style="color: red"><b>nomodeset #</b></span>, like you did at install time.
+     <li>Run <b>driver-manager</b> to see if better graphics or wireless drivers are available.  If so, upgrade the drivers.  Especially the graphics driver.  (You can, however, ignore microcode updates for now.)</li>
+     <li></li>
+     <li></li>
+     <li></li>
+     <li>Reboot and make sure everything works (graphics, network, bluetooth, etc.)</li>
+    </ul>
+    <hr>
+   </section>
+  </td>
+ </tr>
+</table>
+
+</body>
+</html>
