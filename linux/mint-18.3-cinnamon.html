@@ -159,10 +159,8 @@
 </table>
 
 <table>
- <tr>
-  <td><button onclick="button_toggle(this)">-</button></td>
-  <td>
-   <header>Install Linux Mint</header>
+ <tr><td><button onclick="button_toggle(this)">+</button></td>
+  <td><header>Install Linux Mint</header>
    <section>
     <hr>
     <ul>
@@ -185,20 +183,123 @@
 </table>
 
 <table>
- <tr>
-  <td><button onclick="button_toggle(this)">-</button></td>
-  <td>
-   <header>Post-installation optimization</header>
+ <tr><td><button onclick="button_toggle(this)">-</button></td>
+  <td><header>Post-installation optimization</header>
    <section>
     <hr>
-    <ul>
-     <li>When the GRUB boot menu appears, press <span style="background-color: lightgrey">&nbsp;e&nbsp;</span> to edit the boot commands and insert <span style="color: red"><b>nomodeset #</b></span>, like you did at install time.
-     <li>Run <b>driver-manager</b> to see if better graphics or wireless drivers are available.  If so, upgrade the drivers.  Especially the graphics driver.  (You can, however, ignore microcode updates for now.)</li>
-     <li></li>
-     <li></li>
-     <li></li>
-     <li>Reboot and make sure everything works (graphics, network, bluetooth, etc.)</li>
-    </ul>
+    <table>
+
+     <tr><td><table><tr><td><button disabled>&bull;</button></td>
+         <td><header>
+           When the GRUB boot menu appears, press 
+           <span style="background-color: lightgrey">&nbsp;e&nbsp;</span>
+           to edit the boot commands and insert
+           <span style="color: red"><b>nomodeset #</b></span>,
+           like you did at install time.
+          </header>
+         </td></tr></table></td>
+     </tr>
+
+     <tr><td><table><tr><td><button disabled>&bull;</button></td>
+         <td><header>
+           Run <b>driver-manager</b> to see if better graphics or wireless drivers are available.
+           If so, upgrade the drivers.  Especially the graphics driver.
+           (You can, however, ignore microcode updates for now.)
+          </header>
+         </td></tr></table></td>
+     </tr>
+
+     <tr><td><table><tr><td><button onclick="button_toggle(this)">+</button></td>
+         <td><header>(Reserved for heading.)</header>
+          <section>
+           <hr>
+           (Reserved for expandable content.)
+           <hr>
+          </section>
+         </td></tr></table></td>
+     </tr>
+
+     <tr><td><table><tr><td><button onclick="button_toggle(this)">+</button></td>
+         <td><header>(Reserved for heading.)</header>
+          <section>
+           <hr>
+           (Reserved for expandable content.)
+           <hr>
+          </section>
+         </td></tr></table></td>
+     </tr>
+
+     <tr><td><table><tr><td><button disabled>&bull;</button></td>
+         <td><header>Reboot and make sure everything works (graphics, network, bluetooth, etc.)</header>
+         </td></tr></table></td>
+     </tr>
+
+     <tr><td><table><tr><td><button onclick="button_toggle(this)">-</button></td>
+         <td><header>Redirect <b>/var/log</b> to RAM disk (avoids write wear on thumb drive.)</header>
+          <section>
+           <hr>
+           <table>
+            <tr><td>#</td><th>cd /var</th></tr>
+            <tr><td>#</td><th>mv log log.OLD && ln -s /dev/shm log</th></tr>
+            <tr><td>#</td><th>systemctl reboot</th></tr>
+           </table>
+           <hr>
+          </section>
+         </td></tr></table></td>
+     </tr>
+
+     <tr><td><table><tr><td><button onclick="button_toggle(this)">-</button></td>
+         <td><header>Reconfigure GRUB to remember the last OS you booted (makes Windows updates easier).</header>
+          <section>
+           <hr>
+           <table>
+            <tr><td>#</td><th>cd /boot/grub</th></tr> 
+            <tr><td>#</td><th>cp -p grub.cfg grub.cfg.old && nano grub.cfg</th></tr> 
+            <tr><td>&nbsp;</td><td><pre>
+:
+if [ "${next_entry}" ] ; then
+   set default="${next_entry}"
+   set next_entry=
+   save_env next_entry
+   set boot_once=true
+else
+   set default="0"
+   <b>if [ "${saved_entry}" ] ; then set default="${saved_entry}" ; fi</b>
+fi
+:
+menuentry 'Linux Mint 18.3 Cinnamon 64-bit' ...
+        recordfail
+        :
+        linux   /boot/vmlinuz-4.4.0-53-generic root=UUID=...
+        initrd  /boot/initrd.img-4.4.0-53-generic
+        <b>savedefault</b>
+}
+:
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry 'Windows Boot Manager (on /dev/sda1)' --class windows --class os ...
+        insmod part_gpt
+        :
+        chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+        <b>savedefault</b>
+}    
+</pre></td></tr>
+           </table>
+           <hr>
+          </section>
+         </td></tr></table></td>
+     </tr>
+
+     <tr><td><table><tr><td><button onclick="button_toggle(this)">+</button></td>
+         <td><header>(Reserved for heading.)</header>
+          <section>
+           <hr>
+           (Reserved for expandable content.)
+           <hr>
+          </section>
+         </td></tr></table></td>
+     </tr>
+
+    </table>
     <hr>
    </section>
   </td>
