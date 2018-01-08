@@ -6,34 +6,31 @@
 <link href="../css/button.css" type="text/css" rel="stylesheet">
 <link href="css/mint.css" type="text/css" rel="stylesheet">
 <script src="js/button.js" type="text/javascript"></script>
+<script type="text/javascript">
+  function init() {
+    buttons_init();
+    d = new Date();
+    y = d.getFullYear();
+    m = d.getMonth() + 1;
+    d = d.getDate();
+    ymd = y + '-' + (m>9 ? '' : '0') + m + '-' + (d>9 ? '' : '0') + d;
+    cmds = document.getElementsByTagName('th');
+    for (i=0; i<cmds.length; i++) 
+      cmds[i].innerHTML = cmds[i].innerHTML.split('.OLD').join('.'+ymd);
+  };
+</script>
 </head>
 
-<body onload="buttons_init()">
-<h1>Linux Mint 18.3</h1>
-<h2>Installing Mint to a thumb drive and<br>configuring dual boot with Windows 10.</h2>
+<body onload="init()">
+<h1>Installing <font color="#507f19">Linux Mint 18.3</font> to a thumb drive and<br>
+    configuring it to dual boot with <font color="blue">Windows 10</font>.</h1>
 <hr>
-
-<table>
- <tr>
-  <td><button onclick="button_toggle(this)">+</button></td>
-  <td>
-   <header>References</header>
-   <section>
-    <ul>
-     <li><a target="blank" href="https://www.windowscentral.com/how-disable-windows-10-fast-startup">How to disable Windows 10 fast startup (and why you'd want to)</a></li>
-     <li><a target="blank" href="https://winaero.com/blog/how-to-open-various-settings-pages-directly-in-windows-10/">How to open various settings pages directly in Windows 10</a></li>
-     <li>Linux Mint <a target="_blank" href="https://linuxmint.com/">HOME</a></li>
-     <li>Linux Mint 18.3 "Sylvia" - Cinnamon (64-bit) <a target="_blank" href="https://linuxmint.com/edition.php?id=246"><b>download</b></a></li>
-    </ul>
-   </section>
-  </td>
- </tr>
-</table>
 
 <table>
  <tr><td><button onclick="button_toggle(this)">+</button></td>
   <td><header>Obtain USB media</header>
    <section>
+    <hr>
     <ul>
      <li><b>Install media drive</b> (USB2, at least 4GB)<br>
          You will burn an ISO image of the Mint installer to this thumb drive 
@@ -49,6 +46,7 @@
          <a target="_blank" href="https://www.sandisk.com/home/usb-flash/ultra-fit-usb"><span style="background-color: black; color: red;">&nbsp;<b>SanDisk</b>&nbsp;<span style="color:white">Ultra Fit</span>&nbsp;</span></a>
         <img width="125" height="125" style="vertical-align: top" src="images/CZ43_128GB_agnle_right_open-retina.png"></li>
     </ul>
+    <hr>
    </section>
   </td>
  </tr>
@@ -60,11 +58,10 @@
    <section>
     <hr>
     <ul>
-     <li>Download ISO from linuxmint.com.</li>
-     <li>Verify ISO checksum.</li>
-     <li>Burn ISO to install media.</li>
+     <li><a target="_blank" href="https://linuxmint.com/edition.php?id=246">Download</a> ISO from linuxmint.com.</li>
+     <li><a target="_blank" href="https://linuxmint.com/verify.php">Verify</a> ISO checksum.</li>
+     <li><a target="_blank" href="http://linuxmint-installation-guide.readthedocs.io/en/latest/burn.html">"Burn"</a> ISO to install media.</li>
     </ul>
-    If you are unable to complete the above steps without detailed instructions you are in the wrong class.
     <hr>
    </section>
   </td>
@@ -73,24 +70,22 @@
 
 <table>
  <tr><td><button onclick="button_toggle(this)">+</button></td>
-  <td>
-   <header>Prepare Windows</header>
+  <td><header>Prepare Windows</header>
    <section>
     <hr>
     <table>
 
      <tr>
-      <td><button onclick="button_toggle(this)">+</button></td>
-      <td>
-       <header>Disable fast boot</header>
+      <td><button onclick="button_toggle(this)">-</button></td>
+      <td><header>Disable fast boot (to keep Windows hard drive accessible to Linux)</header>
        <section>
         <ul>
          <li>Open <span style="font-weight: bold"><a href="ms-settings:powersleep">Power & sleep</a></span> settings</li>
          <li>Under <span style="font-weight: bold">Related settings</span> click <span style="color:blue;">Additional power settings</span></li>
          <li>Under the <span style="font-weight: bold">Control Panel Home</span> column, click <span style="color:blue">Choose what the power button does</span></li>
          <li>Click <span style="color:blue">Change Settings that are currently unavailable</span></li>
-         <li>Under <span style="font-weight: bold">Shutdown settings</span> uncheck <span style="font-weight: bold">Turn on fast startup</span></li>
-         <li>Click <span style="background-color: lightgrey;">&nbsp;Save changes&nbsp;</span></li>
+         <li>Under <span style="font-weight: bold">Shutdown settings</span> uncheck <button disabled style="border-radius: 0.2em">&nbsp;</button> <span style="font-weight: bold">Turn on fast startup</span></li>
+         <li>Click <button disabled style="border-radius: 0.2em"> Save changes </button></li>
         </ul>
        </section>
       </td>
@@ -98,8 +93,7 @@
 
      <tr>
       <td><button onclick="button_toggle(this)">+</button></td>
-      <td>
-       <header>Force Windows to use UTC for hardware clock</header>
+      <td><header>Force Windows to use UTC for hardware clock (to keep time consistent between Windows and Linux)</header>
        <section>
         <ul>
          <li>Run <b>regedit</b></li>
@@ -120,38 +114,15 @@
 <table>
  <tr>
   <td><button onclick="button_toggle(this)">+</button></td>
-  <td>
-   <header>Prepare BIOS</header>
+  <td><header>Prepare BIOS</header>
    <section>
     <hr>
+    <p>Edit BIOS settings, as follows:</p>
     <ul>
-     <li>Disable secure boot, if possible. (Windows may not boot, if not.)</li>
+     <li>Disable secure boot, and see if Windows still starts.  (If not, re-enable secure boot and hope for the best.)</li>
      <li>Change boot order to try USB media before trying the hard drive.</li>
     </ul>
-    <p>If you are unable to complete the above steps without detailed instructions you are in the wrong class.</p>
-    <p>If all else fails, start with <span style="background-color: lightgrey">Shift</span>+<span style="background-color: lightgrey">Restart</span> from Windows.</p>
-    <hr>
-   </section>
-  </td>
- </tr>
-</table>
-
-<table>
- <tr>
-  <td><button onclick="button_toggle(this)">+</button></td>
-  <td>
-   <header>Boot from install media</header>
-   <section>
-    <hr>
-    <p>Congratulations for making it this far!  Now the <i>real</i> fun begins...</p>
-    <ul>
-     <li>Insert the install media and reboot.</li>
-     <li>When the GRUB boot menu appears, press <span style="background-color: lightgrey">&nbsp;e&nbsp;</span> to edit the boot commands.</li>
-     <li>Down arrow to the line starting with <b>linux</b></li>
-     <li>Right arrow to just before the words <b>quiet splash</b></li>
-     <li>Insert the following text: <span style="color: red"><b>nomodeset #</b></span></li>
-     <li>Press <span style="background-color: lightgrey">&nbsp;F10&nbsp;</span> to continue.</li>
-    </ul>
+    <p>If you have trouble getting to your BIOS settings, try <button disabled style="border-radius: 0.2em"> Shift </button>+<button disabled style="border-radius: 0.2em; background-color: black; color: white;"> Restart </button> from Windows.</p>
     <hr>
    </section>
   </td>
@@ -164,17 +135,28 @@
    <section>
     <hr>
     <ul>
+     <li>Reboot from install media to the Mint desktop.</li>
      <li>Turn off the screen saver.</li>
      <li>Connect to the Internet.</li>
      <li>Insert OS media into the USB slot furthest away from fan exhaust ports.</li>
-     <li>Double-click the installer icon.</li>
-     <li>When asked what kind of installation, choose <b>Something else</b>.</li>
+     <li>Double-click the <span>Install Linux Mint</span> icon.</li>
+     <li>Check the box for <button disabled style="border-radius: 0.2em">x</button> <span>Install third-party software for graphics and Wi-Fi hardware.</span></li>
+     <li>For <span>Installation type</span>, choose <span>Something else</span>.</li>
      <li>Leave sda and sdb drives untouched.</li>
-     <li>Format the entire sdc drive as a single ext4 partition.</li>
-     <li>Do <u><b>not</b></u> configure a swap partition.</li>
-     <li>Specify just <b>sdc</b> as where to install GRUB, <u><b>not</b></u> sdc1</li>
-     <li>Reboot if installation succeeds.</li>
-     <li>Remove install media when prompted.</li>
+     <li>Select <b>/dev/sdc</b> and click
+         <button disabled style="border-radius: 0.2em"> New Partition Table... </button></li>
+     <li>Under <b>/dev/sdc</b> select <b>free space</b> and click 
+         <button disabled style="border-radius: 0.2em"> + </button></li>
+     <li>For <span>Mount point</span> choose
+         <button disabled style="border-radius: 0.2em"> / </button>,
+         then click <button disabled style="border-radius: 0.2em"> OK </button>
+         to format the entire disk as an Ext4 partition.</li>
+     <li>For <span>Device for boot loader installation:</span> choose <b>/dev/sdc</b> (<u>not</u> sdc1), then click
+         <button disabled style="border-radius: 0.2em"> Install Now </button></li>
+     <li>Do <u>not</u> configure a swap partition.</li>
+     <li>Choose timezone, keyboard layout, etc. and proceeed to installation.</li>
+     <li>When installation completes, click <button disabled style="border-radius: 0.2em">Continue Testing</button>.</li>
+     <li>Shutdown then remove install media when prompted.</li>
     </ul>
     <hr>
    </section>
@@ -183,59 +165,32 @@
 </table>
 
 <table>
- <tr><td><button onclick="button_toggle(this)">-</button></td>
+ <tr><td><button onclick="button_toggle(this)">+</button></td>
   <td><header>Post-installation optimization</header>
    <section>
     <hr>
     <table>
 
-     <tr><td><table><tr><td><button disabled>&bull;</button></td>
-         <td><header>
-           When the GRUB boot menu appears, press 
-           <span style="background-color: lightgrey">&nbsp;e&nbsp;</span>
-           to edit the boot commands and insert
-           <span style="color: red"><b>nomodeset #</b></span>,
-           like you did at install time.
-          </header>
-         </td></tr></table></td>
-     </tr>
-
-     <tr><td><table><tr><td><button disabled>&bull;</button></td>
-         <td><header>
-           Run <b>driver-manager</b> to see if better graphics or wireless drivers are available.
-           If so, upgrade the drivers.  Especially the graphics driver.
-           (You can, however, ignore microcode updates for now.)
-          </header>
-         </td></tr></table></td>
-     </tr>
-
-     <tr><td><table><tr><td><button onclick="button_toggle(this)">+</button></td>
-         <td><header>(Reserved for heading.)</header>
-          <section>
-           <hr>
-           (Reserved for expandable content.)
-           <hr>
-          </section>
-         </td></tr></table></td>
-     </tr>
-
-     <tr><td><table><tr><td><button onclick="button_toggle(this)">+</button></td>
-         <td><header>(Reserved for heading.)</header>
-          <section>
-           <hr>
-           (Reserved for expandable content.)
-           <hr>
-          </section>
-         </td></tr></table></td>
-     </tr>
-
-     <tr><td><table><tr><td><button disabled>&bull;</button></td>
-         <td><header>Reboot and make sure everything works (graphics, network, bluetooth, etc.)</header>
-         </td></tr></table></td>
-     </tr>
-
      <tr><td><table><tr><td><button onclick="button_toggle(this)">-</button></td>
-         <td><header>Redirect <b>/var/log</b> to RAM disk (avoids write wear on thumb drive.)</header>
+         <td><header>Boot from Mint OS media with hardware rendering disabled (to prevent crashes caused by graphics driver changes during the next step).</header>
+          <section>
+           <hr>
+           <ul>
+            <li>When the GRUB boot menu appears, press 
+                <button disabled style="border-radius: 0.2em">e</button>
+                to edit the boot commands.</li>
+            <li>Down arrow to the line starting with <b>linux</b></li>
+            <li>Right arrow to just before the words <b>quiet splash</b></li>
+            <li>Insert the following text:&nbsp;&nbsp;<span style="font-family: monospace; font-weight: bold; color: red;">nomodeset #</span></li>
+            <li>Press <button disabled style="border-radius: 0.2em"> F10 </button> to continue.</li>
+           </ul>
+           <hr>
+          </section>
+         </td></tr></table></td>
+     </tr>
+
+     <tr><td><table><tr><td><button onclick="button_toggle(this)">+</button></td>
+         <td><header>Redirect <b>/var/log</b> to RAM disk (to avoid write wear on thumb drive.)</header>
           <section>
            <hr>
            <table>
@@ -248,13 +203,13 @@
          </td></tr></table></td>
      </tr>
 
-     <tr><td><table><tr><td><button onclick="button_toggle(this)">-</button></td>
-         <td><header>Reconfigure GRUB to remember the last OS you booted (makes Windows updates easier).</header>
+     <tr><td><table><tr><td><button onclick="button_toggle(this)">+</button></td>
+         <td><header>Reconfigure GRUB to remember the last OS booted (to make Windows updates easier).</header>
           <section>
            <hr>
            <table>
             <tr><td>#</td><th>cd /boot/grub</th></tr> 
-            <tr><td>#</td><th>cp -p grub.cfg grub.cfg.old && nano grub.cfg</th></tr> 
+            <tr><td>#</td><th>cp -p grub.cfg grub.cfg.OLD && nano grub.cfg</th></tr> 
             <tr><td>&nbsp;</td><td><pre>
 :
 if [ "${next_entry}" ] ; then
@@ -264,7 +219,7 @@ if [ "${next_entry}" ] ; then
    set boot_once=true
 else
    set default="0"
-   <b>if [ "${saved_entry}" ] ; then set default="${saved_entry}" ; fi</b>
+   <span style="font-family: monospace; font-weight: bold; color: red;">if [ "${saved_entry}" ] ; then set default="${saved_entry}" ; fi</span>
 fi
 :
 menuentry 'Linux Mint 18.3 Cinnamon 64-bit' ...
@@ -272,7 +227,7 @@ menuentry 'Linux Mint 18.3 Cinnamon 64-bit' ...
         :
         linux   /boot/vmlinuz-4.4.0-53-generic root=UUID=...
         initrd  /boot/initrd.img-4.4.0-53-generic
-        <b>savedefault</b>
+        <span style="font-family: monospace; font-weight: bold; color: red;">savedefault</span>
 }
 :
 ### BEGIN /etc/grub.d/30_os-prober ###
@@ -280,7 +235,7 @@ menuentry 'Windows Boot Manager (on /dev/sda1)' --class windows --class os ...
         insmod part_gpt
         :
         chainloader /EFI/Microsoft/Boot/bootmgfw.efi
-        <b>savedefault</b>
+        <span style="font-family: monospace; font-weight: bold; color: red;">savedefault</span>
 }    
 </pre></td></tr>
            </table>
@@ -289,17 +244,50 @@ menuentry 'Windows Boot Manager (on /dev/sda1)' --class windows --class os ...
          </td></tr></table></td>
      </tr>
 
-     <tr><td><table><tr><td><button onclick="button_toggle(this)">+</button></td>
-         <td><header>(Reserved for heading.)</header>
+     <tr><td><table><tr><td><button disabled>&bull;</button></td>
+         <td><header>
+           Run <b>driver-manager</b> to see if better graphics or wireless drivers are available.
+           If so, upgrade the drivers.  Especially the graphics driver.
+           (You can, however, ignore microcode updates for now.)
+          </header>
+         </td></tr></table></td>
+     </tr>
+
+     <tr><td><table><tr><td><button disabled>&bull;</button></td>
+         <td><header>Reboot and make sure everything works (graphics, sound, wireless, bluetooth)</header>
+         </td></tr></table></td>
+     </tr>
+
+     <tr hidden><td><table><tr><td><button onclick="button_toggle(this)">+</button></td>
+         <td><header>Reserved for heading.</header>
           <section>
            <hr>
-           (Reserved for expandable content.)
+           Reserved for detailed content.
            <hr>
           </section>
          </td></tr></table></td>
      </tr>
 
     </table>
+    <hr>
+   </section>
+  </td>
+ </tr>
+</table>
+
+<table>
+ <tr>
+  <td><button onclick="button_toggle(this)">+</button></td>
+  <td>
+   <header>References</header>
+   <section>
+    <hr>
+    <ul>
+     <li><a target="_blank" href="https://linuxmint.com/edition.php?id=246">Release Notes</a> for Linux Mint 18.3 Cinnamon</li>
+     <li>Linux Mint <a target="_blank" href="http://linuxmint-installation-guide.readthedocs.io/en/latest/">Installation Guide</a></li>
+     <li><a target="blank" href="https://www.windowscentral.com/how-disable-windows-10-fast-startup">How to disable Windows 10 fast startup (and why you'd want to)</a></li>
+     <li><a target="blank" href="https://winaero.com/blog/how-to-open-various-settings-pages-directly-in-windows-10/">How to open various settings pages directly in Windows 10</a></li>
+    </ul>
     <hr>
    </section>
   </td>

@@ -1,11 +1,10 @@
 pre { display: inline; }
 
-h1, h2 { text-align: center; color: #507f19; }
-h1     { font-size: 64px; }
-    h2 { font-size: 32px; }
+h1 { text-align: center; font-size: 32px; }
 
 th, td, button, li, span { font-size: 20px; }
 th                       { text-align: left; }
 th, td                   { font-family: monospace; vertical-align: top; padding-bottom: 5px; padding-right: 10px; }
+        button           { border-radius: 1.0em; border-width: 1px; }
                 li       { padding-bottom: 10px; }
                     span { font-family: sans-serif; }
