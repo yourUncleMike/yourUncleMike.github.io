@@ -204,7 +204,7 @@
      </tr>
 
      <tr><td><table><tr><td><button onclick="button_toggle(this)">+</button></td>
-         <td><header>Reconfigure GRUB to remember the last OS booted (to make Windows updates easier).</header>
+         <td><header>Reconfigure GRUB to show boot menu and default to the last OS booted (to make Windows updates easier).</header>
           <section>
            <hr>
            <table>
@@ -219,15 +219,22 @@ if [ "${next_entry}" ] ; then
    set boot_once=true
 else
    set default="0"
-   <span style="font-family: monospace; font-weight: bold; color: red;">if [ "${saved_entry}" ] ; then set default="${saved_entry}" ; fi</span>
+   <font color="red"><b>if [ "${saved_entry}" ] ; then set default="${saved_entry}" ; fi</b></font>
 fi
+:
+if [ "${recordfail}" = 1 ] ; then
+  set timeout=30
+else
+  if [ x$feature_timeout_style = xy ] ; then
+    set timeout_style=<font color="red"><b>menu   #</b></font> hidden
+    set timeout=<font color="red"><b>10           #</b></font> 0
 :
 menuentry 'Linux Mint 18.3 Cinnamon 64-bit' ...
         recordfail
         :
         linux   /boot/vmlinuz-4.4.0-53-generic root=UUID=...
         initrd  /boot/initrd.img-4.4.0-53-generic
-        <span style="font-family: monospace; font-weight: bold; color: red;">savedefault</span>
+        <font color="red"><b>savedefault</b></font>
 }
 :
 ### BEGIN /etc/grub.d/30_os-prober ###
@@ -235,7 +242,7 @@ menuentry 'Windows Boot Manager (on /dev/sda1)' --class windows --class os ...
         insmod part_gpt
         :
         chainloader /EFI/Microsoft/Boot/bootmgfw.efi
-        <span style="font-family: monospace; font-weight: bold; color: red;">savedefault</span>
+        <font color="red"><b>savedefault</b></font>
 }    
 </pre></td></tr>
            </table>
