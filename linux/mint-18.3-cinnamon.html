@@ -194,12 +194,12 @@
      </tr>
 
      <tr><td><table><tr><td><button onclick="button_toggle(this)">+</button></td>
-         <td><header>Redirect <b>/var/log</b> to RAM disk (to avoid write wear on thumb drive.)</header>
+         <td><header>Redirect <b>/var/log</b> to RAM disk (to avoid write wear on thumb drive).</header>
           <section>
            <hr>
            <table>
-            <tr><td>#</td><th>cd /var</th></tr>
-            <tr><td>#</td><th>mv log log.OLD && ln -s /dev/shm log</th></tr>
+            <tr><td>$</td><th>cd /var</th></tr>
+            <tr><td>$</td><th>sudo mv log log.OLD && sudo ln -s /dev/shm log</th></tr>
            </table>
            <hr>
           </section>
@@ -211,8 +211,8 @@
           <section>
            <hr>
            <table>
-            <tr><td>#</td><th>cd /boot/grub</th></tr> 
-            <tr><td>#</td><th>cp -p grub.cfg grub.cfg.OLD && nano grub.cfg</th></tr> 
+            <tr><td>$</td><th>cd /boot/grub</th></tr> 
+            <tr><td>$</td><th>sudo cp -p grub.cfg grub.cfg.OLD && sudo nano grub.cfg</th></tr> 
             <tr><td>&nbsp;</td><td><pre>
 :
 if [ "${next_entry}" ] ; then
@@ -265,6 +265,54 @@ menuentry 'Windows Boot Manager (on /dev/sda1)' --class windows --class os ...
 
      <tr><td><table><tr><td><button disabled>&bull;</button></td>
          <td><header>Reboot and make sure everything works (graphics, sound, wireless, bluetooth)</header>
+         </td></tr></table></td>
+     </tr>
+
+     <tr><td><table><tr><td><button onclick="button_toggle(this)">+</button></td>
+         <td><header>Mount Windows drive at /C:  (only if fast boot and BitLocker are disabled).</header>
+          <section>
+           <hr>
+           <table>
+            <tr><td>$</td><th>pushd /etc</th></tr>
+            <tr><td>$</td><th>read fstype uuid size &gt; &gt;(lsblk -lb -x SIZE -o FSTYPE,UUID,SIZE /dev/sda | grep ntfs | tail -1)</th></tr>
+            <tr><td>$</td><th>sudo cp -p fstab fstab.OLD</th></tr>
+            <tr><td>$</td><th>sudo tee -a fstab &gt; &gt;(echo UUID=$uuid$'\t/C:\tntfs\tdefaults\t0\t2')</th></tr>
+            <tr><td> </td><td><pre>UUID=<font color="lightgrey">xxxxxxxxxxxxxxxx</font>   /C:     ntfs    defaults        0       2</pre></td></tr>
+            <tr><td>$</td><th>sudo mount /C:</th></tr>
+            <tr><td>$</td><th>popd</th></tr>
+           </table>
+           <hr>
+          </section>
+         </td></tr></table></td>
+     </tr>
+
+     <tr><td><table><tr><td><button onclick="button_toggle(this)">+</button></td>
+         <td><header>Synchronize bluetooth pairing keys.</header>
+          <section>
+           <ul>
+            <li>Pair devices on Linux.</li>
+            <li>Reboot to Windows, then un-pair and re-pair devices.</li>
+            <li><header>Reboot to Linux, then replace Linux pairing keys with Windows pairing keys.</header>
+             <section>
+              <table>
+               <tr><td colspan="2"><hr></td></tr>
+               <tr><td>$</td><th>wget https://yourunclemike.github.io/linux/blueaud</th></tr>
+               <tr><td>$</td><th>sudo ./blueaud  <font color="grey"># Use a separate terminal for this</grey></th></tr>
+               <tr><td>$</td><th>sudo nano $(sudo find /var/lib/bluetooth -name info)</th></tr>
+               <tr><td> </td><td><pre>[General]
+Name=...
+:
+
+[LinkKey]
+Key=<font color="lightgrey">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</pre></font></td></tr>
+               <tr><td> </td><td>:</td></tr>
+               <tr><td colspan="2"><hr></td></tr>
+              </table>
+             </section>
+            </li>
+            <li>Restart bluetooth service.</li>
+           </ul>
+          </section>
          </td></tr></table></td>
      </tr>
 

@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+if ! reged_path=$(which reged); then echo 'reged not found -- install chntpw package' 1>&2; exit 1; fi
+
+list_fs() { grep ' TYPE="'$1'"' < <(blkid) | sed 's/^\/dev\///; s/:.* LABEL="/ /; s/".*//'; }
+format_MAC() { echo "$1" | sed 's/\(..\)/\1:/g; s/:$//' | tr [a-f] [A-F]; }
+bth_query() { (echo cd 'ControlSet001\Services\BTHPORT\Parameters\'$2 ; echo "$3" ; echo q) | reged -e $1; }
+list_adapters() { bth_query $1 Keys ls | awk -F'[<>]' '/^ +<[0-9a-f]{12}>/ {print $2}'; }
+list_devices() { bth_query $1 'Keys\'$2 ls | awk -F'[<>]' '/^ +16  3 REG_BINARY/ {print $2}'; }
+get_key() { bth_query $1 'Keys\'$2 "hex $3" | awk '/^:00000/ {for(i=2; i<=17; i++) printf("%02s",$i); printf('\n')}'; }
+
+while read drive label
+do
+  printf '\n/dev/%s (%s)\n' $drive "$label"
+  mkdir /mnt/$drive && mount /dev/$drive /mnt/$drive || exit 1
+  hive="/mnt/$drive/Windows/System32/config/SYSTEM"
+  if [ -f $hive ]
+  then
+    for adapter in $(list_adapters $hive)
+    do
+      adapter_MAC=$(format_MAC $adapter)
+      printf '\n. Adapter=%s\n' $adapter_MAC
+      for device in $(list_devices $hive $adapter)
+      do
+        device_MAC=$(format_MAC $device)
+        printf '\n. . Device=%s, Key=%s  (Windows)\n' $device_MAC $(get_key $hive $adapter $device)
+        info_file="/var/lib/bluetooth/$adapter_MAC/$device_MAC/info"
+        if [ -f $info_file ]
+        then
+          printf '                 Paired with: %s  (Linux: %s)\n' $(grep '^Key=' $info_file) "$(grep '^Name=' $info_file)"
+        else
+          printf '                              (NOT PAIRED)\n'
+        fi
+      done
+    done
+  fi
+  umount /mnt/$drive
+  sleep 1
+  rmdir /mnt/$drive
+done < <(list_fs ntfs)
