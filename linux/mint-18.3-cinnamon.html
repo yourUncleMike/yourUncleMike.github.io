@@ -269,24 +269,6 @@ menuentry 'Windows Boot Manager (on /dev/sda1)' --class windows --class os ...
      </tr>
 
      <tr><td><table><tr><td><button onclick="button_toggle(this)">+</button></td>
-         <td><header>Mount Windows drive at /C:  (only if fast boot and BitLocker are disabled).</header>
-          <section>
-           <hr>
-           <table>
-            <tr><td>$</td><th>pushd /etc</th></tr>
-            <tr><td>$</td><th>read fstype uuid size &gt; &gt;(lsblk -lb -x SIZE -o FSTYPE,UUID,SIZE /dev/sda | grep ntfs | tail -1)</th></tr>
-            <tr><td>$</td><th>sudo cp -p fstab fstab.OLD</th></tr>
-            <tr><td>$</td><th>sudo tee -a fstab &gt; &gt;(echo UUID=$uuid$'\t/C:\tntfs\tdefaults\t0\t2')</th></tr>
-            <tr><td> </td><td><pre>UUID=<font color="lightgrey">xxxxxxxxxxxxxxxx</font>   /C:     ntfs    defaults        0       2</pre></td></tr>
-            <tr><td>$</td><th>sudo mount /C:</th></tr>
-            <tr><td>$</td><th>popd</th></tr>
-           </table>
-           <hr>
-          </section>
-         </td></tr></table></td>
-     </tr>
-
-     <tr><td><table><tr><td><button onclick="button_toggle(this)">+</button></td>
          <td><header>Synchronize bluetooth pairing keys.</header>
           <section>
            <ul>
@@ -312,6 +294,24 @@ Key=<font color="lightgrey">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</pre></font></td></
             </li>
             <li>Restart bluetooth service.</li>
            </ul>
+          </section>
+         </td></tr></table></td>
+     </tr>
+
+     <tr><td><table><tr><td><button onclick="button_toggle(this)">+</button></td>
+         <td><header>Mount Windows drive at /C:  (only if fast boot and BitLocker are disabled).</header>
+          <section>
+           <hr>
+           <table>
+            <tr><td>$</td><th>pushd /etc</th></tr>
+            <tr><td>$</td><th>read fstype uuid size &gt; &gt;(lsblk -lb -x SIZE -o FSTYPE,UUID,SIZE /dev/sda | grep ntfs | tail -1)</th></tr>
+            <tr><td>$</td><th>sudo cp -p fstab fstab.OLD</th></tr>
+            <tr><td>$</td><th>sudo tee -a fstab &gt; &gt;(echo UUID=$uuid$'\t/C:\tntfs\tdefaults\t0\t2')</th></tr>
+            <tr><td> </td><td><pre>UUID=<font color="lightgrey">xxxxxxxxxxxxxxxx</font>   /C:     ntfs    defaults        0       2</pre></td></tr>
+            <tr><td>$</td><th>sudo mount /C:</th></tr>
+            <tr><td>$</td><th>popd</th></tr>
+           </table>
+           <hr>
           </section>
          </td></tr></table></td>
      </tr>
