@@ -252,8 +252,8 @@
       case $_type in
         alias)    \builtin alias "$_cmd" 2&gt;/dev/null ;;
         function) echo -n 'function '; \builtin declare -f "$_cmd" ;;
-        builtin)  echo builtin $_cmd ;;
         file)     env which $_opt "$_cmd" | xargs -I{} stat -c $_fmt {} ;;
+        *)        echo builtin $_cmd ;;
       esac
     done
   done }</pre></th></tr>
@@ -276,6 +276,13 @@
 <tr><td>$</td><th>which -a printf</th></tr>
 <tr><td></td><td>builtin printf</td></tr>
 <tr><td></td><td>'/usr/bin/printf'</td></tr>
+
+<tr><td><br>$</td><th><br>time -f%E sleep 5</th><td style="color: red"># WTF moment</td></tr>
+<tr><td></td><td>-f%E: command not found</td></tr>
+<tr><td><br>$</td><th><br>builtin time</th></tr>
+<tr><td></td><td>bash: builtin: time: not a shell builtin</td></tr>
+<tr><td><br>$</td><th><br>which time</th></tr>
+<tr><td></td><td>keyword time</td></tr>
 
 <tr><td><br>$</td><th><br>which -a which</th></tr>
 <tr><td></td><td><pre>function which () 
@@ -303,11 +310,11 @@
                     echo -n 'function ';
                     \builtin declare -f "$_cmd"
                 ;;
-                builtin)
-                    echo builtin $_cmd
-                ;;
                 file)
                     env which $_opt "$_cmd" | xargs -I{} stat -c $_fmt {}
+                ;;
+                *)
+                    echo $_type $_cmd
                 ;;
             esac;
         done;
