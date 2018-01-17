@@ -253,7 +253,7 @@
         alias)    \builtin alias "$_cmd" 2&gt;/dev/null ;;
         function) echo -n 'function '; \builtin declare -f "$_cmd" ;;
         file)     env which $_opt "$_cmd" | xargs -I{} stat -c $_fmt {} ;;
-        *)        echo builtin $_cmd ;;
+        *)        echo $_type $_cmd ;;
       esac
     done
   done }</pre></th></tr>
