@@ -109,7 +109,7 @@
 <tr><td></td><td>/usr/bin/which<br>
                  /bin/which</td></tr>
 
-<tr><td><br>$</td><th><br>which -a which | xargs -I{} stat -c %N {}</th></tr>
+<tr><td><br>$</td><th><br>which -a which | xargs stat -c %N</th></tr>
 <tr><td></td><td>'/usr/bin/which' -> '/bin/which'<br>
                  '/bin/which'</td></tr>
 
@@ -238,7 +238,7 @@
     \builtin alias "$_cmd" 2&gt;/dev/null &amp;&amp; $_all
     \builtin declare -f "$_cmd" &amp;&amp; $_all
     \builtin "$_cmd" &amp;&gt;/dev/null ; [ $? -ne 1 ] &amp;&amp; echo builtin $_cmd &amp;&amp; $_all
-    env which $_opt "$_cmd" | xargs -I{} stat -c $_fmt {}
+    env which $_opt "$_cmd" | xargs stat -c $_fmt
   done }</pre></th></tr>
 
 <tr><td><br>$</td><th><br><pre>function which {<span style="color: red">    # A longer but cleaner implementation</span>
