@@ -37,7 +37,7 @@
      <li><b>Linux Mint OS drive</b> (USB3, at least 32GB)<br>
          You will install Linux Mint to this drive, which will become a permanent part of your computer.<br>
          Recommended product:
-         <a target="_blank" href="https://www.sandisk.com/home/usb-flash/ultra-fit-usb"><span style="background-color: black; color: red;">&nbsp;<b>SanDisk</b>&nbsp;<span style="color:white">Ultra Fit</span>&nbsp;</span></a>
+         <a target="_blank" href="https://www.sandisk.com/home/usb-flash/ultra-fit"><span style="background-color: black; color: red;">&nbsp;<b>SanDisk</b>&nbsp;<span style="color:white">Ultra Fit</span>&nbsp;</span></a>
         <img width="125" height="125" style="vertical-align: top" src="images/CZ43_128GB_agnle_right_open-retina.png"></li>
     </ul>
     <hr>
@@ -200,6 +200,7 @@
            <table>
             <tr><td>$</td><th>cd /var</th></tr>
             <tr><td>$</td><th>sudo mv log log.OLD && sudo ln -s /dev/shm log</th></tr>
+            <tr><td>$</td><th>echo D /var/log/ConsoleKit/ 0755 root root | sudo tee -a /etc/tmpfiles.d/console-kit.conf</th></tr>
            </table>
            <hr>
           </section>
@@ -343,6 +344,7 @@ Key=<font color="lightgrey">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</pre></font></td></
     <ul>
      <li><a target="_blank" href="https://linuxmint.com/rel_sylvia_cinnamon.php">Release Notes</a> for Linux Mint 18.3 Cinnamon</li>
      <li>Linux Mint <a target="_blank" href="http://linuxmint-installation-guide.readthedocs.io/en/latest/">Installation Guide</a></li>
+     <li><a target="blank" href="http://manpages.ubuntu.com/manpages/zesty/man5/tmpfiles.d.5.html">tmpfiles.d</a> - Configuration for creation, deletion and cleaning of volatile and temporary files</a></li>
      <li><a target="blank" href="https://www.windowscentral.com/how-disable-windows-10-fast-startup">How to disable Windows 10 fast startup (and why you'd want to)</a></li>
      <li><a target="blank" href="https://winaero.com/blog/how-to-open-various-settings-pages-directly-in-windows-10/">How to open various settings pages directly in Windows 10</a></li>
     </ul>
