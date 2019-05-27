@@ -1,0 +1,20 @@
+pre { display: inline; }
+
+b      { color: blue; }
+h1, h2 { text-align: center; }
+h1     { font-size: 64px; }
+    h2 { font-size: 32px; }
+
+summary { font-size: 24px; padding-top: 16px; }
+details { font-size: 24px; padding-left: 24px; }
+
+div               { padding-left: 24px; padding-top: 10px; }
+table, tr, th, td { border: 1px solid black; }
+table             { border-collapse: collapse; }
+           th, td { font-size: 20px; vertical-align: middle; padding-bottom: 5px; padding-top: 5px; padding-left: 10px; padding-right: 20px; }
+           th     { background-color: lightblue; text-align: left; }
+        button    { font-family: sans-serif; font-size: 16px; }
+
+body                     { font-family: monospace; }
+ul, ol                   { padding-top: 1px; }
+                li, span { font-size: 24px; }

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<title>vim craft</title>
+<link href="../css/button.css" type="text/css" rel="stylesheet">
+<link href="css/vim.css" type="text/css" rel="stylesheet">
+<script src="js/button.js" type="text/javascript"></script>
+</head>
+
+<body>
+<h1>vim craft</h1>
+<h2>(How vim ruined me for "better" editors.)</h2>
+<hr>
+
+<details><summary>Why is <b>vim</b> so difficult for new users?</summary>
+ <details><summary><b>vim</b> is modal</summary>
+  <div>
+   <span>Most editors have one mode. <button onclick="reveal_next(this)">Spoiler</button></span>
+   <span hidden>(insert mode)</span>
+  </div>
+  <div>
+   <b>vim</b> has <i>many</i> modes:
+   <ul>
+    <li>Normal mode (aka "command" mode, for moving around, cutting, pasting, ...)</li>
+    <li>Insert mode (self-explanatory, until you press <button disabled>Delete</button>)</li>
+    <li>Replace mode (overwrite, except when you press <button disabled>Enter</button>)</li>
+    <li>Cmdline mode (for a single <b>ex</b> command)</li>
+    <li>Ex mode (for multiple <b>ex</b> commands, i.e., line-oriented "<b>ed</b>-style" editing)</li>
+    <li>Visual mode (not to be confused with what <b>:visual</b> does)<br><br>
+        When in doubt, press <button disabled>Esc</button>.</li>
+   </ul>
+  </div>
+ </details>
+ <details><summary><b>vim</b>'s normal mode is case sensitive.</summary>
+  <ul>
+   <li>Lowercase <b>j</b> moves you down.</li>
+   <li>Uppercase <b>J</b> joins lines.<br><br>
+       <button disabled>Caps Lock</button> will be your undoing.<br><br>
+       The undo (<b>u</b>) key is your friend.</li>
+  </ul>
+ </details>
+ <details><summary>The same key might do very different things in different modes.</summary>
+  <ul>
+   <li>In insert or replace mode, <button disabled>Enter</button> starts a new line.</li>
+   <li>In normal mode, <button disabled>Enter</button> moves to the first non-blank character on the next line.</li>
+  </ul>
+ </details>
+ <details><summary>There are an overwhelming number of command keys to learn.</summary>
+  <div>You do <u>not</u> have to learn them all, but the more of them that you master ...</div>
+ </details>
+ <details><summary>Many of the key assignments make no sense.</summary>
+ <div>Until you realize that having all the "arrow" keys (<b>h</b>, <b>j</b>, <b>k</b>, and <b>l</b>) on the home row means you aways know where to find them no matter what keyboard happens to be under your fingertips.</div>
+</details>
+ <details><summary>Try it!</summary>
+  <table>
+   <tr><th>Command</th><th>Description</th></tr>
+   <tr><th>:help</th><td>Learn how to navigate <b>vim</b>'s help system.</td></tr>
+   <tr><th>:help vim-modes</th><td>Learn more about <b>vim</b>'s modes.</td></tr>
+   <tr><th>:q</th><td>Quit help.</td></tr>
+  </table>
+ </details>
+</details>
+
+<details><summary><b>vim</b>'s origin story</summary>
+ <div>
+  <pre>
+  1966  <b>QED</b>          (<b>Q</b>uick <b>ED</b>itor)
+        :
+  1969  <b><a href="https://en.wikipedia.org/wiki/Ed_(text_editor)" target="_blank">ed</a></b>           (Pronounced "<b>E D</b>", not "ed".)
+        :
+  1975  <b>em</b>           (<b>E</b>ditor for <b>M</b>ortals)
+        :
+  1975  <b>en</b>           
+        :
+  1976  <b>ex</b>           (<b>EX</b>tended)
+        :
+  1979  <b>vi</b>           (<b>VI</b>sual mode for <b>ex</b>)
+        :
+  1990  :.... <b>elvis</b>  
+        :
+  1991  <b>vim</b>          (<b>V</b>i <b>IM</b>proved)  &lt;--- WE ARE HERE
+        :
+  2015  <b>neovim</b><br>
+  </pre>
+ </div>
+</details>
+
+<details><summary>A blast from the past ... <b>ed</b></summary>
+ <div>
+  <details><summary>Use cases...</summary>
+   <ol>
+    <li>A disgruntled co-worker deleted all the text editors (<b>vim</b>, <b>nano</b>, ...), and broke the package manager, on her way out the door.</li>
+    <li>You've been assigned to disinfect a Unix box that was connected to the Internet before security patches were applied.  It got compromised, and certain binaries (<b>ls</b>, <b>ps</b>, <b>netstat</b>, <b>vim</b>, ...) were replaced with lookalikes that hide the intruder's activities.</li>
+    <li>You just need to script some repetitive editing operations.</li>
+   </ol>
+  </details>
+  <details><summary>Just dive right in ... with a dice rolling script!</summary>
+   <div>
+    <span>$ <b>ed</b> <button onclick="reveal_next(this)">Enter</button></span>
+    <span hidden><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+    <span hidden><b>#!/usr/bin/bash</b> <button onclick="reveal_next(this)">Enter</button></span>
+    <span hidden><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+    <span hidden><b>echo $RANDOM</b> <button onclick="reveal_next(this)">Enter</button></span>
+    <span hidden>
+     <span><br>?</span>
+     <span><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+     <span hidden>
+      <span><b>?</b> <button disabled>Enter</button></span>
+      <span><br>?</span>
+      <span><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+      <span hidden>
+       <span><b>help</b> <button disabled>Enter</button></span>
+       <span><br>?</span>
+       <span><br><button onclick="reveal_next(this, hide=true)">Esc</button></span><span hidden>^[<button onclick="reveal_next(this, hide=true)">Ctrl-C</button></span><span hidden>^C<br>?<br><b>quit</b> <button onclick="reveal_next(this)">Enter</button></span>
+       <span hidden><br>?<br><b>q</b> <button onclick="reveal_next(this)">Enter</button></span>
+       <span hidden><br> $ </span>
+      </span>
+     </span>
+    </span>
+   </div>
+  </details>
+  <details><summary>Then RTFM.</summary>
+   <div>
+    $ <b>man ed</b><br>
+    $ <b>info ed</b><br>
+    <br>
+   </div>
+  </details>
+  <details><summary>Start with printing a random number.</summary>
+   <div>
+    <span>$ <b>ed</b> <button onclick="reveal_next(this)">Enter</button></span>
+    <span hidden><br><b>i</b> <button onclick="reveal_next(this)">Enter</button></span>
+    <span hidden>
+     <span><br><b>#!/usr/bin/bash</b></span>
+     <span><br><b>echo $RANDOM</b></span>
+     <span><br><b>.</b></span> <button onclick="reveal_next(this)">Enter</button>
+    </span>
+    <span hidden><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+    <span hidden><b>wq roll</b> <button onclick="reveal_next(this)">Enter</button></span>
+    <span hidden><br>29<br>$ <button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+    <span hidden><b>chmod +x roll</b> <button onclick="reveal_next(this)">Enter</button><br></span>
+    <span hidden>$ <b>./roll</b> <button onclick="reveal_next(this)">Enter</button><br></span>
+    <span hidden>bash: ./roll: /usr/bin/bash: bad interpreter: No such file or directory<br><br></span>
+   </div>
+  </details>
+  <details><summary>Fix the error, if needed.</summary>
+   <div>
+    <span>$ <b>ed roll</b> <button onclick="reveal_next(this)">Enter</button></span>
+    <span hidden><br>29<br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+    <span hidden>
+     <span><b>,n</b> <button disabled>Enter</button></span>
+     <span><br><pre>1       #!/usr/bin/bash</pre></span>
+     <span><br><pre>2       echo $RANDOM</pre></span>
+     <span><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+     <span hidden>
+      <span><b>1s/bash/env &</b> <button disabled>Enter</button></span>
+      <span><br>#!/usr/bin/env bash</span>
+      <span><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+      <span hidden>
+       <span><b>wq</b> <button disabled>Enter</button></span>
+       <span><br>33<br>$ <button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+       <span hidden>
+        <span><b>./roll</b> <button disabled>Enter</button></span>
+        <span><br>11627<br><br></span>
+       </span>
+      </span>
+     </span>
+    </span>
+   </div>
+  </details>
+
+  <details><summary>How about a random number between 1-6?</summary>
+   <div>
+    <span>$ <b>ed roll</b> <button onclick="reveal_next(this)">Enter</button></span>
+    <span hidden>
+     <span><br>33<br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+     <span hidden>
+      <span><b>2s/RANDOM/[$&*6/32768+1]</b> <button disabled>Enter</button></span>
+      <span><br>?<br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+      <span hidden>
+       <span><b>h</b> <button disabled>Enter</button></span>
+       <span><br>Invalid command suffix</span>
+       <span><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+       <span hidden>
+        <span><b>2s/RANDOM/[$&*6\/32768+1]</b> <button disabled>Enter</button></span>
+        <span><br>echo $[$RANDOM*6/32768+1]<br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+        <span hidden>
+         <span><b>wq</b> <button disabled>Enter</button></span>
+         <span><br>46<br> $ <button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+         <span hidden>
+          <span><b>./roll</b> <button onclick="reveal_next(this)">Enter</button></span>
+          <span><br>2<br><br></span>
+         </span>
+        </span>
+       </span>
+      </span>
+     </span>
+    </span>
+   </div>
+  </details>
+
+  <details><summary>How about several?</summary>
+   <div>
+    <span>$ <b>ed roll</b> <button disabled>Enter</button></span>
+    <span><br>46</span>
+    <span><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+    <span hidden>
+     <span><b>2i</b> <button disabled>Enter</button></span>
+     <span><br><b>let n=${1:-1}</b></span>
+     <span><br><b>for (( i=0; i&lt;n; i++ ))</b></span>
+     <span><br><b>do</b></span>
+     <span><br><b>.</b></span>
+     <span><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+     <span hidden>
+      <span><b>$a</b> <button disabled>Enter</button></span>
+      <span><br><b>done</b></span>
+      <span><br><b>.</b></span>
+      <span><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+      <span hidden>
+       <span><b>,n</b> <button disabled>Enter</button></span>
+       <span><br><pre>1       #!/usr/bin/env bash</pre></span>
+       <span><br><pre>2       let n=${1:-1}</pre></span>
+       <span><br><pre>3       for (( i=0; i&lt;n; i++ ))</pre></span>
+       <span><br><pre>4       do</pre></span>
+       <span><br><pre>5       echo $[$RANDOM*6/32768+1]</pre></span>
+       <span><br><pre>6       done</pre></span>
+       <span><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+       <span hidden>
+        <span><b>wq</b> <button disabled>Enter</button></span>
+        <span><br>92</span>
+        <span><br>$ <button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+        <span hidden>
+         <span><b>./roll 2</b> <button disabled>Enter</button></span>
+         <span><br>4</span>
+         <span><br>6<br><br></span>
+        </span>
+       </span>
+      </span>
+     </span>
+    </span>
+   </div>
+  </details>
+
+  <details><summary>How about sorted and on the same line?</summary>
+   <div>
+    <span>$ <b>ed roll</b> <button disabled>Enter</button></span>
+    <span><br>92</span>
+    <span><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+    <span hidden>
+     <span><b>3i</b> <button disabled>Enter</button></span>
+     <span><br><b>echo $(</b></span>
+     <span><br><b>.</b></span>
+     <span><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+     <span hidden>
+      <span><b>$c</b> <button disabled>Enter</button></span>
+      <span><br><b>done | sort -n</b></span>
+      <span><br><b>)</b></span>
+      <span><br><b>.</b></span>
+      <span><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+      <span hidden>
+       <span><b>,n</b> <button disabled>Enter</button></span>
+       <span><br><pre>1       #!/usr/bin/env bash</pre></span>
+       <span><br><pre>2       let n=${1:-1}</pre></span>
+       <span><br><pre>3       echo $(</pre></span>
+       <span><br><pre>4       for (( i=0; i&lt;n; i++ ))</pre></span>
+       <span><br><pre>5       do</pre></span>
+       <span><br><pre>6       echo $[$RANDOM*6/32768+1]</pre></span>
+       <span><br><pre>7       done | sort -n</pre></span>
+       <span><br><pre>8       )</pre></span>
+       <span><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+       <span hidden>
+        <span><b>wq</b> <button disabled>Enter</button></span>
+        <span><br>112</span>
+        <span><br>$ <button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+        <span hidden>
+         <span><b>./roll 5</b> <button disabled>Enter</button></span>
+         <span><br>1 1 3 4 6<br><br></span>
+        </span>
+       </span>
+      </span>
+     </span>
+    </span>
+   </div>
+  </details>
+
+  <details><summary>Finally, we make the code pretty!</summary>
+   <div>
+    <span>$ <b>ed roll</b> <button disabled>Enter</button></span>
+    <span><br>112</span>
+    <span><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+    <span hidden>
+     <span><b><pre>4,7s/^/    /</pre></b> <button disabled>Enter</button></span>
+     <span><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+     <span hidden>
+      <span><b><pre>6s/^/    /</pre></b> <button disabled>Enter</button></span>
+      <span><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+      <span hidden>
+       <span><b>,n</b> <button disabled>Enter</button></span>
+       <span><br><pre>1       #!/usr/bin/env bash</pre></span>
+       <span><br><pre>2       let n=${1:-1}</pre></span>
+       <span><br><pre>3       echo $(</pre></span>
+       <span><br><pre>4           for (( i=0; i&lt;n; i++ ))</pre></span>
+       <span><br><pre>5           do</pre></span>
+       <span><br><pre>6               echo $[$RANDOM*6/32768+1]</pre></span>
+       <span><br><pre>7           done | sort -n</pre></span>
+       <span><br><pre>8       )</pre></span>
+       <span><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+       <span hidden>
+        <span><b>wq</b> <button onclick="reveal_next(this)">Enter</button></span>
+        <span><br>132<br><br></span>
+       </span>
+      </span>
+     </span>
+    </span>
+   </div>
+  </details>
+
+ </div>
+</details>
+
+<details><summary><b>ed</b> | <b>ex</b> | <b>vim</b>  Rosetta stone</summary>
+ <div>
+  <table>
+   <tr>
+    <th>ed</th>
+    <th>ex</th>
+    <th>vim</th>
+    <th>Description</th>
+   </tr>
+
+   <tr>
+    <td><b>,n</b></td>
+    <td><b>set nu</b>[mber]<br><b>%p</b></td>
+    <td><b>:set nu</b>[mber]</td>
+    <td>Display entire buffer with line numbers.</td>
+   </tr>
+
+   <tr>
+    <td><b>i</b></td>
+    <td><b>i</b></td>
+    <td><b>O</b></td>
+    <td><u>I</u>nsert above current line.</td>
+   </tr>
+
+   <tr>
+    <td><b>a</b></td>
+    <td><b>a</b></td>
+    <td><b>o</b></td>
+    <td><u>A</u>ppend below current line.</td>
+   </tr>
+
+   <tr>
+    <td><b>.</b></td>
+    <td><b>.</b></td>
+    <td><button disabled>Esc</button></td>
+    <td>Exit insert mode.</td>
+   </tr>
+
+   <tr>
+    <td><b>s/^/</b><i>text</i><b>/</b></td>
+    <td><b>s/^/</b><i>text</i><b>/</b></td>
+    <td><b>0i</b><i>text</i><button disabled>Esc</button></td>
+    <td><u>I</u>nsert <i>text</i> at beginning line.</td>
+   </tr>
+
+   <tr>
+    <td><b>s/$/</b><i>text</i><b>/</b></td>
+    <td><b>s/$/</b><i>text</i><b>/</b></td>
+    <td><b>A</b><i>text</i><button disabled>Esc</button></td>
+    <td><u>A</u>ppend <i>text</i> to end of line.</td>
+   </tr>
+
+   <tr>
+    <td><b>d</b></td>
+    <td><b>d</b></td>
+    <td><b>dd</b></td>
+    <td><u>D</u>elete current line.</td>
+   </tr>
+
+   <tr>
+    <td><b>j</b></td>
+    <td><b>j</b></td>
+    <td><b>J</b></td>
+    <td><u>J</u>oin current and next line.</td>
+   </tr>
+
+   <tr>
+    <td><b>/</b><i>re</i></td>
+    <td><b>/</b><i>re</i></td>
+    <td><b>/</b><i>re</i></td>
+    <td>Search for regular expression <i>re</i>.</td>
+   </tr>
+
+   <tr>
+    <td><b>?</b><i>re</i></td>
+    <td><b>?</b><i>re</i></td>
+    <td><b>?</b><i>re</i></td>
+    <td>Search backward for <i>re</i>.</td>
+   </tr>
+
+   <tr>
+    <td><b>g/</b><i>re</i><b>/p</b></td>
+    <td><b>g/</b><i>re</i><b>/p</b></td>
+    <td><b>:g/</b><i>re</i><b>/p</b></td>
+    <td>Print every line matching <i>re</i>.</td>
+   </tr>
+
+   <tr>
+    <td><b>s/</b><i>re</i><b>/</b><i>replacement</i><b>/</b></td>
+    <td><b>s/</b><i>re</i><b>/</b><i>replacement</i><b>/</b></td>
+    <td><b>:s/</b><i>re</i><b>/</b><i>replacement</i><b>/</b></td>
+    <td>Replace first <i>re</i> match with <i>replacement</i> in current line.</td>
+   </tr>
+
+   <tr>
+    <td><b>s/</b><i>re</i><b>/</b><i>replacement</i><b>/g</b></td>
+    <td><b>s/</b><i>re</i><b>/</b><i>replacement</i><b>/g</b></td>
+    <td><b>:s/</b><i>re</i><b>/</b><i>replacement</i><b>/g</b></td>
+    <td>Replace all <i>re</i> matches in current line.</td>
+   </tr>
+
+   <tr>
+    <td><b>%s/</b><i>re</i><b>/</b><i>replacement</i><b>/g</b></td>
+    <td><b>%s/</b><i>re</i><b>/</b><i>replacement</i><b>/g</b></td>
+    <td><b>:%s/</b><i>re</i><b>/</b><i>replacement</i><b>/g</b></td>
+    <td>Replace all <i>re</i> matches in document.</td>
+   </tr>
+
+   <tr>
+    <td><b>u</b></td>
+    <td><b>u</b></td>
+    <td><b>u</b></td>
+    <td><u>U</u>ndo last command.</td>
+   </tr>
+
+   <tr>
+    <td><b>w</b> [<i>filename</i>]</td>
+    <td><b>w</b> [<i>filename</i>]</td>
+    <td><b>:w</b> [<i>filename</i>]</td>
+    <td><u>W</u>rite buffer to <i>filename</i>.</td>
+   </tr>
+
+   <tr>
+    <td><b>q</b></td>
+    <td><b>q</b></td>
+    <td><b>:q</b></td>
+    <td><u>Q</u>uit (exit) editor.</td>
+   </tr>
+
+   <tr>
+    <td><b>Q</b></td>
+    <td><b>Q</b></td>
+    <td><b>:q!</b></td>
+    <td><u>Q</u>uit without writing buffer.</td>
+   </tr>
+
+   <tr>
+    <td><b>wq</b> [<i>filename</i>]</td>
+    <td><b>wq</b> [<i>filename</i>]</td>
+    <td><b>:wq</b> [<i>filename</i>]</td>
+    <td><u>W</u>rite and <u>q</u>uit.</td>
+   </tr>
+  </table>
+  <br>
+  <details open><summary>Fun facts<br>
+   <ul>
+    <li><b>sed</b> was based on the scripting features of <b>ed</b>.</li>
+    <li><b>grep</b> was inspired by <b>ed</b>'s <b>g/</b><i>re</i><b>/p</b> command.</li>
+   </ul>
+  </details>
+ </div>
+</details>
+
+<details><summary><b>.vimrc</b> suggestions</summary>
+ <div>
+  Coming soon!
+ </div>
+</details>
+
+<details><summary><b>vim</b> visual select, copy, and delete</summary>
+ <div>
+  Coming soon!
+ </div>
+</details>
+
+<details><summary><b>vim</b> keyboard macros</summary>
+ <div>
+  Coming soon!
+ </div>
+</details>
+
+<details><summary><b>vim</b> bonus topic</summary>
+ <div>
+  Coming soon!
+ </div>
+</details>
+
+<details><summary>Continuing education...</summary>
+ <div>
+  <pre>
+  $ <b>vimtutor</b>   # Possibly the best half hour you could invest.
+
+  $ <b>gvim</b>       # Pay particular attention to keyboard shortcuts in the <button disabled>Edit</button> menu.
+
+  <a target="_blank" href="http://learnvimscriptthehardway.stevelosh.com/"><i>Learn Vimscript the Hard Way</i></a>
+
+  </pre>
+ </div>
+</details>
+
+</body>
+</html>
