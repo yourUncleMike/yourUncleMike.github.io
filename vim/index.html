@@ -12,6 +12,29 @@
 <h2>(How vim ruined me for "better" editors.)</h2>
 <hr>
 
+<div  style="text-align: center;">
+ <button onclick="reveal_next(this, hide=true)" style="align: center;">
+  <br>
+  ... <b>DISCLAIMER</b> ...
+  <br>
+  <br>
+  This session will <u>not</u> cover <b>vim</b>'s predecessor <b>vi</b> in any great detail.
+  <br>
+  <br>
+  This session <u>will</u> attempt to explain why <b>vim</b> works as it does,
+  <br>
+  show how to configure it for better usability, and
+  <br>
+  demonstrate how to use some of its more advanced features.
+  <br>
+  <br>
+  [ AGREE ]
+  <br>
+  <br>
+ </button>
+</div>
+<span hidden></span>
+
 <details><summary>Why is <b>vim</b> so difficult for new users?</summary>
  <details><summary><b>vim</b> is modal.</summary>
   <div>
@@ -67,9 +90,11 @@
    <br>
   </div>
  </details>
- <details><summary>Many of the key assignments make no sense, at first.</summary>
+ <details><summary>Many of the key assignments make no sense at first,</summary>
   <div>
-   Until you realize it's mostly about efficiency.
+   until you realize it might be about efficiency,
+   <br>
+   courtesy of an era before screens and mice.
    <br>
    <br>
    For example, having all the "arrow" keys
@@ -77,7 +102,8 @@
     <button disabled>j</button>
     <button disabled>k</button>
     <button disabled>l</button>)
-   on the home row means they are within easy reach, you aways know where to find them no matter what keyboard happens to be under your fingertips.
+   on the home row means they are within easy reach.
+   You always know where to find them, no matter what keyboard happens to be under your fingertips.
    <br>
    <span><button onclick="reveal_next(this, hide=true)">Spoiler</button></span>
    <span hidden><br>Fun fact: <button disabled>Ctrl-H</button> is the same as <button disabled>Backspace</button></span>
@@ -86,12 +112,16 @@
   </div>
  </details>
  <details><summary>Try it!</summary>
-  <table>
-   <tr><th>Command</th><th>Description</th></tr>
-   <tr><td><b>:help</b></td><td>Learn how to navigate <b>vim</b>'s help system.</td></tr>
-   <tr><td><b>:help vim-modes</b></td><td>Learn more about <b>vim</b>'s modes.</td></tr>
-   <tr><td><b>:q</b></td><td>Quit help.</td></tr>
-  </table>
+  <div>
+   <br>
+   <table>
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td><b>:help</b></td><td>Learn how to navigate <b>vim</b>'s help system.</td></tr>
+    <tr><td><b>:help vim-modes</b></td><td>Learn more about <b>vim</b>'s modes.</td></tr>
+    <tr><td><b>:q</b></td><td>Quit help.</td></tr>
+   </table>
+   <br>
+  <div>
  </details>
 </details>
 
@@ -122,10 +152,11 @@
   <details><summary>Use cases...</summary>
    <ol>
     <li>A disgruntled co-worker deleted all the text editors (<b>vim</b>, <b>nano</b>, ...), and broke the package manager, on her way out the door.</li>
-    <li>You've been assigned to disinfect a Unix box that was connected to the Internet before security patches were applied.  It got compromised, and certain binaries (<b>ls</b>, <b>ps</b>, <b>netstat</b>, <b>vim</b>, ...) were replaced with lookalikes that hide the intruder's activities.</li>
+    <li>You've been assigned to disinfect a Unix box that was connected to the Internet before security patches were applied.  It got compromised, and certain binaries (<b>ls</b>, <b>ps</b>, <b>netstat</b>, <b>vi</b>, ...) were replaced with lookalikes that hide the intruder's activities.</li>
     <li>You just need to script some repetitive editing operations.</li>
    </ol>
   </details>
+
   <details><summary>Just dive right in ... with a dice rolling script!</summary>
    <div>
     <span>$ <b>ed</b> <button onclick="reveal_next(this)">Enter</button></span>
@@ -151,13 +182,17 @@
     </span>
    </div>
   </details>
+
   <details><summary>Then RTM.</summary>
    <div>
     $ <b>man ed</b><br>
+    <br>
     $ <b>info ed</b><br>
+    <br>
     <br>
    </div>
   </details>
+
   <details><summary>Start with printing a random number.</summary>
    <div>
     <span>$ <b>ed</b> <button onclick="reveal_next(this)">Enter</button></span>
@@ -175,10 +210,11 @@
     <span hidden>bash: ./roll: /usr/bin/bash: bad interpreter: No such file or directory<br><br></span>
    </div>
   </details>
+
   <details><summary>Fix the error, if needed.</summary>
    <div>
-    <span>$ <b>ed roll</b> <button onclick="reveal_next(this)">Enter</button></span>
-    <span hidden><br>29<br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
+    <span>$ <b>ed roll</b> <button disabled>Enter</button></span>
+    <span><br>29<br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
     <span hidden>
      <span><b>,n</b> <button disabled>Enter</button></span>
      <span><br><pre>1       #!/usr/bin/bash</pre></span>
@@ -203,10 +239,9 @@
 
   <details><summary>How about a random number between 1-6?</summary>
    <div>
-    <span>$ <b>ed roll</b> <button onclick="reveal_next(this)">Enter</button></span>
+    <span>$ <b>ed roll</b> <button disabled>Enter</button></span>
+    <span><br>33<br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
     <span hidden>
-     <span><br>33<br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
-     <span hidden>
       <span><b>2s/RANDOM/[$&*6/32768+1]</b> <button disabled>Enter</button></span>
       <span><br>?<br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
       <span hidden>
@@ -226,7 +261,6 @@
         </span>
        </span>
       </span>
-     </span>
     </span>
    </div>
   </details>
@@ -338,7 +372,7 @@
        <span><br><pre>8       )</pre></span>
        <span><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
        <span hidden>
-        <span><b>wq</b> <button onclick="reveal_next(this)">Enter</button></span>
+        <span><b>wq</b> <button disabled>Enter</button></span>
         <span><br>132<br><br></span>
        </span>
       </span>
@@ -494,7 +528,7 @@
    </tr>
   </table>
   <br>
-  <details open><summary>Fun facts<br>
+  <details><summary>Fun facts<br>
    <ul>
     <li><b>sed</b> was based on the scripting features of <b>ed</b>.</li>
     <li><b>grep</b> was inspired by <b>ed</b>'s <b>g/</b><i>re</i><b>/p</b> command.</li>
@@ -503,9 +537,28 @@
  </div>
 </details>
 
-<details><summary><b>.exrc</b> suggestions</summary>
+<details open><summary><b>.vimrc</b> suggestions</summary>
  <div>
-  Coming soon!
+  <br>
+  <table>
+   <tr><th>Command</th><th>Description</th></tr>
+   <tr><td><b>set nocompatible</b></td><td>50 levels of undo/redo, <b>ex</b> command line recall, and more!</td></tr>
+   <tr><td><b>set showmode</b></td><td>Show when <b>vim</b> is in INSERT or REPLACE mode.</td></tr>
+   <tr><td><b>set ruler</b></td><td>Show line and column where cursor is at all times.</td></tr>
+   <tr><td><b>set number</b></td><td>Show line numbers.</td></tr>
+   <tr><td><b>set incsearch</b></td><td>Enable incremental search.</td></tr>
+   <tr><td><b>set nohlsearch</b></td><td>Disable search highlighting.</td></tr>
+   <tr><td><b>set ignorecase smartcase</b></td><td>Ignore case if search pattern is all lowercase.</td></tr>
+   <tr><td><b>set tabstop=8</b></td><td>Place tabs at proper location.</td></tr>
+   <tr><td><b>set shiftwidth=4</b></td><td>Set indent level to 4 spaces.</td></tr>
+   <tr><td><b>set expandtab</b></td><td>Insert spaces, not actual <button disabled>Tab</button> characters.</td></tr>
+   <tr><td><b>set autoindent</b></td><td>Enable autoindent.</td></tr>
+   <tr><td><b>set smartindent</b></td><td>Indents correctly in code.  Mostly...</td></tr>
+   <tr><td><b>set cindent</b></td><td>Stricter rules for C code.</td></tr>
+   <tr><td><b>set showmatch</b></td><td>Briefly highlight matching parentheses and braces.</td></tr>
+   <tr><td><b>syntax off</b></td><td>Turn off syntax highlighting.</td></tr>
+  </table>
+  <br>
  </div>
 </details>
 
@@ -521,7 +574,7 @@
  </div>
 </details>
 
-<details><summary><b>vim</b> bonus topic</summary>
+<details><summary><b>vim</b> registers</summary>
  <div>
   Coming soon!
  </div>
