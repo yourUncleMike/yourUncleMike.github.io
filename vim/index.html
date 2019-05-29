@@ -15,10 +15,10 @@
 <div  style="text-align: center;">
  <button onclick="reveal_next(this, hide=true)" style="align: center;">
   <br>
-  ... <b>DISCLAIMER</b> ...
+  ~~~ <b>DISCLAIMER</b> ~~~
   <br>
   <br>
-  This session will <u>not</u> cover <b>vim</b>'s predecessor <b>vi</b> in any great detail.
+  This session will <u>not</u> cover <b>vim</b>'s predecessor <b>vi</b> much detail.
   <br>
   <br>
   This session <u>will</u> attempt to explain why <b>vim</b> works as it does,
@@ -111,6 +111,7 @@
    <br>
   </div>
  </details>
+
  <details><summary>Try it!</summary>
   <div>
    <br>
@@ -537,13 +538,13 @@
  </div>
 </details>
 
-<details open><summary><b>.vimrc</b> suggestions</summary>
+<details><summary><b>.vimrc</b> suggestions</summary>
  <div>
   <br>
   <table>
    <tr><th>Command</th><th>Description</th></tr>
    <tr><td><b>set nocompatible</b></td><td>50 levels of undo/redo, <b>ex</b> command line recall, and more!</td></tr>
-   <tr><td><b>set showmode</b></td><td>Show when <b>vim</b> is in INSERT or REPLACE mode.</td></tr>
+   <tr><td><b>set showmode</b></td><td>Show when <b>vim</b> is in INSERT, REPLACE, or VISUAL mode.</td></tr>
    <tr><td><b>set ruler</b></td><td>Show line and column where cursor is at all times.</td></tr>
    <tr><td><b>set number</b></td><td>Show line numbers.</td></tr>
    <tr><td><b>set incsearch</b></td><td>Enable incremental search.</td></tr>
@@ -562,10 +563,55 @@
  </div>
 </details>
 
-<details><summary><b>vim</b> visual select, copy, and delete</summary>
+<details open><summary><b>vim</b> visual (selection) mode</summary>
  <div>
-  Coming soon!
+  <br>
+  Using visual mode is a three part process:
+  <ol>
+   <li>In normal mode, begin selection with
+    <button disabled>v</button>, 
+    <button disabled>V</button>, or
+    <button disabled>Ctrl/V</button>.
+   </li>
+   <li>Move to end of selection (includes character or line under cursor).</li>
+   <li>Finish selection with a visual mode command (see below).</li>
+  </ol>
+  <br>
+  <table>
+   <tr><th>Normal mode command</th><th>Description</th></tr>
+   <tr><td>Lowercase <button disabled>v</button></td><td>Begin character-wise <u>v</u>isual selection mode.</td></tr>
+   <tr><td>Uppercase <button disabled>V</button></td><td>Begin line-wise <u>v</u>isual selection mode.</td></tr>
+   <tr><td><button disabled>Ctrl/V</button></td><td>Begin block-wise <u>v</u>isual selection mode.</td></tr>
+  </table>
+  <br>
+  <table>
+   <tr><th>Visual mode command</th><th>Description</th></tr>
+   <tr><td>Lowercase <button disabled>d</button></td><td><u>D</u>elete selection.</td></tr>
+   <tr><td>Lowercase <button disabled>y</button></td><td><u>Y</u>ank (copy) selection.</td></tr>
+   <tr><td>Lowercase <button disabled>p</button></td><td><u>P</u>ut (paste over) selection.</td></tr>
+   <tr><td>Uppercase <button disabled>U</button></td><td>Convert selection to <u>u</u>ppercase.</td></tr>
+   <tr><td>Lowercase <button disabled>u</button></td><td>Convert selection to lowercase.</td></tr>
+   <tr>
+    <td>
+     <button disabled>&lt;</button>,
+     <button disabled>&gt;</button>
+    </td>
+    <td>Shift selection left, or right.</td>
+   </tr>
+   <tr><td><button disabled>Esc</button></td><td>Exit visual mode.</td></tr>
+  </table>
+  <br>
  </div>
+
+  <details><summary>Try it!</summary>
+    <br>
+    <table>
+     <tr><th>Command</th><th>Description</th></tr>
+     <tr><td><b>:help visual-mode</b></td><td>Learn about <b>vim</b>'s visual mode.</td></tr>
+    </table>
+    <br>
+  </details>
+
 </details>
 
 <details><summary><b>vim</b> keyboard macros</summary>
