@@ -29,6 +29,11 @@ button:disabled:hover {
                       }
 
 
+button:hover, summary:hover {
+    color: -webkit-link;
+    cursor: pointer;
+}
+
 body                     { font-family: monospace; }
 ul, ol                   { padding-top: 1px; }
                 li, span { font-size: 24px; }
