@@ -12,28 +12,21 @@
 <h2>(How vim ruined me for "better" editors.)</h2>
 <hr>
 
-<div  style="text-align: center;">
- <button onclick="reveal_next(this, hide=true)" style="align: center;">
-  <br>
-  ~~~ <b>DISCLAIMER</b> ~~~
-  <br>
-  <br>
-  This session will <u>not</u> cover <b>vim</b>'s predecessor <b>vi</b> much detail.
-  <br>
-  <br>
-  This session <u>will</u> attempt to explain why <b>vim</b> works as it does,
-  <br>
-  show how to configure it for better usability, and
-  <br>
-  demonstrate how to use some of its more advanced features.
-  <br>
-  <br>
+<div style="text-align: center;">
+
+ <span><button onclick="reveal_next(this, hide=true)"><b>DISCLAIMER</b></button></span>
+ <span hidden>
+  <button onclick="reveal_next(this, hide=true)" style="align: center;">
+  <p>This session will <u>not</u> cover <b>vim</b>'s predecessor <b>vi</b> much detail.</p>
+  <p>This session <u>will</u> attempt to explain why <b>vim</b> works as it does,
+   <br>show how to configure it for better usability, and
+   <br>demonstrate how to use some of its more advanced features.
+  <p>
   [ AGREE ]
-  <br>
-  <br>
- </button>
+  </button>
+ </span>
+ <div hidden></div>
 </div>
-<span hidden></span>
 
 <details><summary>Why is <b>vim</b> so difficult for new users?</summary>
  <details><summary><b>vim</b> is modal.</summary>
@@ -112,16 +105,19 @@
   </div>
  </details>
 
- <details><summary>Try it!</summary>
+ <details><summary>But ... help is available!</summary>
   <div>
    <br>
    <table>
     <tr><th>Command</th><th>Description</th></tr>
     <tr><td><b>:help</b></td><td>Learn how to navigate <b>vim</b>'s help system.</td></tr>
     <tr><td><b>:help vim-modes</b></td><td>Learn more about <b>vim</b>'s modes.</td></tr>
+    <tr><td><b><button disabled>Ctrl/W</button><button disabled>W</button></b></td><td>Toggle between help and editor window.</td></tr>
+    <tr><td><b>:help windows</b></td><td>Learn how to use multiple windows.</td></tr>
     <tr><td><b>:q</b></td><td>Quit help.</td></tr>
    </table>
    <br>
+  the current X11button>
   <div>
  </details>
 </details>
@@ -563,7 +559,7 @@
  </div>
 </details>
 
-<details open><summary><b>vim</b> visual (selection) mode</summary>
+<details><summary><b>vim</b> visual (selection) mode</summary>
  <div>
   <br>
   Using visual mode is a three part process:
@@ -603,41 +599,96 @@
   <br>
  </div>
 
-  <details><summary>Try it!</summary>
-    <br>
-    <table>
-     <tr><th>Command</th><th>Description</th></tr>
-     <tr><td><b>:help visual-mode</b></td><td>Learn about <b>vim</b>'s visual mode.</td></tr>
-    </table>
-    <br>
-  </details>
+ <details><summary>Try it!</summary>
+   <br>
+   <table>
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td><b>:help visual-mode</b></td><td>Learn about <b>vim</b>'s visual mode.</td></tr>
+   </table>
+   <br>
+ </details>
 
 </details>
 
-<details><summary><b>vim</b> keyboard macros</summary>
+<details open><summary><b>vim</b> keyboard macros</summary>
  <div>
   Coming soon!
  </div>
 </details>
 
-<details><summary><b>vim</b> registers</summary>
- <div>
-  Coming soon!
+<details open><summary><b>vim</b> registers</summary>
+
+ <details open><summary>Obligatory <b>vim</b> command syntax review...</summary>
+  <div>
+   [register] [count] command
+   <br><br>
+  </div>
+ </details>
+
+ <details open><summary>Fun fact: You're already using registers!</summary>
+  <div>
+  <table>
+   <tr><th>Register</th><th>Usage</th></tr>
+   <tr>
+    <td><b>""</b></td>
+    <td>The "unnamed" register receives text from delete, change, and yank commands, even when another register was explicitly specified, and provides text for put commands where a register was not explicitly specified.</td>
+   </tr>
+   <tr>
+    <td><b>"0</b></td>
+    <td>Receives text from the last yank command.</td>
+  </tr>
+   <tr>
+    <td><b>"1</b> .. <b>"9</b></td>
+    <td>The "numbered" registers receive text from the last 9 delete or change commands that did not explicitly specify a register.
+     <br>(See help for exceptions.)
+    </td>
+   </tr>
+   <tr>
+    <td><b>"-</b></td>
+    <td>The "small delete" register recevies text from the last command that deleted less than one line and did not explicitly specify a register.</td></tr>
+   <tr><td><b>"/</b></td><td>Provides the last search pattern. (It is used by the <b>n</b> and <b>N</b> commands.)</td></tr>
+   <tr><td><b>".</b></td><td>Provides the last text inserted.</td></tr>
+   <tr><td><b>"%</b></td><td>Provides the current filename.</td></tr>
+   <tr><td><b>"*</b></td><td>Provides the last X11 selection.</td></tr>
+   <tr><td><b>"+</b></td><td>Receives or provides the current X11 clipboard.</td></tr>
+   <tr>
+    <td><b>"a</b> .. <b>"z</b>
+     <br><b>"A</b> .. <b>"Z</b>
+    </td>
+    <td>The "named" registers receive or provide text only when explicitly specified.
+     <br>The uppercase variants append to their previous contents.
+    </td>
+   </tr>
+   <tr><td><b>"_</b></td><td>Black hole</td></tr>
+  </table>
  </div>
+ </details>
+
+ <details open><summary>Try it!</summary>
+  <table>
+   <tr><th>Command</th><th>Description</th></tr>
+   <tr><td><b>"%P</b></td><td>Put current file name.</td></tr>
+   <tr><td><b>"+3yy</b></td><td>Yank 3 lines to the X11 clipboard.</td></tr>
+   <tr><td><b>:reg</b>[isters]</td><td>Dispay contents of all registers.</td></tr>
+   <tr><td><b>:help registers</b></td><td>Learn about <b>vim</b>'s registers.</td></tr>
+  </table>
+  <br>
+ </details>
+
 </details>
 
 <details><summary>Continuing education...</summary>
  <div>
   <pre>
-  $ <b>vimtutor</b>   # Possibly the best half hour you could invest.
-
-  $ <b>gvim</b>       # Pay particular attention to keyboard shortcuts in the <button disabled>Edit</button> menu.
-
-  <a target="_blank" href="http://learnvimscriptthehardway.stevelosh.com/"><i>Learn Vimscript the Hard Way</i></a>
-
+  $ <b>vimtutor</b>     # Possibly the best half hour you could invest.
+  
+  $ <b>gvim</b>         # Pay particular attention to keyboard shortcuts in the <button disabled>Edit</button> menu.
+  
+  $ <b>man vimdiff</b>  # Recommended tool.
+  
+  <a target="_blank" href="http://learnvimscriptthehardway.stevelosh.com/"><i>Learn Vimscript the Hard Way</i></a> by Steve Losh
   </pre>
  </div>
-%%%
 </details>
 
 </body>
