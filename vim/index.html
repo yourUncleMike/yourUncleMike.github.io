@@ -635,17 +635,17 @@
    </tr>
    <tr>
     <td><b>"0</b></td>
-    <td>Receives text from the last yank command.</td>
+    <td>Receives or provides text from the last yank command.</td>
   </tr>
    <tr>
     <td><b>"1</b> .. <b>"9</b></td>
-    <td>The "numbered" registers receive text from the last 9 delete or change commands that did not explicitly specify a register.
+    <td>The "numbered" registers receive or provide text from the last 9 delete or change commands that did not explicitly specify a register.
      <br>(See help for exceptions.)
     </td>
    </tr>
    <tr>
     <td><b>"-</b></td>
-    <td>The "small delete" register recevies text from the last command that deleted less than one line and did not explicitly specify a register.</td></tr>
+    <td>The "small delete" register recevies or provides text from the last command that deleted less than one line and did not explicitly specify a register.</td></tr>
    <tr><td><b>"/</b></td><td>Provides the last search pattern. (It is used by the <b>n</b> and <b>N</b> commands.)</td></tr>
    <tr><td><b>".</b></td><td>Provides the last text inserted.</td></tr>
    <tr><td><b>"%</b></td><td>Provides the current filename.</td></tr>
@@ -659,7 +659,7 @@
      <br>The uppercase variants append to their previous contents.
     </td>
    </tr>
-   <tr><td><b>"_</b></td><td>Black hole</td></tr>
+   <tr><td><b>"_</b></td><td>The "black hole" register prevents delete and change commands from affecting other registers.</td></tr>
   </table>
  </div>
  </details>
