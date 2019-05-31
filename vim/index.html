@@ -86,7 +86,9 @@
  </details>
  <details><summary>Many of the key assignments make no sense at first,</summary>
   <div>
-   until you realize it might be about efficiency, from an era predating screens.
+   until you realize it might be about efficiency,
+   <br>
+   from a time before mice, screens, or arrow keys.
    <br>
    <br>
    For example, having all the "arrow" keys
@@ -94,12 +96,16 @@
     <button disabled>j</button>
     <button disabled>k</button>
     <button disabled>l</button>)
-   on the home row means they are within easy reach.
-   You always know where to find them, no matter what 
+   <br>
+   on the home row
+   means they are within easy reach.
+   <br>
+   You can always find them, no matter what 
    <span class="tooltip">
     <a href="https://www.flickr.com/photos/twylo/9795932916" target="_blank">keyboard</a>
     <span class="tooltiptext">ASR 33</span>
    </span>
+   <br>
    happens to be under your fingertips.
    <br>
    <span><button onclick="reveal_next(this, hide=true)">Spoiler</button></span>
@@ -116,12 +122,11 @@
     <tr><th>Command</th><th>Description</th></tr>
     <tr><td><b>:help</b></td><td>Learn how to navigate <b>vim</b>'s help system.</td></tr>
     <tr><td><b>:help vim-modes</b></td><td>Learn more about <b>vim</b>'s modes.</td></tr>
-    <tr><td><b><button disabled>Ctrl/W</button><button disabled>W</button></b></td><td>Toggle between help and editor window.</td></tr>
-    <tr><td><b>:help windows</b></td><td>Learn how to use multiple windows.</td></tr>
+    <tr><td><b><button disabled>Ctrl/w</button><button disabled>w</button></b></td><td>Toggle between help and editor window.</td></tr>
     <tr><td><b>:q</b></td><td>Quit help.</td></tr>
+    <tr><td><b>:help windows</b></td><td>Learn how to use multiple windows.</td></tr>
    </table>
    <br>
-  the current X11button>
   <div>
  </details>
 </details>
@@ -158,7 +163,7 @@
    </ol>
   </details>
 
-  <details><summary>Just dive right in ... with a dice rolling script!</summary>
+  <details><summary>Just dive right in ...</summary>
    <div>
     <span>$ <b>ed</b> <button onclick="reveal_next(this)">Enter</button></span>
     <span hidden><br><button onclick="reveal_next(this, hide=true)">&nbsp;</button></span>
@@ -184,7 +189,7 @@
    </div>
   </details>
 
-  <details><summary>Then RTM.</summary>
+  <details><summary>Then read the documentation.</summary>
    <div>
     $ <b>man ed</b><br>
     <br>
@@ -194,7 +199,7 @@
    </div>
   </details>
 
-  <details><summary>Start with printing a random number.</summary>
+  <details><summary>Start again, better informed.</summary>
    <div>
     <span>$ <b>ed</b> <button onclick="reveal_next(this)">Enter</button></span>
     <span hidden><br><b>i</b> <button onclick="reveal_next(this)">Enter</button></span>
@@ -529,7 +534,8 @@
    </tr>
   </table>
   <br>
-  <details><summary>Fun facts<br>
+  <details><summary>Fun facts</summary
+   <br>
    <ul>
     <li><b>sed</b> was based on the scripting features of <b>ed</b>.</li>
     <li><b>grep</b> was inspired by <b>ed</b>'s <b>g/</b><i>re</i><b>/p</b> command.</li>
@@ -545,8 +551,8 @@
    <tr><th>Command</th><th>Description</th></tr>
    <tr><td><b>set nocompatible</b></td><td>50 levels of undo/redo, <b>ex</b> command line recall, and more!</td></tr>
    <tr><td><b>set showmode</b></td><td>Show when <b>vim</b> is in INSERT, REPLACE, or VISUAL mode.</td></tr>
-   <tr><td><b>set ruler</b></td><td>Show line and column where cursor is at all times.</td></tr>
    <tr><td><b>set number</b></td><td>Show line numbers.</td></tr>
+   <tr><td><b>set ruler</b></td><td>Show line and column where cursor is at all times.</td></tr>
    <tr><td><b>set incsearch</b></td><td>Enable incremental search.</td></tr>
    <tr><td><b>set nohlsearch</b></td><td>Disable search highlighting.</td></tr>
    <tr><td><b>set ignorecase smartcase</b></td><td>Ignore case if search pattern is all lowercase.</td></tr>
@@ -614,22 +620,69 @@
 
 </details>
 
-<details open><summary><b>vim</b> keyboard macros</summary>
+<details><summary><b>vim</b> keyboard macros</summary>
  <div>
-  Coming soon!
+  <br>
+  Syntax:
+  <div><b>:</b>[<i>mode</i>][<b>nore</b>]<b>map</b>&nbsp;&nbsp;<i>keys</i>&nbsp;&nbsp;<i>commands</i></div>
+  <div><b>:</b>[<i>mode</i>]<b>unmap</b>&nbsp;&nbsp;<i>keys</i></div>
+  <br>
+  <div>("<b>nore</b>" prevents recursion -- more on that soon.)</div>
+  <br>
+  <div>
+  <table>
+   <tr><th><i>mode</i></th><th>modes the macro is active for</th></tr>
+   <tr><td>&nbsp</td><td>normal and visual</td></tr>
+   <tr><td><b>n</b></td><td>normal only</td></tr>
+   <tr><td><b>v</b></td><td>visual only</td></tr>
+   <tr><td><b>i</b></td><td>insert only</td></tr>
+   <tr><td><b>c</b></td><td>cmdline only</td></tr>
+  </table>
+  </div>
+  <br>
  </div>
+
+ <details><summary>Try it!</summary>
+   <br>
+   <table>
+    <tr><th>Command</th><th>Description</th></tr>
+    <tr><td><b>:help Q</b></td><td>Show what uppercase <button disabled>Q</button> <i>should</i> do in normal mode.</td></tr>
+    <tr><td><b>:map Q</b></td><td>Show normal and visual mode mappings for uppercase <button disabled>Q</button>.</td></tr>
+    <tr><td><b>:unmap Q</b></td><td>Remove normal and visual mode mappings for uppercase <button disabled>Q</button>.</td></tr>
+    <tr>
+     <td><b>:map &lt;c-a&gt; 0</b></td>
+     <td>Map <button disabled>Ctrl/A</button> to move to beginning of line (in normal mode),
+      <br>or select to beginning of line (in visual mode).
+     </td>
+    </tr>
+    <tr>
+     <td><b>:map &lt;c-e&gt; 0</b></td>
+     <td>Map <button disabled>Ctrl/E</button> to move to end of line (in normal mode),
+      <br>or select to end of line (in visual mode).
+     </td>
+    </tr>
+    <tr><td><b>:nmap x dd</b></td><td>Map <button disabled>x</button> to delete current line (in normal mode).</td></tr>
+    <tr><td><b>:nnoremap \ x</b></td><td>Non-recursively map <button disabled>\</button> to delete current character (in normal mode).</td></tr>
+    <tr><td><b>:nmap # 0i# &lt;esc&gt;0j</b></td><td>Map <button disabled>#</button> to comment out a line.</td></tr>
+    <tr><td><b>:map</b></td><td>Show key mappings for normal and visual modes.</td></tr>
+    <tr><td><b>:help map-modes</b></td><td>Learn about <b>vim</b>'s map commands and modes.</td></tr>
+    <tr><td><b>:help map-examples</b></td><td>Get some more inspiration!</td></tr>
+   </table>
+   <br>
+ </details>
+
 </details>
 
-<details open><summary><b>vim</b> registers</summary>
+<details><summary><b>vim</b> registers</summary>
 
- <details open><summary>Obligatory <b>vim</b> command syntax review...</summary>
+ <details><summary>Obligatory <b>vim</b> command syntax review...</summary>
   <div>
    [register] [count] command
    <br><br>
   </div>
  </details>
 
- <details open><summary>Fun fact: You're already using registers!</summary>
+ <details><summary>Fun fact: You're already using registers!</summary>
   <div>
   <table>
    <tr><th>Register</th><th>Usage</th></tr>
@@ -644,7 +697,7 @@
    <tr>
     <td><b>"1</b> .. <b>"9</b></td>
     <td>The "numbered" registers receive or provide text from the last 9 delete or change commands that did not explicitly specify a register.
-     <br>(See help for exceptions.)
+     <br>(See <b>:help quote9</b> for exceptions.)
     </td>
    </tr>
    <tr>
@@ -668,7 +721,7 @@
  </div>
  </details>
 
- <details open><summary>Try it!</summary>
+ <details><summary>Try it!</summary>
   <table>
    <tr><th>Command</th><th>Description</th></tr>
    <tr><td><b>"%P</b></td><td>Put current file name.</td></tr>
